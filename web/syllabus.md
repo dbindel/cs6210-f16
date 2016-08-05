@@ -37,8 +37,8 @@ of the instructor.
 
 #### Recommended
 
-- Demmel, _Applied Numerical Linear Algebra_
-- Golub and Van Loan, _Matrix Computations_
+- Demmel, [_Applied Numerical Linear Algebra_][demmel]
+- Golub and Van Loan, [_Matrix Computations_][gvl]
 
 #### References
 
@@ -59,6 +59,8 @@ Some MATLAB references:
 - Hanselman and Littlefield, [_Mastering MATLAB7_][hanselman]
 - Or pick a favorite from the [many available][mathworks-books]
 
+[demmel]: https://www.amazon.com/Applied-Numerical-Linear-Algebra-Demmel/dp/0898713897/
+[gvl]: https://www.amazon.com/Computations-Hopkins-Studies-Mathematical-Sciences/dp/B00BD2DVIC/
 [meyer]: http://www.amazon.com/gp/product/0898714540/qid=1137779618/sr=2-1/ref=pd_bbs_b_2_1/002-5247186-8320001
 [lay]: http://www.amazon.com/Linear-Algebra-Its-Applications-Edition/dp/0321385179
 [strang]: http://www.amazon.com/gp/product/0155510053/qid=1137779745/sr=2-1/ref=pd_bbs_b_2_1/002-5247186-8320001
@@ -75,7 +77,7 @@ Some MATLAB references:
 
 ### Readings and the problem du jour
 
-Readings from the course text (or notes) will be listed on the course
+Readings from the course notes will be listed on the course
 page before class.  *You are responsible for reading before lecture*.
 
 For most lectures, there will be a "problem of the day" related to
@@ -85,7 +87,7 @@ material -- and as a way to study for the exams.
 
 ### Homework
 
-There will be ten one-week homeworks, typically assigned Friday
+There will be twelve one-week homeworks, typically assigned Friday
 and due the following Friday.  These problems will involve a mix
 of proofs and computations done in MATLAB.  Homework should be typed and
 submitted as PDF files on CMS.  After they are graded, homework scores
