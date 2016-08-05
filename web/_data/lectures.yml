@@ -1,0 +1,206 @@
+# ==================
+# Week 1 (intro)
+#
+-
+  date: 2016-08-24
+  info: Introduction
+-
+  date: 2016-08-26
+  info: Matrix multiplication
+#
+# ==================
+# Week 2 (background)
+#
+-
+  date: 2016-08-29
+  info: Floating point
+-
+  date: 2016-08-31
+  info: Norms
+-
+  date: 2016-09-02
+  info: Matrix calculus, singular values
+  hw: HW 1
+#
+# ==================
+# Week 3 (linear solves)
+#
+-
+  date: 2016-09-05
+  break: Labor Day
+-
+  date: 2016-09-07
+  info: Sensitivity and conditioning
+-
+  date: 2016-09-09
+  info: Sensitivity and conditioning
+  hw: HW 2
+#
+# ==================
+# Week 4 (structured solves)
+#
+-
+  date: 2016-09-12
+  break: February break
+-
+  date: 2016-09-14
+  info: Introduction to Gaussian elimination
+-
+  date: 2016-09-16
+  info: Schur complements and blocking
+  hw: HW 3
+#
+# ==================
+# Week 5 (least squares)
+#
+-
+  date: 2016-09-19
+  info: Backward error, pivoting, iterative refinement
+-
+  date: 2016-09-21
+  info: Condition estimation and scaling
+-
+  date: 2016-09-23
+  info: Structured linear systems
+  hw: HW 4
+#
+# ==================
+# Week 6 (least squares + eigen background)
+#
+-
+  date: 2016-09-26
+  info: Matrices and graphs; nested dissection
+-
+  date: 2016-09-28
+  info: Householder, Givens, and QR
+-
+  date: 2016-09-30
+  info: Full rank least squares
+  hw: HW 5
+#
+# ==================
+# Week 7 (eigenvalue methods)
+#
+-
+  date: 2016-10-03
+  info: Rank-deficient problems
+-
+  date: 2016-10-05
+  info: Rank-deficient problems
+-
+  date: 2016-10-07
+  info: Weighting and regularization
+  hw: HW 6
+#
+# ==================
+# Week 8 (nonlinear solvers in 1D)
+#
+-
+  date: 2016-10-10
+  break: Fall Break
+-
+  date: 2016-10-12
+  info: Introduction to eigenvalue problems
+-
+  date: 2016-10-14
+  info: Perturbation theory
+  hw: Midterm
+#
+# ==================
+# Week 9 (linear iterative solvers)
+# Weds is drop deadline
+#
+-
+  date: 2016-10-17
+  info: Power iterations
+-
+  date: 2016-10-19
+  info: Power iterations
+  travel: Bindel at Argonne
+-
+  date: 2016-10-21
+  info: Hessenberg and real Schur form
+  hw: HW 7
+#
+# ==================
+# Break
+#
+-
+  date: 2016-10-24
+  info: Practical QR
+-
+  date: 2016-10-26
+  info: Intro to symmetric eigenproblems
+-
+  date: 2016-10-28
+  info: Symmetric power iterations and QR
+  hw: HW 8
+#
+# ==================
+# Week 10 (nonlinear eq and optimization)
+#
+-
+  date: 2016-10-31
+  info: Other methods
+-
+  date: 2016-11-02
+  info: Computing the SVD
+-
+  date: 2016-11-04
+  info: Symmetric generalized problems
+  hw: HW 9
+#
+# ==================
+# Week 11 (globalization)
+#
+-
+  date: 2016-11-07
+  info: Lanczos and connections
+-
+  date: 2016-11-09
+  info: Lanczos and connections
+-
+  date: 2016-11-11
+  info: Lanczos and connections
+  hw: HW 10
+#
+# ==================
+# Week 12 (constraints)
+#
+-
+  date: 2016-11-14
+  info: Arnoldi and company
+-
+  date: 2016-11-16
+  info: Classical iterations
+-
+  date: 2016-11-18
+  info: Conjugate gradients
+  HW: HW 11
+#
+# ==================
+# Week 13 (eig reductions)
+#
+-
+  date: 2016-11-21
+  info: Other Krylov subspace methods
+-
+  date: 2016-11-23
+  info: Thanksgiving special
+-
+  date: 2016-11-25
+  break: Thanksgiving Break
+#
+# ==================
+# Week 14 (special topics)
+#
+-
+  date: 2016-11-28
+  info: Preconditioners
+-
+  date: 2016-11-30
+  info: Multigrid
+-
+  date: 2016-12-02
+  info: Review
+  hw: HW 12

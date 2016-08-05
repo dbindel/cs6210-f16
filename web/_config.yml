@@ -1,0 +1,12 @@
+title: David Bindel
+email: bindel@cornell.edu
+description: CS 6210, Fall 2016
+baseurl: "/~bindel/class/cs6210-f16/"
+url: "http://www.cs.cornell.edu/"
+
+encoding: utf-8
+timezone: America/New_York
+
+exclude: ["Rakefile"]
+
+markdown: kramdown

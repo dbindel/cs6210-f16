@@ -1,0 +1,147 @@
+15 weeks
+
+
+Name, enrolled, why taking?
+
+Calculus:
+- Taylor series for 1/(1+x); error on truncating?
+- Partial w.r.t. x of r^-2 where r^2 = x^2 + y^2?
+
+Linear algebra:
+- Solve linear system
+
+  [1, 2; 0, 3]*[x; y] = [3; 3]
+
+- Which matrix is pos def?
+
+  [1, 1; 1, 1], [-1, 2; 2, -1], [2, -1; -1, 2]
+
+- When is an upper triangular matrix singular?
+
+Order notation and basic MATLAB:
+- Complexity of following using order notation
+
+    for i = 1:n
+      for j = i:n
+        v(i) = v(i) + A(i,j)*x(j);
+
+- Express in words what the above algorithm does
+
+
+
+I want to cover:
+- Matrix operations
+- Linear systems (dense, sparse, structured)
+- Least squares and orthogonal transforms
+- Iterative solvers
+- Eigenproblems and SVD
+
+
+1.  Short week -- start up
+    W: Syllabus, intro quiz, nonlinear equations; PS 1 out
+    F: Solving nonlinear equations -- read 3.1-3.4 (problem session)
+2.  LA background
+    M: Thinking about matrix multiply + special matrices; PS 2 out
+    W: Vector spaces, norms, singular values
+       -- read 4.1-2.  PS 1 due
+    F: Problems (fast multiply + identities)
+3.  LA background + floating point
+    M: Special matrices (orthogonal, triangular, symmetric, pos def); SVD
+        -- Read 4.3-4.4.  PS 3 out
+    W: Sensitivity of linear systems -- read 5.8
+    F: Floating point -- read Ch 2
+4.  Out Monday -- PS 4 out -- read Ch 5.1-5.4
+    Gaussian elimination
+5.  Monday is Feb break; post Proj 1 (some sparse LS solver?)
+    Structured and sparse solvers, error -- read Ch 5.5-5.10
+6.  Least squares -- read Ch 6
+7.  In class midterm; Proj 1 due
+    Iterative methods -- read 7.1-7.4
+8.  Preconditioning, Proj 2 out (regularizing via iteration)
+9.  Out Monday; eigenproblems 1 (read Ch 8)
+10. Eigenproblems 2 (read Ch 9), Proj 2 due
+11. Spring break
+12. Newton for nonlinear systems and optimization (Ch 9)
+13. Continuation methods
+14. Constrained optimization
+15. Special topics
+16. Review and wrap (last two lectures)
+
+AG:
+1.  Numerical algorithms
+2.  Roundoff
+3.  Nonlinear equations in one variable
+4.  Linear algebra background
+5.  Direct solvers (GE, Cholesky, sparse)
+6.  Least squares (normal equations, QR)
+7.  Iterative methods (stationary, CG, Krylov)
+8.  Eigenvalues and SVD
+9.  Nonlinear systems and optimization
+
+CV: 
+
+Matrix algebra
+Linear systems and conditioning
+Structured systems (pos def, banded, symm)
+Nonlinear equations and optimization
+Iterative methods
+Least squares, QR, and SVD
+SEP, Lanczos, Jacobi iteration
+Tridiagonal methods, power method, Lanczos
+Newton for systems, quasi-Newton, trust region
+Nonlinear least squares, constraints
+Special topics
+
+My feeling:
+ - Not enough nonlinear
+ - Too much on eigenmethods
+
+1.  Matrix manipulations
+2.  Matrix setup, sparsity, FFT/wavelet
+3.  Linear systems and SVD, LU, conditioning
+4.  Pivoting, positive definiteness, Cholesky
+5.  Banded systems, LDL', sparse direct
+6.  1D nonlinear problems (Newton, bisection, opt)
+7.  Iterative methods, steepest descent, CG
+8.  Review/Midterm, Preconditioners
+9.  Least squares, QR, SVD, Givens QR
+10.  SEP, Lanczos, Jacobi
+-- break
+11. Tridiagonal methods, power method, Lanczos
+12. Newton for systems, quasi-Newton, trust regions
+13. Nonlinear least squares, constrained optimization
+14. Special topics
+15. Review
+
+DSB (3220):
+1.  Floating point
+2.  Nonlinear equations (1D)
+3.  LA background
+4.  Gaussian elimination
+5.  Prelim + least squares
+6.  Least squares + SVD
+7.  Iterative methods
+8.  Nonlinear systems
+-- break
+10. Interpolation
+11. Interpolation + Prelim
+12. Differentiation
+13. Quadrature
+14. ODEs
+
+DSB (6210):
+1. Matrix multiply
+2. Norms; matrix calculus; singular values
+3. Sensitivity; conditioning; floating point
+4. Triangular solves, LU, GEPP
+5. Condition est and scaling; structured problems
+6. Matrices and graphs; ND; orth transforms and QR; LS
+7. Rank-deficient problems
+8. Eigenvalue intro; perturbation theory
+9. Power iterations; Hessenberg and Schur
+10. QR; SEP; power iterations and QR
+11. Other methods; SVD; generalized EP
+12. Lanczos
+13. Arnoldi; classical iterations; CG
+14. Other Krylov
+15. Preconditioners + MG

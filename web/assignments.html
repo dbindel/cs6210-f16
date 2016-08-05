@@ -1,0 +1,10 @@
+---
+title: Assignments
+layout: main
+---
+
+<ul>
+{% for entry in site.data.hw %}
+{%   include hw_entry.html %}
+{% endfor %}
+</ul>

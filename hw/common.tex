@@ -1,0 +1,35 @@
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{listings}
+
+\newcommand{\fl}{\operatorname{fl}}
+\newcommand{\macheps}{\epsilon_{\mathrm{mach}}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+
+\newcommand{\hdr}[2]{
+  \pagestyle{fancy}
+  \lhead{Bindel, Fall 2016}
+  \rhead{Matrix Computations (CS 6210)}
+  \fancyfoot{}
+  \begin{center}
+    {\large{\bf #1}} \\
+    Due: #2
+  \end{center}
+  \lstset{language=matlab,columns=flexible}
+}
+
+\newcommand{\phdr}[1]{
+  \pagestyle{fancy}
+  \lhead{Bindel, Fall 2016}
+  \rhead{Matrix Computations (CS 6210)}
+  \fancyfoot{}
+  \begin{center}
+    {\large{\bf #1}}
+  \end{center}
+  \lstset{language=matlab,columns=flexible}
+}

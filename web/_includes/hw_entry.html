@@ -1,0 +1,5 @@
+<li>
+  <strong>Due {{ entry.due }}:</strong>
+  {% if entry.file %}<a href="hw/{{ entry.file }}.pdf">{{ entry.desc }}</a>{% else %}{{ entry.desc }}{% endif %}
+  {% if entry.support %}({% for s in entry.support %}<a href="hw/{{ s }}">{{ s }}</a>{% endfor %}){% endif %}
+</li>

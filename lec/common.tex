@@ -1,0 +1,30 @@
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{listings}
+
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\ddiag}{\operatorname{diag}}
+\newcommand{\fl}{\operatorname{fl}}
+\newcommand{\macheps}{\epsilon_{\mathrm{mach}}}
+\newcommand{\matlab}{\textsc{Matlab}}
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+\newcommand{\hdr}[2]{
+  \pagestyle{fancy}
+  \lhead{Bindel, Fall 2016}
+  \rhead{Numerical Analysis (CS 6210)}
+  \fancyfoot{}
+  \begin{center}
+    {\large{\bf Notes for #1}}
+  \end{center}
+  \lstset{language=matlab,columns=flexible}  
+}
