@@ -1,8 +1,6 @@
--
-  date: 2016-08-18
-  text: |
+- date: 2016-08-05
+  desc: Welcome to CS 6210!
+- date: 2016-08-18
+  desc: |
     If you cannot enroll now, keep checking!  The course cap of 40
     is set by the room size, but we are looking for a bigger room.
--
-  date: 2016-08-05
-  text: Welcome to CS 6210!
