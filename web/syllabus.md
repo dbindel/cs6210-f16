@@ -7,7 +7,7 @@ layout:     main
 
 CS 6210, Fall 2016  
 Lecture time: MWF 11:15-12:05  
-Lecture location: Hollister Hall 320
+Lecture location: Hollister Hall 306
 
 ### Staff and office hours
 
