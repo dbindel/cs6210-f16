@@ -1,99 +1,99 @@
 # ==================
-# Week 1 (intro)
+# Week 1
 #
 -
   date: 2016-08-24
-  info: Introduction
+  info: Introduction and matrix multiply
 -
   date: 2016-08-26
-  info: Matrix multiplication
+  info: Structured matrix multiply
 #
 # ==================
-# Week 2 (background)
+# Week 2
 #
 -
   date: 2016-08-29
-  info: Floating point
+  info: Interpreting matrices; norms
 -
   date: 2016-08-31
-  info: Norms
+  info: Matrix calculus, singular values
 -
   date: 2016-09-02
-  info: Matrix calculus, singular values
+  info: Sensitivity and conditioning
   hw: HW 1
 #
 # ==================
-# Week 3 (linear solves)
+# Week 3
 #
 -
   date: 2016-09-05
-  break: Labor Day
+  break: Floating point
 -
   date: 2016-09-07
-  info: Sensitivity and conditioning
+  info: Error analysis basics
 -
   date: 2016-09-09
-  info: Sensitivity and conditioning
+  info: Building blocks for error analysis
   hw: HW 2
 #
 # ==================
-# Week 4 (structured solves)
+# Week 4
 #
 -
   date: 2016-09-12
-  break: February break
+  break: Introduction to Gaussian elimination
 -
   date: 2016-09-14
-  info: Introduction to Gaussian elimination
+  info: Schur complements and blocking
 -
   date: 2016-09-16
-  info: Schur complements and blocking
+  info: Backward error, pivoting, iterative refinement
   hw: HW 3
 #
 # ==================
-# Week 5 (least squares)
+# Week 5
 #
 -
   date: 2016-09-19
-  info: Backward error, pivoting, iterative refinement
--
-  date: 2016-09-21
   info: Condition estimation and scaling
 -
-  date: 2016-09-23
+  date: 2016-09-21
   info: Structured linear systems
+-
+  date: 2016-09-23
+  info: Matrices and graphs; nested dissection
   hw: HW 4
 #
 # ==================
-# Week 6 (least squares + eigen background)
+# Week 6
 #
 -
   date: 2016-09-26
-  info: Matrices and graphs; nested dissection
+  info: Introduction to least squares
 -
   date: 2016-09-28
-  info: Householder, Givens, and QR
+  info: Sensitivity of least squares
 -
   date: 2016-09-30
-  info: Full rank least squares
+  info: Householder, Givens, and QR
   hw: HW 5
 #
 # ==================
-# Week 7 (eigenvalue methods)
+# Week 7
 #
 -
   date: 2016-10-03
-  info: Rank-deficient problems
+  info: Rank-deficiency and regularization
 -
   date: 2016-10-05
-  info: Rank-deficient problems
+  info: Constrained, weighted, and sparse problems
 -
   date: 2016-10-07
-  info: Weighting and regularization
+  info: Regression beyond least squares
   hw: HW 6
 #
 # ==================
-# Week 8 (nonlinear solvers in 1D)
+# Week 8
 #
 -
   date: 2016-10-10
@@ -107,8 +107,7 @@
   hw: Midterm
 #
 # ==================
-# Week 9 (linear iterative solvers)
-# Weds is drop deadline
+# Week 9
 #
 -
   date: 2016-10-17
@@ -123,7 +122,7 @@
   hw: HW 7
 #
 # ==================
-# Break
+# Week 10
 #
 -
   date: 2016-10-24
@@ -137,7 +136,7 @@
   hw: HW 8
 #
 # ==================
-# Week 10 (nonlinear eq and optimization)
+# Week 11
 #
 -
   date: 2016-10-31
@@ -151,7 +150,7 @@
   hw: HW 9
 #
 # ==================
-# Week 11 (globalization)
+# Week 12
 #
 -
   date: 2016-11-07
@@ -165,7 +164,7 @@
   hw: HW 10
 #
 # ==================
-# Week 12 (constraints)
+# Week 13
 #
 -
   date: 2016-11-14
@@ -179,7 +178,7 @@
   hw: HW 11
 #
 # ==================
-# Week 13 (eig reductions)
+# Week 14
 #
 -
   date: 2016-11-21
@@ -192,7 +191,7 @@
   break: Thanksgiving Break
 #
 # ==================
-# Week 14 (special topics)
+# Week 15
 #
 -
   date: 2016-11-28
