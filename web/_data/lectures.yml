@@ -27,10 +27,10 @@
 #
 -
   date: 2016-09-05
-  info: Floating point
+  break: Labor day
 -
   date: 2016-09-07
-  info: Error analysis basics
+  info: Floating point and error analysis basics
 -
   date: 2016-09-09
   info: Building blocks for error analysis
