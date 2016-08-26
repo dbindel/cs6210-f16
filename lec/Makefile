@@ -41,10 +41,6 @@ clean:
 distclean: clean
 	rm -f *.pdf
 
-copy:
-	mkdir -p ../web/lec
-	#cp $(LEC) ../web/lec
-
 %.pdf: %.tex
 	pdflatex $<
 	pdflatex $<
