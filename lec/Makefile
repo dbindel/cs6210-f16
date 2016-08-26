@@ -5,6 +5,10 @@ LEC=\
 .PHONY: all copy
 all: $(LEC)
 
+copy:
+        mkdir -p ../web/lec
+        cp $(LEC) ../web/lec
+
 2016-08-26.pdf: 2016-08-26.tex common.tex refs.bib \
 	logistics/2016-08-26.tex \
 	basics/matrix-shapes.tex \
