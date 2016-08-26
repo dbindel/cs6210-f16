@@ -13,8 +13,7 @@ copy:
 	logistics/2016-08-26.tex \
 	basics/matrix-shapes.tex \
 	basics/matrix-sparse.tex \
-	basics/matrix-data-sparse.tex \
-	basics/matrix-free.tex
+	basics/matrix-data-sparse.tex
 	pdflatex $<
 	bibtex 2016-08-26
 	pdflatex $<
