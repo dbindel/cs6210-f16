@@ -1,4 +1,5 @@
 LEC=\
+	notes.pdf \
 	2016-08-26.pdf \
 	2016-08-24.pdf
 
@@ -9,18 +10,17 @@ copy:
 	mkdir -p ../web/lec
 	cp $(LEC) ../web/lec
 
-2016-08-26.pdf: 2016-08-26.tex common.tex refs.bib \
-	logistics/2016-08-26.tex \
+notes.pdf: notes.tex commonm.tex refs.bib \
+	$(LEC1) $(LEC2)
+
+LEC2=\
 	basics/matrix-shapes.tex \
 	basics/matrix-sparse.tex \
 	basics/matrix-data-sparse.tex
-	pdflatex $<
-	bibtex 2016-08-26
-	pdflatex $<
-	pdflatex $<
+2016-08-26.pdf: 2016-08-26.tex common.tex commonm.tex refs.bib \
+	logistics/2016-08-26.tex $(LEC2)
 
-2016-08-24.pdf: 2016-08-24.tex common.tex refs.bib \
-	logistics/2016-08-24.tex \
+LEC1=\
 	basics/matrix-background.tex \
 	basics/matrix-notation.tex \
 	basics/matrix-interp.tex \
@@ -30,17 +30,14 @@ copy:
 	code/matvec2_row.m \
 	data/matvec_time.dat \
 	figs/matvec_time.tex
-	pdflatex $<
-	bibtex 2016-08-24
-	pdflatex $<
-	pdflatex $<
+2016-08-24.pdf: 2016-08-24.tex common.tex commonm.tex refs.bib \
+	logistics/2016-08-24.tex $(LEC1)
 
 clean:
-	rm -f *.aux *.log *.out *.bbl *.blg
+	rm -f *.aux *.log *.out *.bbl *.blg *.brf *.idx *.toc
 
 distclean: clean
 	rm -f *.pdf
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+	util/build.sh $<

@@ -1,0 +1,133 @@
+\documentclass{SIAMGHbook2016}
+
+\input{commonm}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{multicol}
+%\usepackage{subeqn}
+
+\makeindex
+
+
+% definitions used by included articles, reproduced here for
+% educational benefit, and to minimize alterations needed to be made
+% in developing this sample file.
+
+\newcommand{\pe}{\psi}
+\def\d{\delta}
+\def\ds{\displaystyle}
+\def\e{{\epsilon}}
+\def\eb{\bar{\eta}}
+\def\enorm#1{\|#1\|_2}
+\def\Fp{F^\prime}
+\def\fishpack{{FISHPACK}}
+\def\fortran{{FORTRAN}}
+\def\gmres{{GMRES}}
+\def\gmresm{{\rm GMRES($m$)}}
+\def\Kc{{\cal K}}
+\def\norm#1{\|#1\|}
+\def\wb{{\bar w}}
+\def\zb{{\bar z}}
+
+% some definitions of bold math italics to make typing easier.
+% They are used in the corollary.
+
+\def\bfE{\mbox{\boldmath$E$}}
+\def\bfG{\mbox{\boldmath$G$}}
+
+
+
+%_%_%_%_%
+%_%_%_%_% set up for back referencing
+%_%_%_%_%
+\usepackage[pageref]{backref}
+\renewcommand*{\backrefalt}[4]{%
+\ifcase #1 %
+(Not cited)%
+\or
+(Cited on p.~#2)%
+\else
+(Cited on pp.~#2)%
+\fi
+}
+\renewcommand*{\backreftwosep}{, }
+\renewcommand*{\backreflastsep}{, }
+
+%_%_%_%_%
+%_%_%_%_% set up the fonts
+%_%_%_%_%
+\usepackage[urw-garamond,sfscaled=false]{mathdesign}
+\usepackage[T1]{fontenc}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand\bfdefault{b}
+
+\title{Afternotes on Matrix Computations}
+\author{David Bindel}
+\date{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+\frontmatter
+\tableofcontents
+
+%\begin{contributors}
+%\contributor{A. Einstein}{Institute for Advanced Studies Princeton University}
+%\contributor{Enrico Fermi}{University of Chicago}
+%\contributor{John von Neumann}{Institute for Advanced Studies Princeton %University}
+%\contributor{A. Einstein}{Institute for Advanced Studies Princeton University}
+%\contributor{Enrico Fermi}{University of Chicago}
+%\contributor{John von Neumann}{Institute for Advanced Studies Princeton %University}\contributor{A. Einstein}{Institute for Advanced Studies Princeton %University}
+%\contributor{Enrico Fermi}{University of Chicago}
+%\contributor{John von Neumann}{Institute for Advanced Studies Princeton %University}\contributor{A. Einstein}{Institute for Advanced Studies Princeton %University}
+%\contributor{Enrico Fermi}{University of Chicago}
+%\contributor{John von Neumann}{Institute for Advanced Studies Princeton %University}\contributor{A. Einstein}{Institute for Advanced Studies Princeton %University}
+%\contributor{Enrico Fermi}{University of Chicago}
+%\contributor{John von Neumann}{Institute for Advanced Studies Princeton %University}
+%\end{contributors}
+
+%\listoffigures
+%\listoftables
+%\listofalgorithms
+
+\begin{thepreface}
+\input{preface}
+\end{thepreface}
+
+\mainmatter
+%\part{A Sample Part Page}
+
+% \chapter[Sample File for SIAM \LaTeX\ Book Macro Package]%
+% {Sample File for SIAM \LaTeX\ Book Macro Package}
+% \index{Sample!file}
+% \begin{chapterquote}[120pt]
+% We have nothing to fear but fear itself.\\
+% ---{\upshape Franklin D. Roosevelt}\\[6pt]
+% I am not a crook.\\
+% ---{\upshape Richard M. Nixon}
+% \end{chapterquote}
+
+\chapter[Basics]{Basics}
+
+\input{basics/matrix-background}
+\input{basics/matrix-notation}
+\input{basics/matrix-interp}
+\input{basics/matrix-dense}
+\input{basics/matrix-shapes}
+\input{basics/matrix-sparse}
+\input{basics/matrix-data-sparse}
+
+\backmatter
+
+\bibliography{refs}
+\bibliographystyle{siamplain}
+
+\cleardoublepage
+
+\printindex
+
+\end{document}
