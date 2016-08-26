@@ -1,0 +1,84 @@
+\section{Matrix shapes and structures}
+
+In linear algebra, we talk about different matrix structures.
+For example:
+\begin{itemize}
+\item $A \in \bbR^{n \times n}$ is {\em nonsingular} if the inverse
+  exists; otherwise it is {\em singular}.
+\item $Q \in \bbR^{n \times n}$ is {\em orthogonal} if $Q^T Q = I$.
+\item $A \in \bbR^{n \times n}$ is {\em symmetric} if $A = A^T$.
+\item $S \in \bbR^{n \times n}$ is {\em skew-symmetric} if $S = -S^T$.
+\item $L \in \bbR^{n \times m}$ is {\em low rank} if $L = UV^T$
+  for $U \in \bbR^{n \times k}$ and $V \in \bbR^{m \times k}$ where
+  $k \ll \min(m,n)$.
+\end{itemize}
+These are properties of an underlying linear map or quadratic form; if
+we write a different matrix associated with an (appropriately
+restricted) change of basis, it will also have the same properties.
+
+In matrix computations, we also talk about the {\em shape} (nonzero
+structure) of a matrix.  For example:
+\begin{itemize}
+\item $D$ is {\em diagonal} if $d_{ij} = 0$ for $i \neq j$.
+\item $T$ is {\em tridiagonal} if $t_{ij} = 0$ for $i \not \in \{j-1,
+  j, j+1\}$.
+\item $U$ is {\em upper triangular} if $u_{ij} = 0$ for $i > j$
+  and {\em strictly upper triangular} if $u_{ij} = 0$ for $i \geq j$
+  (lower triangular and strictly lower triangular are similarly
+  defined).
+\item $H$ is {\em upper Hessenberg} if $h_{ij} = 0$ for $i > j+1$.
+\item $B$ is {\em banded} if $b_{ij} = 0$ for $|i-j| > \beta$.
+\item $S$ is {\em sparse} if most of the entries are zero.  The
+  position of the nonzero entries in the matrix is called the
+  {\em sparsity structure}.
+\end{itemize}
+We often represent the shape of a matrix by marking where the nonzero
+elements are (usually leaving empty space for the zero elements); for
+example:
+\begin{align*}
+  \mbox{Diagonal} &
+  \begin{bmatrix}
+    \times & & & & \\
+    & \times & & & \\
+    & & \times & & \\
+    & & & \times & \\
+    & & & & \times
+  \end{bmatrix} &
+  \mbox{Tridiagonal} &
+  \begin{bmatrix}
+    \times & \times & & & \\
+    \times & \times & \times & & \\
+    & \times & \times & \times & \\
+    & & \times & \times & \times \\
+    & & & \times & \times
+  \end{bmatrix} \\
+  \mbox{Triangular} &
+  \begin{bmatrix}
+    \times & \times & \times & \times & \times \\
+    & \times & \times & \times & \times \\
+    & & \times & \times & \times \\
+    & & & \times & \times \\
+    & & & & \times
+  \end{bmatrix} &
+  \mbox{Hessenberg} &
+  \begin{bmatrix}
+    \times & \times & \times & \times & \times \\
+    \times & \times & \times & \times & \times \\
+    & \times & \times & \times & \times \\
+    & & \times & \times & \times \\
+    & & & \times & \times
+  \end{bmatrix} \\
+\end{align*}
+We also sometimes talk about the {\em graph} of a (square) matrix
+$A \in \bbR^{n \times n}$: if we assign a node to each index
+$\{1, \ldots, n\}$, an edge $(i,j)$ in the graph corresponds
+to $a_{ij} \neq 0$.  There is a close connection between certain
+classes of graph algorithms and algorithms for factoring sparse
+matrices or working with different matrix shapes.  For example,
+the matrix $A$ can be permuted so that $P A P^T$ is upper triangular
+iff the associated directed graph is acyclic.
+
+The shape of a matrix (or graph of a matrix) is not intrinsically
+associated with a more abstract linear algebra concept; apart from
+permutations, sometimes, almost any change of basis will completely
+destroy the shape.

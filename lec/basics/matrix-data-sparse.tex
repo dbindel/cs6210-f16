@@ -1,0 +1,137 @@
+\section{Data-sparse matrices}
+
+A {\em sparse} matrix has mostly zero entries; this lets us design
+compact storage formats with space proportional to the number of nonzeros,
+and fast matrix-vector multiplication with time proportional to the
+number of nonzeros.  A {\em data-sparse} matrix can be described with
+far fewer than $n^2$ parameters, even if it is not sparse.  Such matrices
+usually also admit compact storage schemes and fast matrix-vector products.
+This is significant because many of the iterative algorithms we
+describe later in the semester do not require any particular representation
+of the matrix; they only require that we be able to multiply by a vector
+quickly.
+
+The study of various data sparse representations has blossomed into a
+major field of study within matrix computations; in this section we give
+a taste of a few of the most common types of data sparsity.  We will
+see several of these structures in model problems used over the course
+of the class.
+
+\subsection{(Nearly) low-rank matrices}
+
+The simplest and most common data-sparse matrices are {\em low-rank}
+matrices.  If $A \in \bbR^{m \times n}$ has rank $k$, it can be written
+in outer product form as
+\[
+  A = UW^T, \quad, U \in \bbR^{m \times k}, W \in \bbR^{n \times k}.
+\]
+This factored form has a storage cost of $(n+m) k$, a significant savings
+over the $mn$ cost of the dense representation in the case $k \ll \max(m,n)$.
+To multiply a low-rank matrix by a vector fast, we need only to use
+associativity of matrix operations
+\begin{lstlisting}
+  y = (U*V')*x;  % O(mn) storage, O(mnk) flops
+  y = U*(V'*x);  % O((m+n) k) storage and flops
+\end{lstlisting}
+
+\subsection{Circulant, Toeplitz, and Hankel structure}
+
+A {\em Toeplitz} matrix is a matrix in which each (off)-diagonal is
+constant, e.g.
+\[
+  A =
+  \begin{bmatrix}
+    a_0    & a_1    & a_2    & a_3 \\
+    a_{-1} & a_0    & a_1    & a_2 \\
+    a_{-2} & a_{-1} & a_0    & a_1 \\
+    a_{-3} & a_{-2} & a_{-1} & a_0
+  \end{bmatrix}.
+\]
+Toeplitz matrices play a central role in the theory of constant-coefficient
+finite difference equations and in many applications in signal processing.
+
+Multiplication of a Toeplitz matrix by a vector represents (part of) a
+{\em convolution}; and afficionados of Fourier analysis and signal processing
+may already know that this implies that matrix multiplication can be done
+in $O(n \log n)$ time using a discrete Fourier transforms.  The trick to
+this is to view the Toeplitz matrix as a block in a larger {\em circulant}
+matrix
+\[
+C =
+\begin{bmatrix}
+  \color{red}{a_0   } & \color{red}{a_1   } & \color{red}{a_2   } & \color{red}{a_3} & a_{-3} & a_{-2} & a_{-1}\\
+  \color{red}{a_{-1}} & \color{red}{a_0   } & \color{red}{a_1   } & \color{red}{a_2} & a_{3} & a_{-3} & a_{-2}\\
+  \color{red}{a_{-2}} & \color{red}{a_{-1}} & \color{red}{a_0   } & \color{red}{a_1} & a_{2} & a_{3} & a_{-3} \\
+  \color{red}{a_{-3}} & \color{red}{a_{-2}} & \color{red}{a_{-1}} & \color{red}{a_0} & a_{1} & a_{2} & a_{3} \\
+  a_3 & a_{-3} & a_{-2} & a_{-1} & a_0 & a_1 & a_2 \\
+  a_2 & a_3 & a_{-3} & a_{-2} & a_{-1} & a_0 & a_1 \\
+  a_1 & a_2 & a_3 & a_{-3} & a_{-2} & a_{-1} & a_0 \\
+\end{bmatrix} =
+\sum_{k=-3}^3 a_{-k} P^k,
+\]
+where $P$ is the cyclic permutation matrix
+\[
+  P =
+  \begin{bmatrix}
+  0 & 0 & \dots & 0 & 1 \\
+  1 &   &       &   & 0 \\
+    & 1 &       &   & 0 \\
+    &   & \ddots&   & \vdots \\
+    &   &       & 1 & 0
+  \end{bmatrix}.
+\]
+As we will see later in the course, the discrete Fourier transform matrix
+is the eigenvector matrix for this cyclic permutation, and this is a
+gateway to fast matrix-vector multiplication algorithms.
+
+Closely-related to Toeplitz matrices are {\em Hankel} matrices, which
+are constant on skew-diagonals (that is, they are Toeplitz matrices
+flipped upside down).  Hankel matrices appear in numerous
+applications in control theory.
+
+\subsection{Separability and Kronecker product structure}
+
+The {\em Kronecker product} $A \kron B \in \bbR^{(mp) \times (nq)}$
+of matrices $A \in \bbR^{m \times n}$ and $B \in \bbR^{p \times q}$
+is the (gigantic) matrix
+\[
+  A \kron B =
+  \begin{bmatrix}
+    a_{11} B & a_{12} B & \ldots & a_{1n} B \\
+    a_{21} B & a_{22} B & \ldots & a_{2n} B \\
+    \vdots & \vdots & & \vdots \\
+    a_{m1} B & a_{m2} B & \ldots & a_{mn} B
+  \end{bmatrix}.
+\]
+Multiplication of a vector by a Kronecker product represents
+a matrix triple product:
+\[
+  (A \kron B) \vec(X) = \vec(BXA^T)
+\]
+where $\vec(X)$ represents the vector formed by listing the
+elements of a matrix in column major order, e.g.
+\[
+  \vec \begin{bmatrix} 1 & 3 \\ 2 & 4 \end{bmatrix} =
+  \begin{bmatrix} 1 \\ 2 \\ 3 \\ 4 \end{bmatrix}.
+\]
+
+Kronecker product structure appears often in control theory
+applications and in problems that arise from difference or
+differential equations posed on regular grids --- you should
+expect to see it for regular discretizations of differential
+equations where separation of variables works well.  There is
+also a small industry of people working on {\em tensor decompositions},
+which feature sums of Kronecker products.
+
+\subsection{Low-rank block structure}
+
+In problems that come from certain areas of mathematical physics,
+integral equations, and PDE theory, one encounters matrices that are not
+low rank, but have  {\em low-rank submatrices}.  The {\em fast multipole
+method} computes a matrix-vector product for one such class of matrices;
+and again, there is a cottage industry of related methods, including
+the $\mathcal{H}$ matrices studied by Hackbush and colleagues, the
+sequentially semi-separable (SSS) and heirarchically
+semi-separable (HSS) matrices, quasi-separable matrices, and a horde of
+others.  A good reference is the pair of books by Vandebril, Van Barel
+and Mstronardi~\cite{Vandebril:2010:Linear,Vandebril:2010:Eigen}.

@@ -1,0 +1,41 @@
+\section{Matrix algebra versus linear algebra}
+
+\begin{quotation}
+  We share a philosophy about linear algebra: we think basis-free, we write basis-free, but when the chips are down we close the office door and compute with matrices like fury. \\
+  \hspace*{\fill} --- Irving Kaplansky
+  on the late Paul Halmos~\cite{Ewing:1991:Halmos},
+\end{quotation}
+
+Linear algebra is fundamentally about the structure of vector spaces
+and linear maps between them.  A matrix represents a linear map with
+respect to some bases.  Properties of the underlying linear map may
+be more or less obvious via the matrix representation associated with
+a particular basis, and much of matrix computations is about finding
+the right basis (or bases) to make the properties of some linear map
+obvious.  We also care about finding changes of basis that are ``nice''
+for numerical work.
+
+In some cases, we care not only about the linear map a matrix
+represents, but about the matrix itself.  For example, the {\em graph}
+associated with a matrix $A \in \bbR^{n \times n}$ has vertices $\{1,
+\ldots, n\}$ and an edge $(i,j)$ if $a_{ij} \neq 0$.  Many of the
+matrices we encounter in this class are special because of the structure
+of the associated graph, which we usually interpret as the ``shape'' of
+a matrix (diagonal, tridiagonal, upper triangular, etc).  This structure
+is a property of the matrix, and not the underlying linear
+transformation; change the bases in an arbitrary way, and the graph
+changes completely.  But identifying and using special graph structures
+or matrix shapes is key to building efficient numerical methods for all
+the major problems in numerical linear algebra.
+
+In writing, we represent a matrix concretely as an array of numbers.
+Inside the computer, a {\em dense} matrix representation is a
+two-dimensional array data structure, usually ordered row-by-row or
+column-by-column in order to accomodate the one-dimensional structure of
+computer memory address spaces.  While much of our work in the class
+will involve dense matrix layouts, it is important to realize that there
+are other data structures!  The ``best'' representation for a matrix
+depends on the structure of the matrix and on what we want to do with
+it.  For example, many of the algorithms we will discuss later in the
+course only require a black box function to multiply an (abstract)
+matrix by a vector.

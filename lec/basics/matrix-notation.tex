@@ -1,0 +1,121 @@
+\section{Basic notational conventions}
+
+In this section, we set out some basic notational conventions used
+in the class.
+\begin{enumerate}
+\item
+  The complex unit is $\i$ (not $i$ or $j$).
+
+\item
+  By default, all spaces in this class are finite dimensional. If there
+  is only one space and the dimension is not otherwise stated, we use
+  $n$ to denote the dimension.
+
+\item
+  Concrete real and complex vector spaces are $\bbR^n$ and $\bbC^n$,
+  respectively.
+
+\item
+  Real and complex matrix spaces are $\bbR^{m\times n}$ and $\bbC^{m
+  \times n}$.
+
+\item Unless otherwise stated, a concrete vector is a column vector.
+
+\item The vector $e$ is the vector of all ones.
+
+\item The vector $e_i$ has all zeros except a one in the $i$th place.
+
+\item
+  The basis $\{ e_i \}_{i=1}^n$ is the {\em standard basis} in $\bbR^n$
+  or $\bbC^n$.
+
+\item
+  We use calligraphic math caps for abstract space,
+  e.g.~$\mathcal{U}, \mathcal{V}, \mathcal{W}$.
+
+\item
+   When we say $U$ is a basis for a space $\mathcal{U}$, we mean $U$ is
+   an isomorphism $\mathcal{U} \rightarrow \bbR^n$.  By a slight abuse
+   of notation, we say $U$ is a matrix whose columns are the abstract
+   vectors $u_1, \ldots, u_n$, and we write the linear combination
+   $\sum_{i=1}^n u_i c_i$ concisely as $Uc$.
+
+\item
+  Similarly, $U^{-1} x$ represents the linear mapping from the
+  abstract vector $x$ to a concrete coefficient vector $c$ such
+  that $x = Uc$.
+
+\item The space of univariate polynomials of degree at most
+  $d$ is $\mathcal{P}_d$.
+
+\item
+  Scalars will typically be lower case Greek, e.g.~$\alpha, \beta$. In
+  some cases, we will also use lower case Roman letters, e.g.~$c, d$.
+
+\item
+  Vectors (concrete or abstract) are denoted by lower case Roman,
+  e.g.~$x, y, z$.
+
+\item
+  Matrices and linear maps are both denoted by upper case Roman,
+  e.g.~$A, B, C$.
+
+\item
+  For $A \in \bbR^{m \times n}$, we denote the entry in row $i$ and
+  column $j$ by $a_{ij}$.  We reserve the notation $A_{ij}$ to refer to
+  a submatrix at block row $i$ and block column $j$ in a partitioning of
+  $A$.
+
+\item
+  We use a superscript star to denote dual spaces and dual vectors; that
+  is, $v^* \in \mathcal{V}^*$ is a dual vector in the space dual to
+  $\mathcal{V}$.
+
+\item
+  In $\bbR^n$, we use $x^*$ and $x^T$ interchangeably for the transpose.
+
+\item
+  In $\bbC^n$, we use $x^*$ and $x^H$ interchangeably for the conjugate
+  transpose.
+
+\item
+  Inner products are denoted by angles, e.g.~$\ip{x}{y}$. To denote an
+  alternate inner product, we use subscripts, e.g. $\ip{x}{y}_M = y^* M
+  x$.
+
+\item
+  The standard inner product in $\bbR^n$ or $\bbC^n$ is also $x \cdot y$.
+
+\item
+  In abstract vector spaces with a standard inner product, we use $v^*$
+  to denote the dual vector associated with $v$ through the inner
+  product, i.e.~$v^* = (w \mapsto \ip{w}{v})$.
+
+\item
+  We use the notation $\|x\|$ to denote a norm of the vector $x$. As
+  with inner products, we use subscripts to distinguish between multiple
+  norms.  When dealing with two generic norms, we will sometimes use the
+  notation $\vertiii{y}$ to distinguish the second norm from the first.
+
+\item
+  We use order notation for both algorithm scaling with parameters going
+  to infinity (e.g.~$\order{n^3}$ time) and for reasoning about scaling
+  with parameters going to zero (e.g.~$\order{\epsilon^2}$ error). We
+  will rely on context to distinguish between the two.
+
+\item
+  We use {\em variational notation} to denote derivatives of matrix
+  expressions, e.g.~$\delta (AB) = \delta A \, B + A \, \delta B$ where
+  $\delta A$ and $\delta B$ represent infinitesimal changes to the
+  matrices $A$ and $B$.
+
+\item
+  Symbols typeset in Courier font should be interpreted as \matlab\ code
+  or pseudocode, e.g.~{\tt y = A*x}.
+
+\item
+  The function notation $\fl(x)$ refers to taking a real or complex
+  quantity (scalar or vector) and representing each entry in floating
+  point.
+
+\end{enumerate}

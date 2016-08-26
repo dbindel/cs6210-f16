@@ -1,0 +1,181 @@
+\section{Sparse matrices}
+
+We say a matrix is {\em sparse} if the vast majority of the entries are
+zero.  Because we only need to explicitly keep track of the nonzero
+elements, sparse matrices require less than $O(n^2)$ storage, and we
+can perform many operations more cheaply with sparse matrices than with
+dense matrices.  In general, the cost to store a sparse matrix, and to
+multiply a sparse matrix by a vector, is $O(\nnz(A))$, where $\nnz(A)$
+is the {\em number of nonzeros} in $A$.
+
+Two specific classes of sparse matrices are such ubiquitous building
+blocks that it is worth pulling them out for special attention.
+These are diagonal matrices and permutation matrices.  Many linear
+algebra libraries also have support for {\em banded} matrices
+(and sometimes for generalizations such as {\em skyline} matrices).
+\matlab\ also provides explicit support for general sparse matrices
+in which the nonzeros can appear in any position.
+
+\subsection{Diagonal matrices}
+
+A diagonal matrix is zero except for the entries on the diagonal.
+We often associate a diagonal matrix with the vector of these entries,
+and we will adopt in class the notational convention used in MATLAB:
+the operator $\ddiag$ maps a vector to the corresponding diagonal matrix,
+and maps a matrix to the vector of diagonal entries.  For example,
+for the vector and matrix
+\[
+  d = \begin{bmatrix} d_1 \\ d_2 \\ d_3 \end{bmatrix} \\
+  D = \begin{bmatrix} d_1 & & \\ & d_2 & \\ & & d_3 \end{bmatrix}
+\]
+we would write $D = \ddiag(d)$ and $d = \ddiag(D)$.
+
+The \matlab\ routine {\tt diag} forms a dense representation of a
+diagonal matrix.  Next to {\tt inv}, it is one of the \matlab\ commands
+that is most commonly poorly used.  The primary {\em good} use of
+{\tt diag} is as the first term in a sum that builds a more complicated matrix.
+But {\em multiplication} by a diagonal matrix should never go through the
+{\tt diag} routine.  To multiple a diagonal matrix by a vector, the preferred
+idiom is to use the elementwise multiplication operation, i.e.
+\begin{lstlisting}
+  y = diag(d) * x;  % Bad -- O(n^2) time and intermediate storage
+  y = d .* x;  % Good -- equivalent, but O(n) time and space
+\end{lstlisting}
+To multiply a diagonal matrix by a vector in \matlab, use the {\tt bsxfun}
+command, e.g.
+\begin{lstlisting}
+  B = diag(d) * A;  % Bad -- left scaling in O(n^3) time
+  C = A * diag(d);  % Bad -- right scaling in O(n^3) time
+  B = bsxfun(@times, d, A);  % Good -- O(n^2) time
+  C = bsxfun(@times, A, d.');  % Ditto
+\end{lstlisting}
+
+\subsection{Permutations}
+
+A permutation matrix is a 0-1 matrix in which one appears exactly
+once in each row and column.  We typically use $P$ or $\Pi$ to
+denote permutation matrices; if there are two permutations in a
+single expression, we might use $P$ and $Q$.
+
+A permutation matrix is so named because it permutes the entries
+of a vector.  As with diagonal matrices, it is usually best to
+work with permutations implicitly in computational practice.
+For any given permutation vector $P$, we can define an associated
+mapping vector $p$ such that $p(j) = i$ iff $P_{ij} = 1$.  We can
+then apply the permutation to a vector or matrix using \matlab's
+indexing operations:
+\begin{lstlisting}
+  B = P*A;    % Straightforward, but slow if P is a dense rep'n
+  C = A*P';
+  B = A(p,:); % Better
+  C = A(:,p);
+\end{lstlisting}
+To apply a transpose permutation, we would usually use the permuted
+indexing on the destination rather than the source:
+\begin{lstlisting}
+  y = P'*x;  % Implies that P*y = x
+  y(p) = x;  % Apply the transposed permutation via indexing
+\end{lstlisting}
+
+\subsection{Narrowly banded matrices}
+
+If a matrix $A$ has zero entries outside a narrow band near the
+diagonal, we say that $A$ is a {\em banded} matrix.  More precisely,
+if $a_{ij} = 0$ for $j < i-k_1$ or $j > i+k_2$, we say that $A$
+has {\em lower bandwidth} $k_1$ and {\em upper bandwidth} $k_2$.
+The most common narrowly-banded matrices in matrix computations
+(other than diagonal matrices) are {\em tridiagonal} matrices in
+which $k_1 = k_2 = 1$.
+
+In the conventional storage layout for band matrices (used by LAPACK)
+the nonzero entries for a band matrix $A$ are stored in a packed
+storage matrix $B$ such that each column of $B$ corresponds to a column
+of $A$ and each row of $B$ corresponds to a nonzero (off-)diagonal of $A$.
+For example,
+\[
+  \begin{bmatrix}
+    a_{11} & a_{12} \\
+    a_{21} & a_{22} & a_{23} \\
+    a_{31} & a_{32} & a_{33} & a_{34} \\
+    & a_{42} & a_{43} & a_{44} & a_{45} \\
+    & & a_{53} & a_{54} & a_{55}
+  \end{bmatrix} \mapsto
+  \begin{bmatrix}
+    * & a_{12} & a_{23} & a_{34} & a_{45} \\
+    a_{11} & a_{22} & a_{33} & a_{44} & a_{55} \\
+    a_{21} & a_{32} & a_{43} & a_{54} & * \\
+    a_{31} & a_{42} & a_{53} & * & *
+  \end{bmatrix}
+\]
+\matlab\ does not provide easy specialized support for band matrices
+(though it is possible to access the band matrix routines if you
+are tricky).  Instead, the simplest way to work with narrowly banded
+matrices in \matlab\ is to use a general sparse representation.
+
+\subsection{General sparse matrices}
+
+For diagonal and band matrices, we are able to store nonzero matrix
+entries explicitly, but (as with the dense matrix format) the locations
+of those nonzero entries in the matrix are implicit.  For permutation
+matrices, the values of the nonzero entries are implicit (they are
+always one), but we must store their positions explicitly.  In a
+{\em general} sparse matrix format, we store both the positions and
+the values of nonzero entries explicitly.
+
+For input and output, \matlab\ uses a {\em coordinate} format for
+sparse matrices consisting of three parallel arrays ({\tt i}, {\tt j},
+and {\tt aij}).  Each entry in the parallel arrays represents a
+nonzero in the matrix with value {\tt aij(k)} at row {\tt i(k)} and
+column {\tt j(k)}.  For input, repeated entries with the same row and
+column are allowed; in this case, all the entries for a given location
+are summed together in the final matrix.  For example,
+\begin{lstlisting}
+  i = [1, 2, 3, 4, 4]; % Row indices
+  j = [2, 3, 4, 5, 5]; % Col indices
+  v = [5, 8, 13, 21, 34]; % Entry values/contributions
+  A = sparse(i,j,v,5,5); % 5-by-5 sparse matrix
+  full(A) % Convert to dense format and display
+
+  % Output:
+  % ans =
+  %
+  %   0    5    0    0    0
+  %   0    0    8    0    0
+  %   0    0    0   13    0
+  %   0    0    0    0   55
+  %   0    0    0    0    0
+\end{lstlisting}
+This functionality is useful
+in some applications (e.g.~for assembling finite element matrices).
+
+Internally, \matlab\ uses a {\em compressed sparse column} format
+for sparse matrices.  In this format, the row position and value for
+each nonzero are stored in parallel arrays, in column-major
+order (i.e.~all the elements of column $k$ appear before elements of
+column $k+1$).  The column positions are not stored explicitly for
+every element; instead, a {\em pointer array} indicates the offset
+in the row and entry arrays of the start of the data for each column;
+a pointer array entry at position $n+1$ indicates the total number
+of nonzeros in the data structure.
+
+The compressed sparse column format has some features that may not
+be obvious at first:
+\begin{itemize}
+\item
+  For very sparse matrices, multiplying a sparse format matrix by a
+  vector is much faster than multiplying a dense format matrix by a
+  vector --- but this is not true if a significant fraction of the
+  matrix is nonzeros.  The tradeoff depends on the matrix size and
+  machine details, but sparse matvecs will often have the same speed as ---
+  or even be slower than --- dense matvecs when the sparsity is above a
+  few percent.
+\item
+  Adding contributions into a sparse matrix is relatively slow,
+  as each sum requires recomputing the sparse indexing data structure
+  and reallocating memory.  To build up a sparse matrix as the sum of
+  many components, it is usually best to use the coordinate form first.
+\end{itemize}
+In general, though, the sparse matrix format has a great deal to
+recommend it for genuinely sparse matrices.  \matlab\ uses the sparse
+matrix format not only for general sparse matrices, but also for the
+special case of banded matrices.

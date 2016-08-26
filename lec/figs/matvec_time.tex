@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,xlabel={$n$},ylabel={GFlop/s},xmin=0,ymin=0]
+
+  \addplot table [x={n}, y={matvec0}] {data/matvec_time.dat};
+  \addlegendentry{Default};
+
+  \addplot table [x={n}, y={matvec1}] {data/matvec_time.dat};
+  \addlegendentry{Two loops};
+
+  \addplot table [x={n}, y={matvec2_row}] {data/matvec_time.dat};
+  \addlegendentry{Row-oriented};
+
+  \addplot table [x={n}, y={matvec2_col}] {data/matvec_time.dat};
+  \addlegendentry{Col-oriented};
+\end{axis}
+\end{tikzpicture}
