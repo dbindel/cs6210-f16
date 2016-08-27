@@ -1,17 +1,19 @@
-PDFS= 
+HW=\
+	hw1.pdf
 
-.PHONY: all clean distclean copy
-all: $(PDFS)
+.PHONY: all copy
+all: $(HW)
+
+copy:
+	mkdir -p ../web/lec
+	cp $(HW) ../web/lec
 
 clean:
-	rm -f hw*.aux hw*.log hw*.out
+	rm -f *.aux *.log *.out *.bbl *.blg *.brf *.idx *.toc
 
 distclean: clean
-	rm -f hw*.pdf
+	rm -f *.pdf
 
-copy: $(PDFS)
-	mkdir -p ../web/hw
-
-%.pdf: %.tex common.tex
+%.pdf: %.tex
 	pdflatex $<
 	pdflatex $<

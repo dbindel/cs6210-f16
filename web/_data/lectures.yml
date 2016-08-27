@@ -24,7 +24,6 @@
 -
   date: 2016-09-02
   info: Sensitivity and conditioning
-  hw: HW 1
 #
 # ==================
 # Week 3
@@ -38,7 +37,7 @@
 -
   date: 2016-09-09
   info: Building blocks for error analysis
-  hw: HW 2
+  hw: HW 1
 #
 # ==================
 # Week 4
@@ -52,7 +51,6 @@
 -
   date: 2016-09-16
   info: Backward error, pivoting, iterative refinement
-  hw: HW 3
 #
 # ==================
 # Week 5
@@ -66,7 +64,7 @@
 -
   date: 2016-09-23
   info: Matrices and graphs; nested dissection
-  hw: HW 4
+  hw: HW 2
 #
 # ==================
 # Week 6
@@ -80,7 +78,6 @@
 -
   date: 2016-09-30
   info: Householder, Givens, and QR
-  hw: HW 5
 #
 # ==================
 # Week 7
@@ -94,7 +91,7 @@
 -
   date: 2016-10-07
   info: Regression beyond least squares
-  hw: HW 6
+  hw: HW 3
 #
 # ==================
 # Week 8
@@ -123,7 +120,6 @@
 -
   date: 2016-10-21
   info: Hessenberg and real Schur form
-  hw: HW 7
 #
 # ==================
 # Week 10
@@ -137,7 +133,7 @@
 -
   date: 2016-10-28
   info: Symmetric power iterations and QR
-  hw: HW 8
+  hw: HW 4
 #
 # ==================
 # Week 11
@@ -151,7 +147,6 @@
 -
   date: 2016-11-04
   info: Symmetric generalized problems
-  hw: HW 9
 #
 # ==================
 # Week 12
@@ -165,7 +160,7 @@
 -
   date: 2016-11-11
   info: Lanczos and connections
-  hw: HW 10
+  hw: HW 5
 #
 # ==================
 # Week 13
@@ -179,7 +174,6 @@
 -
   date: 2016-11-18
   info: Conjugate gradients
-  hw: HW 11
 #
 # ==================
 # Week 14
@@ -206,4 +200,4 @@
 -
   date: 2016-12-02
   info: Review
-  hw: HW 12
+  hw: HW 6
