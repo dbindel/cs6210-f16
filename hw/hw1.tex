@@ -1,0 +1,26 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\begin{document}
+
+\hdr{HW 1}
+
+You may (and should) talk about problems with each other and with me,
+providing attribution for any good ideas you might get.  Your final
+write-up should be your own.
+
+\paragraph*{1: A problem of performance}
+\matlab\ supports both sparse and dense matrix data structures,
+and they have different performance characteristics.  For a variety
+of square matrices of size $n$ and sparsity level $s$ (where $s$ is
+the fraction of entries that are nonzero), compare the speed of dense
+and sparse matrix-vector multiply.  You may use {\tt As = sparse(A)}
+to make a sparse version of a dense matrix $A$.  What do you observe
+about the relative performance of these options?
+
+{\em Note:} Your performance will vary depending on your machine and
+\matlab\ version.  Feel free to write these experiments using
+Octave, Python, or Julia if you prefer.
+
+
+\end{document}
