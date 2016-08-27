@@ -1,0 +1,281 @@
+\section{Vectors}
+
+A vector space (or linear space) is a set of vectors that can be added
+or scaled in a sensible way -- that is, addition is associative and
+commutative and scaling is distributive.  We will generally denote
+vector spaces by script letters (e.g.~$\mathcal{V}, \mathcal{W}$),
+vectors by lower case Roman letters (e.g.~$v, w$), and scalars by
+lower case Greek letters (e.g.~$\alpha, \beta$).  But we feel free to
+violate these conventions according to the dictates of our conscience
+or in deference to other conflicting conventions.
+
+There are many types of vector spaces.  Apart from the ubiquitous
+spaces $\bbR^n$ and $\bbC^n$, the most common vector spaces in applied
+mathematics are different types of function spaces.  These include
+\begin{align*}
+  \mathcal{P}_d &=
+  \{ \mbox{polynomials of degree at most $d$} \}; \\
+  \mathcal{V}^* &=
+  \{ \mbox{linear functions $\mathcal{V} \rightarrow \bbR$ (or $\bbC$)} \}; \\
+  L(\mathcal{V}, \mathcal{W}) &=
+  \{ \mbox{linear maps $\calV \rightarrow \calW$} \}; \\
+  \mathcal{C}^k(\Omega) &=
+  \{\mbox{ $k$-times differentiable functions on a set $\Omega$} \};
+\end{align*}
+and many more.  We compute with vectors in $\bbR^n$ and $\bbC^n$,
+which we represent concretely by tuples of numbers in memory, usually
+stored in sequence.  To keep a broader perspective, though, we will
+also frequently describe examples involving the polynomial spaces
+$\mathcal{P}_d$.
+
+\subsection{Spanning sets and bases}
+
+We often think of a matrix as a set of vectors
+\[
+  V = \begin{bmatrix} v_1 & v_2 & \ldots & v_n \end{bmatrix}.
+\]
+The {\em range space} $\mathcal{R}(V)$ or the {\em span}
+$\operatorname{sp}\{ v_j \}_{j=1}^n$ is the set of vectors
+$\{ V c : c \in \bbR^n \}$ (or $\bbC^n$
+for complex spaces).  The vectors are {\em linearly independent}
+if any vector in the span has a unique representation as a linear
+combination of the spanning vectors; equivalently, the vectors are
+linearly independent if there is no linear combination of the
+spanning vectors that equals zero except the one in which all
+coefficients are zero.  A linearly independent set of vectors is
+a {\em basis} for a space $\mathcal{V}$ if
+$\operatorname{sp}\{v_j\}_{j=1}^n = \mathcal{V}$; the number of
+basis vectors $n$ is the {\em dimension} of the space.  Spaces
+like $\mathcal{C}^k(\Omega)$ do not generally have a finite basis;
+they are {\em infinite-dimensional}.  We will focus on
+finite-dimensional spaces in the class, but it is useful to know
+that there are interesting infinite-dimensional spaces in the
+broader world.
+
+The {\em standard basis in $\bbR^n$} is the set of column vectors
+$e_j$ with a one in the $j$th position and zeros elsewhere:
+\[
+  I = \begin{bmatrix} e_1 & e_2 & \ldots & e_n \end{bmatrix}.
+\]
+Of course, this is not the only basis.  Any other set of $n$ linearly
+independent vectors in $\bbR^n$ is also a basis
+\[
+  V = \begin{bmatrix} v_1 & v_2 & \ldots & v_n \end{bmatrix}.
+\]
+The matrix $V$ formed in this way is invertible, with multiplication
+by $V$ corresponding to a change from the $\{v_j\}$ basis into the
+standard basis and multiplication by $V^{-1}$ corresponding to a map
+from the $\{v_j\}$ basis to the standard basis.
+
+We will use matrix-like notation to describe bases and spanning sets
+even when we deal with spaces other than $\bbR^n$.  For example, a
+common basis for $\mathcal{P}_d$ is the {\em power basis}
+\[
+  X = \begin{bmatrix} 1 & x & x^2 & \ldots & x^d \end{bmatrix}.
+\]
+Each ``column'' in $X$ is really a function of one variable ($x$), and
+matrix-vector multiplication with $X$ represents a map from a
+coefficient vector in $\bbR^{d+1}$ to a polynomial in $\mathcal{P}_d$.
+That is, we write polynomials $p \in \mathcal{P}_d$ in terms of the
+basis as
+\[
+  p = Xc = \sum_{j=0}^d c_j x^j
+\]
+and, we think of computing the coefficients from the
+abstract polynomial via a formal inverse:
+\[
+  c = X^{-1} p.
+\]
+We typically think of a map like $Y^* = X^{-1}$ in terms of ``rows''
+\[
+  Y^* = \begin{bmatrix} y_0^* \\ y_1^* \\ \vdots \\ y_d^* \end{bmatrix}
+\]
+where each row $y_j^*$ is a {\em linear functional} or {\em dual
+  vector} (i.e.~linear mappings from the vector space to the real or
+complex numbers).  Collectively, $\{y_0^*, \ldots, y_d^*\}$ are the
+{\em dual basis} to $\{1, x, \ldots, x^d\}$.
+
+The power basis is not the only basis for $\mathcal{P}_d$.  Other
+common choices include Newton or Lagrange polynomials with respect to
+a set of points, which you may have seen in another class such as CS
+4210.  In this class, we will sometimes use the Chebyshev\footnote{
+  Pafnuty Chebyshev %(Чебышёв)
+  was a nineteenth century Russian
+  mathematician, and his name has been transliterated from the
+  Cyrillic alphabet into the Latin alphabet in several different ways.
+  We inherit our usual spelling from one of the French
+  transliterations, but the symbol $T$ for the polynomials comes from
+  the German transliteration Tschebyscheff.  } polynomial basis $\{
+T_j(x) \}$ given by the recurrence
+\begin{align*}
+  T_0(x) &= 1 \\
+  T_1(x) &= x \\
+  T_{j+1}(x) &= 2 x T_{j}(x) - T_{j-1}(x), \quad j \geq 1,
+\end{align*}
+and the Legendre polynomial basis
+$\{ P_j(x) \}$, given by the recurrence
+\begin{align*}
+  P_0(x) &= 1 \\
+  P_1(x) &= x \\
+  (j+1) P_{j+1}(x) &= (2j+1) x P_j(x) - j P_{j-1}(x).
+\end{align*}
+As we will see over the course of the semester, sometimes the
+``obvious'' choice of basis (e.g.~the standard basis in $\bbR^n$ or
+the power basis in $\mathcal{P}_d$) is not the best choice for
+numerical computations.
+
+\subsection{Vector norms}
+
+A {\em norm} $\|\cdot\|$ measures vector lengths.  It is
+positive definite, homogeneous, and sub-additive:
+\begin{align*}
+  \|v\| & \geq 0 \mbox{ and } \|v\| = 0 \mbox{ iff } v = 0 \\
+  \|\alpha v\| &= |\alpha| \|v\| \\
+  \|u+v\| & \leq \|u\| + \|v\|.
+\end{align*}
+The three most common vector norms we work with in $\bbR^n$ are the
+Euclidean norm (aka the 2-norm), the $\infty$-norm (or max norm),
+and the $1$-norm:
+\begin{align*}
+  \|v\|_2 &= \sqrt{\sum_j |v_j|^2} \\
+  \|v\|_\infty &= \max_j |v_j| \\
+  \|v\|_1 &= \sum_j |v_j|
+\end{align*}
+
+Many other norms can be related to one of these three norms.  In
+particular, a ``natural'' norm in an abstract vector space will often
+look strange in the corresponding concrete representation with respect
+to some basis function.  For example, consider the vector space of
+polynomials with degree at most 2 on $[-1,1]$.  This space also has
+a natural Euclidean norm, max norm, and $1$-norm; for a given
+polynomial $p(x)$ these are
+\begin{align*}
+  \|p\|_2 &= \sqrt{ \int_{-1}^1 |p(x)|^2 \, dx } \\
+  \|p\|_\infty &= \max_{x \in [-1,1]} |p(x)| \\
+  \|p\|_1 &= \int_{-1}^1 |p(x)| \, dx.
+\end{align*}
+But when we write $p(x)$ in terms of the coefficient vector with
+respect to the power basis (for example), the max norm of the
+polynomial is not the same as the max norm of the coefficient vector.
+In fact, if we consider a polynomial $p(x) = c_0 + c_1 x$, then
+the max norm of the polynomial $p$ is the same as the one-norm of the
+coefficient vector --- the proof of which is left as a useful exercise
+to the reader.
+
+In a finite-dimensional vector space, all norms are {\em equivalent}:
+that is, if $\|\cdot\|$ and $\vertiii{\cdot}$ are two norms on the
+same finite-dimensional vector space, then there exist constants $c$
+and $C$ such that for any $v$ in the space,
+\[
+  c \|v\| \leq \vertiii{v} \leq C \|v\|.
+\]
+Of course, there is no guarantee that the constants are small!
+
+An {\em isometry} is a mapping that preserves vector norms.
+For $\bbR^n$, the only isometries for the 1-norm and the $\infty$-norm
+are permutations.  For Euclidean space, though, there is a much
+richer set of isometries, represented by the orthogonal matrices
+(matrices s.t.~$Q^* Q = I$).
+
+% Vector spaces
+% - Abstract picture
+% - R^n
+% - Polynomials
+% - Norms
+
+\subsection{Inner products}
+
+An {\em inner product} $\langle \cdot, \cdot \rangle$
+is a function from two vectors into the real
+numbers (or complex numbers for an complex vector space).  It is
+positive definite, linear in the first slot, and symmetric (or
+Hermitian in the case of complex vectors); that is:
+\begin{align*}
+  \langle v, v \rangle & \geq 0 \mbox{ and }
+  \langle v, v \rangle = 0 \mbox{ iff } v = 0 \\
+%
+  \langle \alpha u, w \rangle &= \alpha \langle u, w \rangle
+  \mbox{ and }
+  \langle u+v, w \rangle = \langle u, w \rangle + \langle v, w \rangle \\
+%
+  \langle u, v \rangle &= \overline{\langle v, u \rangle},
+\end{align*}
+where the overbar in the latter case corresponds to complex
+conjugation.  A vector space with an inner product is sometimes
+called an {\em inner product space} or a {\em Euclidean space}.
+
+Every inner product defines a corresponding norm
+\[
+  \|v\| = \sqrt{ \langle v, v \rangle}
+\]
+The inner product and the associated norm satisfy
+the {\em Cauchy-Schwarz} inequality
+\[
+  \langle u, v \rangle \leq \|u\| \|v\|.
+\]
+The {\em standard inner product} on $\bbC^n$ is
+\[
+  x \cdot y = y^* x = \sum_{j=1}^n \bar{y}_j x_j.
+\]
+But the standard inner product is not the only inner product,
+just as the standard Euclidean norm is not the only norm.
+
+Just as norms allow us to reason about size, inner products let us
+reason about angles.  In particular, we define the cosine of
+the angle $\theta$ between nonzero vectors $v$ and $w$ as
+\[
+  \cos \theta = \frac{\langle v, w \rangle}{\|v\| \|w\|}.
+\]
+
+Returning to our example of a vector space of polynomials,
+the standard $L^2([-1,1])$ inner product is
+\[
+  \langle p, q \rangle_{L^2([-1,1])} = \int_{-1}^1 p(x) \bar{q}(x) \, dx.
+\]
+If we express $p$ and $q$ with respect to a basis (e.g.~the power
+basis), we fine that we can represent this inner product via a
+symmetric positive definite matrix.  For example,
+let $p(x) = c_0 + c_1 x + c_2 x^2$ and let
+$q(x) = d_0 + d_1 x + d_2 x^2$.  Then
+\[
+  \langle p, q \rangle_{L^2([-1,1])} =
+  \begin{bmatrix} d_0 \\ d_1 \\ d_2 \end{bmatrix}^*
+  \begin{bmatrix}
+    a_{00} & a_{01} & a_{02} \\
+    a_{10} & a_{11} & a_{12} \\
+    a_{20} & a_{21} & a_{22}
+  \end{bmatrix}
+  \begin{bmatrix} c_0 \\ c_1 \\ c_2 \end{bmatrix} =
+  d^* A c = \langle c, d \rangle_A
+\]
+where
+\[
+a_{ij} = \int_{-1}^1 x^{i-1} x^{j-1} \, dx =
+\begin{cases}
+  2/(i+j-1), & i+j \mbox{ even} \\
+  0, & \mbox{ otherwise}
+\end{cases}
+\]
+The symmetric positive definite matrix $A$ is what is sometimes called
+the {\em Gram matrix} for the basis $\{1, x, x^2\}$.
+
+We say two vectors $u$ and $v$ are {\em orthogonal} with respect to an
+inner product if $\langle u, v \rangle = 0$.  If $u$ and $v$ are
+orthogonal, we have the {\em Pythagorean theorem}:
+\begin{align*}
+  \|u+v\|^2
+  = \langle u + v, u + v \rangle
+  = \langle u, u \rangle + \langle v, u \rangle + \langle u, v \rangle
+  + \langle v, v \rangle
+  = \|u\|^2 + \|v\|^2
+\end{align*}
+Two vectors $u$ and $v$ are {\em orthonormal} if they are orthogonal
+with respect to the inner product and have unit length in the associated
+norm.  When we work in an inner product space, we often use an
+{\em orthonormal basis}, i.e.~a basis in which all the vectors are
+orthonormal.  For example, the normalized Legendre polynomials
+\[
+  \sqrt{\frac{2}{2j+1}} P_j(x)
+\]
+form orthonormal bases for the $\mathcal{P}_d$ inner product with
+respect to the $L^2([-1,1])$ inner product.
