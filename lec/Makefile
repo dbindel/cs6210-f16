@@ -1,5 +1,5 @@
 LEC=\
-	notes.pdf \
+	2016-08-31.pdf \
 	2016-08-29.pdf \
 	2016-08-26.pdf \
 	2016-08-24.pdf
@@ -18,7 +18,8 @@ LEC5=
 2016-09-02.pdf: 2016-09-02.tex common.tex commonm.tex \
 	$(LEC5)
 
-LEC4=
+LEC4= \
+	la/calculus.tex
 2016-08-31.pdf: 2016-08-31.tex common.tex commonm.tex \
 	$(LEC4)
 
