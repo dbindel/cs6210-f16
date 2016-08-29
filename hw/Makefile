@@ -5,8 +5,8 @@ HW=\
 all: $(HW)
 
 copy:
-	mkdir -p ../web/lec
-	cp $(HW) ../web/lec
+	mkdir -p ../web/hw
+	cp $(HW) ../web/hw
 
 clean:
 	rm -f *.aux *.log *.out *.bbl *.blg *.brf *.idx *.toc

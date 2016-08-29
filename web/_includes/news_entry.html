@@ -1,4 +1,4 @@
 <p class="hanging-indent">
   <strong>{{ entry.date }}:</strong>
-  {{ entry.desc }}
+  {{ entry.desc | markdownify | remove: '<p>' | remove: '</p>' }}
 </p>

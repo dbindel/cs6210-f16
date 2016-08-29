@@ -22,5 +22,56 @@ about the relative performance of these options?
 \matlab\ version.  Feel free to write these experiments using
 Octave, Python, or Julia if you prefer.
 
+\paragraph*{2: Toeplitz and transforms}
+Consider a circulant matrix $C$ whose first column is $c$, i.e.
+\[
+  C =
+  \begin{bmatrix}
+  c_1 & c_n & c_{n-1} & \ldots & c_2 \\
+  c_2 & c_1 & c_{n} & \ldots & c_3 \\
+  \vdots & & & & \vdots \\
+  c_n & c_{n-1} & c_{n-2} & \ldots & c_1 \\
+  \end{bmatrix}.
+\]
+The following \matlab\ code computes a matrix-vector product with $C$
+in $O(n \log n)$ time:
+\begin{lstlisting}
+  y = ifft(fft(c) .* fft(x));  % Equivalent to y = C*x
+\end{lstlisting}
+Using the circulant multiply as a building block and following the
+approach sketched in the notes from the first week, write an $O(n \log n)$
+multiply for the Toeplitz matrix $T$ with first row $r$ and first column $c$,
+i.e.~a fast version of
+\begin{lstlisting}
+  y = toeplitz(c, r)*x;
+\end{lstlisting}
+
+\paragraph*{3: Low-rank limbo}
+Suppose $A = xy^T$ where $x \in \bbR^m$ and $y \in \bbR^n$.  Show that
+$\|A\|_2 = \|A\|_F = \|x\|_2 \|y\|_2$,
+$\|A\|_1 = \|x\|_1 \|y\|_\infty$, and
+$\|A\|_\infty = \|x\|_\infty \|y\|_1$.
+
+\paragraph*{4: Noodling with Neumann}
+Suppose that if $A \in \bbR^{n \times n}$ satisfies
+$|A| < M$ (interpreted elementwise) for some $M \in \bbR^{n \times n}$.
+Show that if $\|M\| \leq 1$ in some consistent norm, then
+both $(I-A)^{-1}$ and $(I-M)^{-1}$ exist and
+$|(I-A)^{-1}| \leq (I-M)^{-1}$.
+
+\paragraph*{5: Simple substitutions}
+Consider the code for forward substitution to solve the linear system
+$Lx = b$ where $L$ is lower triangular:
+\begin{lstlisting}
+  for i = 1:n
+    x(i) = ( b(i)-L(i,1:i-1)*x(1:i-1) )/L(i,i);
+  end
+\end{lstlisting}
+Show that the vector $\hat{x}$ computed in floating point arithmetic
+satisfies
+\[
+  (L+\delta L) \hat{x} = b
+\]
+where $|\delta l_{ij}| \leq n \macheps + O(\macheps^2)$.
 
 \end{document}
