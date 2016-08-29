@@ -110,7 +110,7 @@ Your final grade in CS 6210 will be computed from grades on the
 assignments and exams using the following weights:
 
  - Participation: 5%
- - Homework: 5% times 12 homeworks
+ - Homework: 10% times 6 homeworks
  - Midterm: 15%
  - Final: 20%
 
