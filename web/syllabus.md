@@ -14,13 +14,12 @@ Lecture location: Hollister Hall 306
 Prof: [David Bindel](http://www.cs.cornell.edu/~bindel)  
 425 Gates Hall  
 Phone: 607-255-5395  
-E-mail: <script type="text/javascript" language="javascript">
- function strrev(str) { return str.split("").reverse().join(""); }
- var name = 'lednib';
- var domain = 'cs.cornell.edu';
- document.write(strrev(name) + '@' + domain + "<br/>OH: W 1:30-2:30, Th 10-11, or by appointment.");
-</script>
-<noscript>lastname at cs.cornell.edu<br/>OH: W 1:30-2:30, Th 10-11, or by appointment.</noscript>
+E-mail: <bindel@cs.cornell.edu>  
+OH: W 1:30-2:30, Th 10-11, or by appointment.
+
+TA: [David Eriksson](https://people.cam.cornell.edu/~dme65/)  
+E-mail: <dme65@cornell.edu>  
+OH: F 1:00-3:00
 
 ### Catalog description
 
