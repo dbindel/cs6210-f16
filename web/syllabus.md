@@ -19,7 +19,7 @@ OH: W 1:30-2:30, Th 10-11, or by appointment.
 
 TA: [David Eriksson](https://people.cam.cornell.edu/~dme65/)  
 E-mail: <dme65@cornell.edu>  
-OH: F 1:00-3:00
+OH: F 1:00-3:00 in 657 Rhodes Hall, Room 1
 
 ### Catalog description
 
