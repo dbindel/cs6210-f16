@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-02.pdf \
 	2016-08-31.pdf \
 	2016-08-29.pdf \
 	2016-08-26.pdf \
@@ -14,7 +15,8 @@ copy:
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
-LEC5=
+LEC5= \
+	error/notions.tex error/conditioning.tex error/sensitivity.tex
 2016-09-02.pdf: 2016-09-02.tex common.tex commonm.tex \
 	$(LEC5)
 
