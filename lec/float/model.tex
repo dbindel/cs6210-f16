@@ -1,0 +1,116 @@
+\section{Modeling floating point}
+
+The fact that normal floating point results have a relative error
+bounded by $\macheps$ gives us a useful {\em model} for reasoning about
+floating point error.  We will refer to this as the ``$1 + \delta$''
+model.  For example, suppose $x$ is an exactly-represented input to
+the MATLAB statement
+\begin{lstlisting}
+    z = 1-x*x;
+\end{lstlisting}
+We can reason about the error in the computed $\hat{z}$ as follows:
+\begin{align*}
+  t_1 &= \fl(x^2) = x^2 (1+\delta_1) \\
+  t_2 &= 1-t_1 = (1-x^2)\left( 1 + \frac{\delta_1 x^2}{1-x^2} \right) \\
+  \hat{z}
+  &= \fl(1-t_1)
+    = z \left( 1 + \frac{\delta_1 x^2}{1-x^2} \right)(1+\delta_2) \\
+  & \approx z \left( 1 + \frac{\delta_1 x^2}{1-x^2} +\delta_2 \right),
+\end{align*}
+where $|\delta_1|, |\delta_2| \leq \macheps$.  As before, we throw
+away the (tiny) term involving $\delta_1 \delta_2$.
+Note that if $z$ is close to zero (i.e.~if there is {\em cancellation} in the
+subtraction), then the model shows the result may have a
+large relative error.
+
+\subsection{First-order error analysis}
+
+Analysis in the $1+\delta$ model quickly gets to be a sprawling mess
+of Greek letters unless one is careful.  A standard trick to get
+around this is to use {\em first-order} error analysis in which we
+linearize all expressions involving roundoff errors.  In particular,
+we frequently use the approximations
+\begin{align*}
+  (1+\delta_1)(1+\delta_2) & \approx 1+\delta_1 + \delta_2 \\
+  1/(1+\delta) & \approx 1-\delta.
+\end{align*}
+In general, we will resort to first-order analysis without comment.
+Those students who think this is a sneaky trick to get around our
+lack of facility with algebra\footnote{%
+Which it is.
+}
+may take comfort in the fact that if $|\delta_i| < \macheps$, then
+in double precision
+\[
+  \left| \prod_{i=1}^n (1+\delta_i) \prod_{i=n+1}^N (1+\delta_i)^{-1} \right| < (1+1.03 N \macheps)
+\]
+for $N < 10^{14}$ (and a little further).
+
+As an example of first-order error analysis, consider the following
+code to compute a sum of the entries of a vector $v$:
+\begin{lstlisting}
+  s = 0;
+  for k = 1:n
+    s = s + v(k);
+  end
+\end{lstlisting}
+Let $\hat{s}_k$ denote the computed sum at step $k$ of the loop;
+then we have
+\begin{align*}
+  \hat{s}_1 &= v_1 \\
+  \hat{s}_k &= (\hat{s}_{k-1} + v_k)(1 + \delta_k), \quad k > 1.
+\end{align*}
+Running this forward gives
+\begin{align*}
+  \hat{s}_2 &= (v_1 + v_2)(1+\delta_2) \\
+  \hat{s}_3 &= (v_1 + v_2)(1+\delta_2) + v_3)(1+\delta_2)
+\end{align*}
+and so on.  Using first-order analysis, we have
+\[
+  \hat{s}_k \approx (v_1 + v_2)\left(1 + \sum_{j=2}^k \delta_k\right)
+              + \sum_{l=3}^k v_l \left( 1 + \sum_{j=l}^k \delta_k \right),
+\]
+and the difference between $\hat{s}_k$ and the exact partial sum
+is then
+\[
+  \hat{s}_k-s_k \approx \sum_{j=2}^k s_k \delta_k.
+\]
+Using $\|v\|_1$ as a uniform bound on all the partial sums, we have
+\[
+  |\hat{s}_n-s_n| \lesssim (n-1) \macheps \|v\|_2.
+\]
+
+An alternate analysis, which is a useful prelude to analyses to come
+involves writing an error recurrence.
+Taking the difference between $\hat{s}_k$ and the true partial sums $s_k$,
+we have
+\begin{align*}
+  e_1 &= 0 \\
+  e_{k} &= \hat{s}_k-s_k \\
+        &= (\hat{s}_{k-1} + v_k)(1+\delta_k) - (s_{k-1} + v_k) \\
+        &= e_{k-1} + (\hat{s}_{k-1} + v_k) \delta_k,
+\end{align*}
+and $\hat{s}_{k-1} + v_k = s_k + O(\macheps)$, so that
+\[
+  |e_{k}| \leq |e_{k-1}| + |s_k| \macheps + O(\macheps^2).
+\]
+Therefore,
+\[
+  |e_{n}| \lesssim (n-1) \macheps \|v\|_1,
+\]
+which is the same bound we had before.
+
+\subsection{Shortcomings of the model}
+
+The $1+\delta$ model has two shortcomings.  First, it is only valid
+for expressions that involve normalized numbers --- most notably,
+gradual underflow breaks the model.  Second, the model is sometimes
+pessimistic.  Certain operations, such as taking a difference between
+two numbers within a factor of $2$ of each other, multiplying or
+dividing by a factor of two\footnote{Assuming that the result
+does not overflow or produce a subnormal.}, or multiplying two
+single-precision numbers into a double-precision result,
+are {\em exact} in floating point.  There are useful operations
+such as simulating extended precision using ordinary floating point
+that rely on these more detailed properties of the floating point system,
+and cannot be analyzed using just the $1+\delta$ model.

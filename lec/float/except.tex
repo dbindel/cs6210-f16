@@ -1,0 +1,41 @@
+\section{Exceptions}
+
+We say there is an {\em exception} when the floating point result is
+not an ordinary value that represents the exact result.  The most
+common exception is {\em inexact} (i.e. some rounding was needed).
+Other exceptions occur when we fail to produce a normalized floating
+point number.  These exceptions are:
+\begin{description}
+\item[Underflow:]
+  An expression is too small to be represented as a normalized floating
+  point value.  The default behavior is to return a subnormal.
+\item[Overflow:]
+  An expression is too large to be represented as a floating point
+  number.  The default behavior is to return {\tt inf}.
+\item[Invalid:]
+  An expression evaluates to Not-a-Number (such as $0/0$)
+\item[Divide by zero:]
+  An expression evaluates ``exactly'' to an infinite value
+  (such as $1/0$ or $\log(0)$).
+\end{description}
+When exceptions other than inexact occur, the usual ``$1 + \delta$''
+model used for most rounding error analysis is not valid.
+
+An important feature of the floating point standard is that an
+exception should {\em not} stop the computation by default.  This
+is part of why we have representations for infinities and NaNs:
+the floating point system is {\em closed} in the sense that every
+floating point operation will return some result in the floating
+point system.  Instead, by default, an exception is {\em flagged}
+as having occurred\footnote{%
+There is literally a register inside the computer with a set of
+flags to denote whether an exception has occurred in a given
+chunk of code.  This register is highly problematic, as it
+represents a single, centralized piece of global state.  The
+treatment of the exception flags --- and of exceptions generally ---
+played a significant role in the debates leading up to the last revision
+of the IEEE 754 floating point standard,
+and I would be surprised if they are not playing a role again in the
+current revision of the standard.
+}.  An actual exception (in the sense of hardware
+or programming language exceptions) occurs only if requested.

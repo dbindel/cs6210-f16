@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-07.pdf \
 	2016-09-02.pdf \
 	2016-08-31.pdf \
 	2016-08-29.pdf \
@@ -14,6 +15,13 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC6= \
+	float/repn.tex float/arith.tex float/except.tex \
+	float/model.tex float/fixing.tex \
+	code/mymax1.m code/mymax2.m
+2016-09-07.pdf: 2016-09-07.tex common.tex commonm.tex \
+	logistics/2016-09-07.tex $(LEC6)
 
 LEC5= \
 	error/notions.tex error/conditioning.tex error/sensitivity.tex

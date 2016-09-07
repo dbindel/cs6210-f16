@@ -1,0 +1,67 @@
+\section{Problems to ponder}
+
+\begin{enumerate}
+\item
+  How do we accurately evaluate $\sqrt{1+x}-\sqrt{1-x}$ when $x \ll 1$?
+\item
+  How do we accurately evaluate $\ln \sqrt{x+1}-\ln\sqrt{x}$ when $x \gg 1$?
+\item
+  How do we accurately evaluate $(1-\cos(x))/\sin(x)$ when $x \ll 1$?
+\item
+  How would we compute $\cos(x)-1$ accurately when $x \ll 1$?
+\item
+  The {\em Lamb-Oseen vortex} is a solution to the 2D Navier-Stokes
+  equation that plays a key role in some methods for computational
+  fluid dynamics.  It has the form
+  \[
+    v_{\theta}(r,t) = \frac{\Gamma}{2 \pi r}
+      \left( 1 - \exp\left( \frac{-r^2}{4 \nu t} \right) \right)
+  \]
+  How would one evaluate $v(r,t)$ to high relative accuracy for all
+  values of $r$ and $t$ (barring overflow or underflow)?
+\item
+  For $x > 1$, the equation $x = \cosh(y)$ can be solved as
+  \[
+    y = -\ln\left(x - \sqrt{x^2-1}\right).
+  \]
+  What happens when $x = 10^8$?  Can we fix it?
+\item
+  The difference equation
+  \[
+    x_{k+1} = 2.25x_k - 0.5 x_{k-1}
+  \]
+  with starting values
+  \[
+    x_1 = \frac{1}{3}, \qquad x_2 = \frac{1}{12}
+  \]
+  has solution
+  \[
+    x_k = \frac{4^{1-k}}{3}.
+  \]
+  Is this what you actually see if you compute?  What goes wrong?
+\item
+  Considering the following two MATLAB fragments:
+\begin{lstlisting}
+    % Version 1
+    f = (exp(x)-1)/x;
+
+    % Version 2
+    y = exp(x);
+    f = (1-y)/log(y);
+\end{lstlisting}
+  In exact arithmetic, the two fragments are equivalent.  In floating
+  point, the first formulation is inaccurate for $x \ll 1$, while the
+  second formulation remains accurate.  Why?
+\item
+  Running the recurrence $E_n = 1-nE_{n-1}$ {\em forward} is an
+  unstable way to compute $\int_0^1 x^n e^{x-1} \, dx$.  However, we
+  can get good results by running the recurrence {\em backward} from
+  the estimate $E_n \approx 1/(N+1)$ starting at large enough $N$.
+  Explain why.  How large must $N$ be to compute $E_{20}$ to near
+  machine precision?
+\item
+  How might you accurately compute this function for $|x| < 1$?
+  \[
+    f(x) = \sum_{j=0}^\infty \left( \cos(x^j)-1 \right)
+  \]
+\end{enumerate}

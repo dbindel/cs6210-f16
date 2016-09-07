@@ -1,0 +1,131 @@
+\section{Binary floating point}
+
+Binary floating point arithmetic is essentially scientific notation.
+Where in decimal scientific notation we write
+\[
+  \frac{1}{3}
+  = 3.333\ldots \times 10^{-1},
+\]
+in floating point, we write
+\[
+  \frac{(1)_2}{(11)_2}
+  = (1.010101\ldots)_2 \times 2^{-2}.
+\]
+Because computers are finite, however, we can only keep a finite
+number of bits after the binary point.  We can also only keep a finite
+number of bits for the exponent field.  These facts turn out to have
+interesting implications.
+
+\subsection{Normalized representations}
+
+In general, a {\em normal floating point number} has the form
+\[
+  (-1)^s \times (1.b_1 b_2 \ldots b_p)_2 \times 2^{E},
+\]
+where $s \in \{0,1\}$ is the {\em sign bit},
+$E$ is the {\em exponent}, and
+$(1.b_2 \ldots b_p)_2$ is the {\em significand}.
+The normalized representations are called normalized because they
+start with a one before the binary point.  Because this is always
+the case, we do not need to store that digit explicitly; this gives
+us a ``free'' extra digit.
+
+In the 64-bit double precision format, $p = 52$ bits are used to store
+the significand, 11 bits are used for the exponent, and one bit is
+used for the sign.  The valid exponent range for normal double
+precision floating point numbers is $-1023 < E < 1024$; the number
+$E$ is encoded as an unsigned binary integer $E_{\mathrm{bits}}$
+which is implicitly shifted by 1023 ($E = E_{\mathrm{bits}}-1023$).
+This leaves two exponent encodings left over for special purpose,
+one associated with $E_{\mathrm{bits}} = 0$ (all bits zero),
+and one associated with all bits set; we return to these in a moment.
+
+In the 32-bit single-percision format, $p = 23$ bits are used to store
+the significand, 8 bits are used for the exponent, and one bit is used
+for the sign.  The valid exponent range for normal is $-127 < E < 128$;
+as in the double precision format, the representation is based on an
+unsigned integer and an implicit shift, and two bit patterns are left
+free for other uses.
+
+We will call the distance between 1.0 and the next largest floating
+point number one either an {\em ulp} (unit in the last place) or,
+more frequently, machine epsilon (denoted $\macheps$).  This is
+$2^{-52} \approx 2 \times 10^{-16}$ for double precision and
+$2^{-23} \approx 10^{-7}$ for single precision.  This is the definition
+used in most numerical analysis texts, and in MATLAB and Octave, but
+it is worth noting that in a few places (e.g.~in the C standard),
+call machine epsilon the quantity that is half what we
+call machine epsilon.
+
+\subsection{Subnormal representations}
+
+When the exponent field consists of all zero bits, we have a
+{\em subnormal} representation.
+In general, a {\em subnormal floating point number} has the form
+\[
+  (-1)^s \times (0.b_1 b_2 \ldots b_p)_2 \times 2^{-E_{\mathrm{bias}}},
+\]
+where $E_{\mathrm{bias}}$ is 1023 for double precision and 127
+for single.  Unlike the normal numbers, the subnormal numbers are
+evenly spaced, and so the {\em relative} differences between
+successive subnormals can be much larger than the relative differences
+between successive normals.
+
+Historically, there have been some floating point systems that lack
+subnormal representations; and even today, some vendors encourage
+``flush to zero'' mode arithmetic in which all subnormal results are
+automatically rounded to zero.  But there are some distinct advantage
+to these numbers.  For example, the subnormals allow us to keep the
+equivalence between $x-y = 0$ and $x = y$; without subnormals, this
+identity can fail to hold in floating point.  Apart from helping us
+ensure standard identities, subnormals let us represent numbers close
+to zero with reduced accuracy rather than going from full precision to
+zero abruptly.  This property is sometimes known as {\em gradual underflow}.
+
+The most important of the subnormal numbers is zero.  In fact, we consider
+zero so important that we have two representations: $+0$ and $-0$!
+These representations behave the same in most regards, but the sign
+does play a subtle role; for example, $1/+0$ gives a representation
+for $+\infty$, while $1/-0$ gives a representation for $-\infty$.
+The default value of zero is $+0$; this is what is returned, for example,
+by expressions such as $1.0-1.0$.
+
+\subsection{Infinities and NaNs}
+
+A floating point representation in which the exponent bits are all
+set to one and the signficand bits are all zero represents
+an {\em infinity} (positive or negative).
+
+When the exponent bits are all one and the significand bits are not all
+zero, we have a {\em NaN} (Not a Number).  A NaN is quiet or signaling
+depending on the first bit of the significand; this distinguishes
+between the NaNs that simply propagate through arithmetic and those that
+cause exceptions when operated upon.  The remaining significand bits
+can, in principle, encode information about the details of how and where
+a NaN was generated.  In practice, these extra bits are typically
+ignored.  Unlike infinities (which can be thought of as a computer
+representation of part of the extended reals\footnote{%
+The extended reals in this case means $\bbR$ together with $\pm \infty$.
+This is sometimes called the {\em two-point compactification} of $\bbR$.
+In some areas of analysis (e.g. complex variables),
+the {\em one-point compactification} involving a single, unsigned
+infinity is also useful.  This was explicitly supported in early
+proposals for the IEEE floating point standard, but did not make it in.
+The fact that we have signed infinities in floating point is one reason
+why it makes sense to have signed zeros --- otherwise, for example,
+we would have $1/(1/-\infty)$ yield $+\infty$.
+}), NaN ``lives outside'' the extended real numbers.
+
+Infinity and NaN values represent entities that are not part of the
+standard real number system.  They should not be interpreted
+automatically as ``error values,'' but they should be treated with
+respect.  When an infinity or NaN arises in a code
+in which nobody has analyzed the code correctness in the presence
+of infinity or NaN values, there is likely to be a problem.  But
+when they are accounted for in the design and analysis of a floating
+point routine, these representations have significant
+value.  For example, while an expression like $0/0$ cannot be
+interpreted without context (and therefore yields a NaN in floating
+point), given context --- eg., a computation involving a removable
+singularity --- we may be able to interpret a NaN, and potentially
+replace it with some ordinary floating point value.

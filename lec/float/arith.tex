@@ -1,0 +1,81 @@
+\section{Basic floating point arithmetic}
+
+For a general real number $x$, we will write
+\[
+  \fl(x) = \mbox{ correctly rounded floating point representation of } x.
+\]
+By default, ``correctly rounded'' means that we find the closest
+floating point number to $x$, breaking any ties by rounding to the
+number with a zero in the last bit\footnote{%
+There are other rounding modes beside the default, but we will not
+discuss them in this class}.
+If $x$ exceeds the largest normal floating point number,
+then $\fl(x) = \infty$; similarly, if $x$ is a negative number
+with magnitude greater than the most negative normalized floating
+point value, then $\fl(x) = -\infty$.
+
+% DSB: Check eps vs eps/2
+For basic operations (addition, subtraction, multiplication,
+division, and square root), the floating point standard specifies that
+the computer should produce the {\em true result, correctly rounded}.
+So the MATLAB statement
+\lstset{language=matlab,columns=flexible}
+\begin{lstlisting}
+    % Compute the sum of x and y (assuming they are exact)
+    z = x + y;
+\end{lstlisting}
+actually computes the quantity $\hat{z} = \fl(x+y)$.  If $\hat{z}$ is
+a normal double-precision floating point number, it will agree with
+the true $z$ to 52 bits after the binary point.  That is, the relative
+error will be smaller in magnitude than the {\em machine epsilon}
+$\macheps = 2^{-53} \approx 1.1 \times 10^{-16}$:
+\[
+  \hat{z} = z(1+\delta), \quad |\delta| < \macheps.
+\]
+More generally, basic operations that produce normalized numbers are
+correct to within a relative error of $\macheps$.
+
+The floating
+point standard also {\em recommends} that common transcendental functions,
+such as exponential and trig functions, should be correctly rounded\footnote{%
+For algebraic functions, it is possible to determine in advance how many
+additional bits of precision are needed to correctly round the result
+for a function of one input.  In contrast, transcendental functions
+can produce outputs that fall arbitrarily close to the halfway point
+between two floating point numbers.
+},
+though compliant implementations that do not follow with this
+recommendation may produce results with a relative error
+just slightly larger than $\macheps$.
+Correct rounding of transcendentals is useful in large part because it
+implies other properties: for example, if a computer function to evaluate
+a monotone function returns a correctly rounded result, then the computed
+function is also monotone.
+
+Operations in which NaN appears as an input conventionally (but not always)
+produce a NaN output.  Comparisons in which NaN appears conventionally produce false.
+But sometimes there is some subtlety in accomplishing these
+semantics.  For example, the following code for finding the maximum
+element of a vector returns a NaN if one appears
+in the first element, but otherwise results in the largest non-NaN
+element of the array:
+\lstinputlisting{code/mymax1.m}
+In contrast, the following code always propagates a NaN to the output
+if one appears in the input
+\lstinputlisting{code/mymax2.m}
+You are encouraged to play with different vectors involving some NaN
+or all NaN values to see what the semantics for the built-in
+vector max are in MATLAB, Octave, or your language of choice.
+You may be surprised by the results!
+
+Apart from NaN, floating point numbers do correspond to real numbers,
+and comparisons between floating point numbers have the usual semantics
+associated with comparisons between floating point numbers.  The only
+point that deserves some further comment is that plus zero and minus
+zero are considered equal as floating point numbers, despite the fact
+that they are not bitwise identical (and do not produce identical
+results in all input expressions)\footnote{%
+This property of signed zeros is just a little bit horrible.
+But to misquote Winston Churchill, it is the worst
+definition of equality except all the others that have been tried.
+}.
