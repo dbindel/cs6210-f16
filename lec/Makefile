@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-09.pdf \
 	2016-09-07.pdf \
 	2016-09-02.pdf \
 	2016-08-31.pdf \
@@ -16,9 +17,14 @@ copy:
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
+LEC7= \
+	float/fixing.tex float/sumdot.tex float/problems.tex \
+	code/sillysqrt.m code/testnan.m
+2016-09-09.pdf: 2016-09-09.tex common.tex commonm.tex \
+	$(LEC7)
+
 LEC6= \
-	float/repn.tex float/arith.tex float/except.tex \
-	float/model.tex float/fixing.tex \
+	float/repn.tex float/arith.tex float/except.tex float/model.tex \
 	code/mymax1.m code/mymax2.m
 2016-09-07.pdf: 2016-09-07.tex common.tex commonm.tex \
 	logistics/2016-09-07.tex $(LEC6)

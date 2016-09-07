@@ -46,60 +46,6 @@ in double precision
 \]
 for $N < 10^{14}$ (and a little further).
 
-As an example of first-order error analysis, consider the following
-code to compute a sum of the entries of a vector $v$:
-\begin{lstlisting}
-  s = 0;
-  for k = 1:n
-    s = s + v(k);
-  end
-\end{lstlisting}
-Let $\hat{s}_k$ denote the computed sum at step $k$ of the loop;
-then we have
-\begin{align*}
-  \hat{s}_1 &= v_1 \\
-  \hat{s}_k &= (\hat{s}_{k-1} + v_k)(1 + \delta_k), \quad k > 1.
-\end{align*}
-Running this forward gives
-\begin{align*}
-  \hat{s}_2 &= (v_1 + v_2)(1+\delta_2) \\
-  \hat{s}_3 &= (v_1 + v_2)(1+\delta_2) + v_3)(1+\delta_2)
-\end{align*}
-and so on.  Using first-order analysis, we have
-\[
-  \hat{s}_k \approx (v_1 + v_2)\left(1 + \sum_{j=2}^k \delta_k\right)
-              + \sum_{l=3}^k v_l \left( 1 + \sum_{j=l}^k \delta_k \right),
-\]
-and the difference between $\hat{s}_k$ and the exact partial sum
-is then
-\[
-  \hat{s}_k-s_k \approx \sum_{j=2}^k s_k \delta_k.
-\]
-Using $\|v\|_1$ as a uniform bound on all the partial sums, we have
-\[
-  |\hat{s}_n-s_n| \lesssim (n-1) \macheps \|v\|_2.
-\]
-
-An alternate analysis, which is a useful prelude to analyses to come
-involves writing an error recurrence.
-Taking the difference between $\hat{s}_k$ and the true partial sums $s_k$,
-we have
-\begin{align*}
-  e_1 &= 0 \\
-  e_{k} &= \hat{s}_k-s_k \\
-        &= (\hat{s}_{k-1} + v_k)(1+\delta_k) - (s_{k-1} + v_k) \\
-        &= e_{k-1} + (\hat{s}_{k-1} + v_k) \delta_k,
-\end{align*}
-and $\hat{s}_{k-1} + v_k = s_k + O(\macheps)$, so that
-\[
-  |e_{k}| \leq |e_{k-1}| + |s_k| \macheps + O(\macheps^2).
-\]
-Therefore,
-\[
-  |e_{n}| \lesssim (n-1) \macheps \|v\|_1,
-\]
-which is the same bound we had before.
-
 \subsection{Shortcomings of the model}
 
 The $1+\delta$ model has two shortcomings.  First, it is only valid
