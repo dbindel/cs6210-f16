@@ -1,0 +1,45 @@
+\section{Triangular matrix graphs and groups}
+
+Before moving on from triangular matrices, it is worth pointing
+out two useful structural facts.
+
+\subsection{Triangular matrices and DAGs}
+
+Triangular matrices are associated with {\em directed acyclic graphs}
+(DAGs), and this is part of what makes them useful for solving linear
+systems: forward and back-substitution are both instances of processing
+the graph according to a topological ordering by variable dependencies.
+
+In \matlab, a {\em psychologically triangular} matrix is a matrix whose
+rows can be permuted to obtain a lower (or upper) triangular matrix.  A
+\matlab\ solve involving a psychologically triangular matrix is still
+$O(n^2)$, since \matlab\ checks in advance for this structure.  When the
+{\tt lu} function in \matlab\ is called without explicitly returning a
+permutation, the $L$ matrix it returns is psychologically lower
+triangular.
+
+In principle, \matlab\ could use a topological sort to solve a
+matrix that could be transformed to triangularity by row {\em and column}
+permutations in $O(n^2)$ time.  In practice, it does not!
+
+\subsection{Triangular matrices and groups}
+
+% Psychologically triangular matrices and DAGs
+% Matrix groups
+
+The (square) unit lower triangular matrices (lower triangular matrices with
+ones on the main diagonal) have several interesting properties:
+\begin{itemize}
+\item $I$ is unit lower triangular
+\item Products of unit lower triangular matrices are unit lower triangular
+\item Every unit lower triangular matrix has a unit lower triangular
+  inverse
+\end{itemize}
+That is, the unit lower triangular matrices form an {\em algebraic group}
+within the set of square matrices.  If you don't know what an algebraic
+group is, that is fine --- but it is worth noting that the unit triangular
+matrices are closed under inversion and multiplication.
+
+The invertible lower triangular matrices are also an algebraic group,
+as are the unit upper triangular matrices and the invertible upper
+triangular matrices.

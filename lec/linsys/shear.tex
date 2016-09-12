@@ -1,0 +1,37 @@
+\section{Aside: Gauss transformations and shearing}
+
+In the previous section, we observed that we can reduce a matrix
+to upper triangularity by repeated multiplication by Gauss
+transformations
+\[
+  I-\tau_k e_k^T
+\]
+where $\tau_k$ is nonzero only in elements below the main diagonal.
+It is worth thinking about what this means geometrically: a Gauss
+transformation is a {\em shear} transformation affecting a particular
+coordinate direction.  If we think about the columns of a matrix $A$
+as representing the edges of a paralellipiped in $\bbR^n$, then
+Gaussian elimination can be interpreted as the process of applying
+shear transformations to move the first vector into the $x$ direction,
+the second into the $xy$-plane, the third into the $xyz$ space, and
+so forth.  Because shear transformations do not change volume, the
+transformed parallelipiped has the same volume as the original one.
+But because of the axis alignment in the transformed parallelipiped,
+we can compute the volume via the generalization of the
+usual ``base $\times$ height'' computation.
+
+Algebraically, what have we just observed?  If $A = LU$ where $L$
+is unit lower triangular and $U$ is upper triangular, then
+\[
+  \det(A) = \det(L) \det(U) = \det(U) = \prod_{k=1}^n u_{kk}.
+\]
+That is, we can use the LU factorization to compute determinants
+or volumes as well as to solve linear systems.  I prefer to start
+from the perspective of volume-preserving shear transformations,
+though, as I consider this a very natural explanation for why
+determinants have anything to do with volume.  Indeed, I pretty much
+took the volume characterization of determinants as a matter of faith
+rather than true understanding, up to the point where I really
+understood the connection to various matrix factorizations.  We will
+see this connection again when we talk about QR factorization and
+least squares.

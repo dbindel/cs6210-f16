@@ -1,0 +1,45 @@
+\section{Introduction}
+
+For the next few lectures, we will explore methods to solve linear
+systems.  Our main tool will be the factorization $PA = LU$, where
+$P$ is a permutation, $L$ is a unit lower triangular matrix, and $U$ is
+an upper triangular matrix.  As we will see, the Gaussian elimination
+algorithm learned in a first linear algebra class implicitly computes
+this decomposition; but by thinking about the decomposition explicitly,
+we can come up with other organizations for the computation.
+
+We emphasize a few points up front:
+\begin{itemize}
+\item {\em Some matrices are singular.}  Errors in this part of the class
+  often involve attempting to invert a matrix that has no inverse.
+  A matrix does {\em not} have to be invertible to admit an LU factorization.
+  We will also see more subtle problems from {\em almost} singular matrices.
+\item {\em Some matrices are rectangular.}  In this part of the class,
+  we will deal almost exclusively with square matrices; if a rectangular
+  matrix shows up, we will try to be explicit about dimensions.  That
+  said, LU factorization makes sense for rectangular matrices as well
+  as for square matrices --- and it is sometimes useful.
+\item {\em {\tt inv} is evil.}  The {\tt inv} command is one of the most
+  abused commands in \matlab.  The \matlab\ backslash operator is the
+  preferred way to solve a linear system absent other information:
+\begin{lstlisting}
+x = A \ b;  % Good
+x = inv(A) * b;  % Evil
+\end{lstlisting}
+  Homework solutions that feature inappropriate explicit {\tt inv}
+  commands {\em will} lose points.
+\item {\em LU is not for linear solves alone.}  One can solve a variety
+  of other interesting problems with an LU factorization.
+\item {\em LU is not the only way to solve systems.}  Gaussian elimination
+  and variants will be our default solver, but there are other solver
+  methods that are appropriate for problems with more structure.
+  We will touch on other methods throughout the class.
+\end{itemize}
+
+% - Never use inv!
+% - Rectangular matrices
+% - Singular matrices
+% - Determinants and the like
+% - Blocking and block solves
+% - Graph theory and sparse solvers
+% - Iterative refinement

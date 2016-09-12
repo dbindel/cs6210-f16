@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-12.pdf \
 	2016-09-09.pdf \
 	2016-09-07.pdf \
 	2016-09-02.pdf \
@@ -16,6 +17,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC8= \
+	linsys/intro.tex linsys/trisolve.tex linsys/trialgebra.tex \
+	linsys/ge_example.tex linsys/basic_lu.tex
+2016-09-12.pdf: 2016-09-12.tex common.tex commonm.tex \
+	$(LEC8) logistics/2016-09-12.tex
 
 LEC7= \
 	float/fixing.tex float/sumdot.tex float/problems.tex \

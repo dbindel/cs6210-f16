@@ -1,0 +1,58 @@
+\section{Triangular solves}
+
+Suppose that we have computed a factorization $PA = LU$.  How can we
+use this to solve a linear system of the form $Ax = b$?  Permuting the
+rows of $A$ and $b$, we have
+\[
+  PAx = LUx = Pb,
+\]
+and therefore
+\[
+  x = U^{-1} L^{-1} Pb.
+\]
+So we can reduce the problem of finding $x$ to two simpler problems:
+\begin{enumerate}
+\item
+  Solve $Ly = Pb$
+\item
+  Solve $Ux = y$
+\end{enumerate}
+We assume the matrix $L$ is unit lower triangular (diagonal of all
+ones + lower triangular), and $U$ is upper triangular, so we can solve
+linear systems with $L$ and $U$ involving forward and backward
+substitution.
+
+As a concrete example, suppose
+\[
+  L = \begin{bmatrix}
+        1 & 0 & 0 \\
+        2 & 1 & 0 \\
+        3 & 2 & 1
+      \end{bmatrix}, \quad
+  d = \begin{bmatrix} 1 \\ 1 \\ 3 \end{bmatrix}
+\]
+To solve a linear system of the form $Ly = d$, we process each row in
+turn to find the value of the corresponding entry of $y$:
+\begin{enumerate}
+\item Row 1:
+  $y_1 = d_1$
+\item Row 2: $2y_1 + y_2 = d_2$, or $y_2 = d_2 - 2y_1$
+\item Row 3: $3y_1 + 2 y_2 + y_3 = d_3$, or $y_3 = d_3 - 3y_1 - 2y_2$
+\end{enumerate}
+More generally, the {\em forward substitution} algorithm for solving
+unit lower triangular linear systems $Ly = d$ looks like
+\begin{lstlisting}
+  y = d;
+  for i=2:n
+    y(i) = d(i)-L(1:i-1)*y(1:i-1)
+  end
+\end{lstlisting}
+Similarly, there is a {\em backward substitution} algorithm for
+solving upper triangular linear systems $Ux = d$
+\begin{lstlisting}
+  x(n) = d(n)/U(n,n);
+  for i=n-1:-1:1
+    x(i) = ( d(i)-U(i+1:n)*x(i+1:n) )/U(i,i)
+  end
+\end{lstlisting}
+Each of these algorithms takes $O(n^2)$ time.

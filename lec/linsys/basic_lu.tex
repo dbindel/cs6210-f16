@@ -1,0 +1,52 @@
+\section{Basic LU factorization}
+
+Let's generalize our previous algorithm and write a simple code for
+$LU$ factorization.  We will leave the issue of pivoting to a later
+discussion.  We'll start with a purely loop-based implementation:
+\begin{lstlisting}
+%
+% Overwrites A with an upper triangular factor U, keeping track of
+% multipliers in the matrix L.
+%
+function [L,A] = mylu(A)
+
+  n = length(A);
+  L = eye(n);
+  for j=1:n-1
+    for i=j+1:n
+
+      % Figure out multiple of row j to subtract from row i
+      L(i,j) = A(i,j)/A(j,j);
+
+      % Subtract off the appropriate multiple
+      A(i,j) = 0
+      for k=j+1:n
+        A(i,k) = A(i,k) - L(i,j)*A(j,k);
+      end
+    end
+  end
+\end{lstlisting}
+Note that we can write the two innermost loops more concisely by
+thinking of them in terms of applying a {\em Gauss
+  transformation} $M_j = I - \tau_j e_j^T$, where $\tau_j$ is the
+vector of multipliers that appear when eliminating in column $j$:
+\begin{lstlisting}
+%
+% Overwrites A with an upper triangular factor U, keeping track of
+% multipliers in the matrix L.
+%
+function [L,A] = mylu(A)
+
+  n = length(A);
+  L = eye(n);
+  for j=1:n-1
+
+    % Form vector of multipliers
+    L(j+1:n,j) = A(j+1:n,j)/A(j,j);
+
+    % Apply Gauss transformation
+    A(j+1:n,j) = 0;
+    A(j+1:n,j+1:n) = A(j+1:n,j+1:n)-L(j+1:n,j)*A(j,j+1:n);
+
+  end
+\end{lstlisting}

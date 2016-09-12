@@ -1,0 +1,121 @@
+\section{Gaussian elimination by example}
+
+Let's start our discussion of $LU$ factorization by working through
+these ideas with a concrete example:
+\[
+  A =
+  \begin{bmatrix}
+    1 & 4 & 7 \\
+    2 & 5 & 8 \\
+    3 & 6 & 10
+  \end{bmatrix}.
+\]
+To eliminate the subdiagonal entries $a_{21}$ and $a_{31}$, we
+subtract twice the first row from the second row, and thrice the
+second row from the third row:
+\[
+  A^{(1)} =
+  \begin{bmatrix}
+    1 & 4 & 7 \\
+    2 & 5 & 8 \\
+    3 & 6 & 10
+  \end{bmatrix} -
+  \begin{bmatrix}
+    0 \cdot 1 & 0 \cdot 4 & 0 \cdot 7 \\
+    2 \cdot 1 & 2 \cdot 4 & 2 \cdot 7 \\
+    3 \cdot 1 & 3 \cdot 4 & 3 \cdot 7
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    1 &  4 &  7 \\
+    0 & -3 & -6 \\
+    0 & -6 & -11
+  \end{bmatrix}.
+\]
+That is, the step comes from a rank-1 update to the matrix:
+\[
+  A^{(1)} =
+  A -
+  \begin{bmatrix} 0 \\ 2 \\ 3 \end{bmatrix}
+  \begin{bmatrix} 1 & 4 & 7 \end{bmatrix}.
+\]
+Another way to think of this step is as a linear transformation
+$A^{(1)} = M_1 A$, where the rows of $M_1$ describe the multiples
+of rows of the original matrix that go into rows of the updated matrix:
+\[
+  M_1 = \begin{bmatrix} 1 & 0 & 0 \\ -2 & 1 & 0 \\ -3 & 0 & 1 \end{bmatrix}
+      = I - \begin{bmatrix} 0 \\ 2 \\ 3 \end{bmatrix}
+            \begin{bmatrix} 1 & 0 & 0 \end{bmatrix}
+      = I - \tau_1 e_1^T.
+\]
+Similarly, in the second step of the algorithm, we subtract twice the second
+row from the third row:
+\[
+  \begin{bmatrix}
+    1 &  4 &  7 \\
+    0 & -3 & -6 \\
+    0 &  0 &  1
+  \end{bmatrix} =
+  \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & -2 & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    1 &  4 &  7 \\
+    0 & -3 & -6 \\
+    0 & -6 & -11
+  \end{bmatrix} =
+  \left( I - \begin{bmatrix} 0 \\ 0 \\ 2 \end{bmatrix}
+             \begin{bmatrix} 0 & 1 & 0 \end{bmatrix} \right) A^{(1)}.
+\]
+More compactly: $U = (I-\tau_2 e_2^T) A^{(1)}$.
+
+Putting everything together, we have computed
+\[
+  U = (I-\tau_2 e_2^T) (I-\tau_1 e_1^T) A.
+\]
+Therefore,
+\[
+  A = (I-\tau_1 e_1^T)^{-1} (I-\tau_2 e_2^T)^{-1} U = LU.
+\]
+Now, note that
+\[
+  (I-\tau_1 e_1^T) (I + \tau_1 e_1^T) =
+  I - \tau_1 e_1^T + \tau_1 e_1^T - \tau_1 e_1^T \tau_1 e_1^T = I,
+\]
+since $e_1^T \tau_1$ (the first entry of $\tau_1$) is zero.  Therefore,
+\[
+  (I-\tau_1 e_1^T)^{-1} = (I+\tau_1 e_1^T)
+\]
+Similarly,
+\[
+  (I-\tau_2 e_2^T)^{-1} = (I+\tau_2 e_2^T)
+\]
+Thus,
+\[
+  L = (I+\tau_1 e_1^T)(I + \tau_2 e_2^T).
+\]
+Now, note that because $\tau_2$ is only nonzero in the third element,
+$e_1^T \tau_2 = 0$; thus,
+\begin{align*}
+  L &= (I+\tau_1 e_1^T)(I + \tau_2 e_2^T) \\
+    &= (I + \tau_1 e_1^T + \tau_2 e_2^T + \tau_1 (e_1^T \tau_2) e_2^T \\
+    &= I + \tau_1 e_1^T + \tau_2 e_2^T \\
+    &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} +
+       \begin{bmatrix} 0 & 0 & 0 \\ 2 & 0 & 0 \\ 3 & 0 & 0 \end{bmatrix} +
+       \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 2 & 0 \end{bmatrix}
+     = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 3 & 2 & 1 \end{bmatrix}.
+\end{align*}
+
+The final factorization is
+\[
+A =
+\begin{bmatrix} 1 & 4 & 7 \\ 2 & 5 & 8 \\ 3 & 6 & 10 \end{bmatrix} =
+\begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 3 & 2 & 1 \end{bmatrix}
+\begin{bmatrix} 1 & 4 & 7 \\ 0 & -3 & -6 \\ 0 & 0 & 1 \end{bmatrix} = LU.
+\]
+Note that the subdiagonal elements of $L$ are easy to read off: for $j
+> i$, $l_{ij}$ is the multiple of row $j$ that we subtract from row
+$i$ during elimination.  This means that it is easy to read off the
+subdiagonal entries of $L$ during the elimination process.
