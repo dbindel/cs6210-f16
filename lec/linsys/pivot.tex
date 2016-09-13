@@ -1,0 +1,83 @@
+\section{Pivoting}
+
+The backward error analysis in the previous section is not completely
+satisfactory, since $|L| |U|$ may be much larger than $|A|$, yielding
+a large backward error overall.  For example, consider the matrix
+\[
+  A = \begin{bmatrix} \delta & 1 \\ 1 & 1 \end{bmatrix} =
+      \begin{bmatrix} 1 & 0 \\ \delta^{-1} & 1 \end{bmatrix}
+      \begin{bmatrix} \delta & 1 \\ 0 & 1-\delta^{-1} \end{bmatrix}.
+\]
+If $0 < \delta \ll 1$ then $\|L\|_{\infty} \|U\|_{\infty} \approx
+\delta^{-2}$, even though $\|A\|_{\infty} \approx 2$.  The problem is
+that we ended up subtracting a huge multiple of the first row from the
+second row because $\delta$ is close to zero --- that is, the leading
+principle minor is {\em nearly} singular.  If $\delta$ were exactly
+zero, then the factorization would fall apart even in exact
+arithmetic.  The solution to the woes of singular and near singular minors
+is pivoting; instead of solving a system with $A$, we re-order the
+equations to get
+\[
+  \hat{A} =
+      \begin{bmatrix} 1 & 1 \\ \delta & 1 \end{bmatrix} =
+      \begin{bmatrix} 1 & 0 \\ \delta & 1 \end{bmatrix}
+      \begin{bmatrix} 1 & 1 \\ 0 & 1-\delta \end{bmatrix}.
+\]
+Now the triangular factors for the re-ordered system matrix $\hat{A}$
+have very modest norms, and so we are happy.  If we think of the re-ordering
+as the effect of a permutation matrix $P$, we can write
+\[
+  A = \begin{bmatrix} \delta & 1 \\ 1 & 1 \end{bmatrix} =
+      \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+      \begin{bmatrix} 1 & 0 \\ \delta & 1 \end{bmatrix}
+      \begin{bmatrix} 1 & 1 \\ 0 & 1-\delta \end{bmatrix}
+    = P^T LU.
+\]
+Note that this is equivalent to writing $P A = LU$ where $P$
+is another permutation (which undoes the action of $P^T$).
+
+If we wish to control the multipliers, it's natural to choose
+the permutation $P$ so that each of the multipliers is at most one.
+This standard choice leads to the following algorithm:
+\begin{lstlisting}
+  for j = 1:n-1
+
+    % Find ipiv >= j to maximize |A(i,j)|
+    [absAij, ipiv] = max(abs(A(j:n,j)));
+    ipiv = ipiv + j-1;
+
+    % Swap row ipiv and row j
+    Aj = A(j,j:n);
+    A(j,j:n) = A(ipiv,j:n);
+    A(ipiv,j:n) = Aj;
+
+    % Record the pivot row
+    piv(j) = ipiv;
+
+    % Update trailing submatrix
+    A(j+1:n,j+1:n) = A(j+1:n,j+1:n) - A(j+1:n,j)*A(j,j+1:n);
+
+  end
+\end{lstlisting}
+In practice, we would typically use a strategy of
+{\em deferred updating}: that is, rather than applying the
+pivot immediately across all columns, we would only apply
+the pivoting within a block of columns.  At the end of the
+block, we would apply all the pivots simultaneously.  As with
+other blocking strategies we have discussed, this has no impact
+on the total amount of work done in some abstract machine model,
+but it is much more friendly to the memory architecture of real
+machines.
+
+By design, this algorithm produces an $L$ factor in which all the
+elements are bounded by one.  But what about the $U$ factor?  There
+exist pathological matrices for which the elements of $U$ grow
+exponentially with $n$.  But these examples are extremely uncommon in
+practice, and so, in general, Gaussian elimination with partial
+pivoting does indeed have a small backward error.  Of course, the
+pivot growth is something that we can monitor, so in the unlikely event
+that it {\em does} look like things are blowing up, we can tell there
+is a problem and try something different.
+But when problems do occur, it is more frequently the result of
+ill-conditioning in the problem than of pivot growth during the
+factorization.

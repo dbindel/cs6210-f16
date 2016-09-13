@@ -1,0 +1,71 @@
+\section{Beyond partial pivoting}
+
+Gaussian elimination with partial pivoting has been the mainstay of
+linear system solving for many years.  But the partial pivoting
+strategy is far from the end of the story!  GECP, or Gaussian elimination
+with {\em complete} pivoting (involving both rows and columns),
+is often held up as the next step beyond partial pivoting,
+but this is really a strawman --- though complete pivoting fixes
+the aesthetically unsatisfactory lack of backward stability in the
+partial pivoted variant, the cost of the GECP pivot search is
+more expensive than is usually worthwhile in practice.  We instead
+briefly describe two other pivoting strategies that are generally
+useful: {\em rook pivoting} and {\em tournament pivoting}.  Next week,
+we will also briefly mention {\em threshold pivoting}, which is relevant
+to sparse Gaussian elimination.
+
+\subsection{Rook pivoting}
+
+In Gaussian elimination with rook pivoting, we choose a pivot at each
+step by choosing the largest magnitude element in the first row
+{\em or column} of the current Schur complement.  This eliminates
+the possibility of exponential pivot growth that occurs in the
+partial pivoting strategy, but does not involve the cost of searching
+the entire Schur complement for a pivot (as occurs in the GECP case).
+
+For the problem of solving linear systems, it is unclear whether rook
+pivoting really holds a practical edge over partial pivoting.  The
+complexity is not really worse than partial pivoting, but there is more
+overhead (both in runtime and in implementation cost) to handle deferred
+pivoting for performance.  Where rook pivoting has a great deal of
+potential is in Gaussian elimination on (nearly) {\em singular} matrices.
+If $A \in \bbR^{m \times n}$ has a large gap between $\sigma_{k}$
+and $\sigma_{k+1}$ for $k < \min(m,n)$, then GERP on $A$ tends to yield
+the factorization
+\[
+  PAQ = LU, U = \begin{bmatrix} U_{11} & U_12 \\ 0 & U_{22} \end{bmatrix}
+\]
+where $U_{11} \in \bbR^{k \times k}$ and $\|U_{22}\|$ is very small
+(on the order of $\sigma_{k+1}$).
+
+Rook pivoting and the closely-related threshold rook pivoting are
+particularly useful in constrained optimization problems in which
+constraints can become redundant.  Apart from its speed, the rook
+pivoting strategy has the advantage over other rank-revealing
+factorizations that when $A$ is sparse, as one can often control the
+fill (nonzeros in $L$ and $U$ that are not present in $A$).
+The LUSOL package of Michael Saunders is a particularly effective example.
+
+\subsection{Tournament pivoting}
+
+In parallel dense linear algebra libraries,
+a major disadvantage of partial pivoting is that the pivot search is
+a communication bottleneck, even with deferred pivoting.  This is
+increasingly an issue, as communication between processors is far
+more expensive than arithmetic, and (depending on the matrix layout)
+GEPP requires communication each time a pivot is selected.
+For this reason, a number of recent {\em communication-avoiding}
+LU variants use an alternate pivoting strategy called
+{\em tournament pivoting}.
+
+The idea behind {\em tournament pivoting} is to choose $b$ pivot rows in
+one go, rather than iterating between choosing a pivot row and
+performing elimination.  The algorithm involves each processor proposing
+several candidate pivot rows for a heirarchical tournament.  There are
+different methods for managing this tournament, with different levels of
+complexity.  One intriguing variant, for example, is the remarkable
+(though awkwardly named) {\tt CALU\_PRRP} algorithm, which uses
+rank-revealing QR factorizations to choose the pivots in the tournament.
+The {\tt CALU\_PRRP} algorithm does a modest amount of work beyond what
+is done by partial pivoting, but has better behavior both in terms of
+communication complexity and in terms of numerical stability.

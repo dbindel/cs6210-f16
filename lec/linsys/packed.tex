@@ -1,0 +1,36 @@
+\section{Packed storage}
+
+In $LU$ factorization, the locations where we write the multipliers in
+$L$ are exactly the same locations where we introduce zeros in $A$ as we
+transform to $U$.  Thus, we can re-use the storage space for $A$ to
+store both $L$ (except for the diagonal ones, which are implicit) and
+$U$.  Using this strategy, we have the following code:
+\begin{lstlisting}
+%
+% Overwrite A with L and U factors
+%
+function [A] = mylu(A)
+  n = length(A);
+  for j=1:n-1
+    A(j+1:n,j) = A(j+1:n,j)/A(j,j);
+    A(j+1:n,j+1:n) = A(j+1:n,j+1:n) - A(j+1:n,j)*A(j,j+1:n);
+  end
+\end{lstlisting}
+If we wanted to extract the $L$ and $U$ factors explicitly, we could
+then do
+\begin{lstlisting}
+  LU = mylu(A);
+  L = eye(length(A)) + tril(A,-1);
+  U = triu(A);
+\end{lstlisting}
+
+The bulk of the work at step $j$ of the elimination algorithm is in
+the computation of a rank-one update to the trailing submatrix.
+How much work is there in total?  In eliminating column $j$, we do
+$(n-j)^2$ multiplies and the same number of subtractions; so in all,
+the number of multiplies (and adds) is
+\[
+  \sum_{j=1}^{n-1} (n-j)^2 = \sum_{k=1}^{n-1} k^2 = \frac{1}{6} n^3 + O(n^2)
+\]
+We also perform $O(n^2)$ divisions.  Thus, Gaussian elimination, like
+matrix multiplication, is an $O(n^3)$ algorithm operating on $O(n^2)$ data.

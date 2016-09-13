@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-14.pdf \
 	2016-09-12.pdf \
 	2016-09-09.pdf \
 	2016-09-07.pdf \
@@ -17,6 +18,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC9= \
+	linsys/packed.tex linsys/schur.tex linsys/blocked.tex \
+	linsys/ge_berr.tex linsys/pivot.tex
+2016-09-14.pdf: 2016-09-14.tex common.tex commonm.tex \
+	$(LEC9)
 
 LEC8= \
 	linsys/intro.tex linsys/trisolve.tex linsys/trialgebra.tex \

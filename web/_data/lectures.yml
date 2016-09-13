@@ -51,10 +51,11 @@
   notes: 2016-09-12.pdf
 -
   date: 2016-09-14
-  info: Schur complements and blocking
+  info: Schur complements, blocking, and pivoting
+  notes: 2016-09-14.pdf
 -
   date: 2016-09-16
-  info: Backward error, pivoting, iterative refinement
+  info: Backward error, iterative refinement
 #
 # ==================
 # Week 5

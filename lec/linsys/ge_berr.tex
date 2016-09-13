@@ -1,0 +1,64 @@
+\section{Backward error in Gaussian elimination}
+
+Solving $Ax = b$ in finite precision using Gaussian elimination
+followed by forward and backward substitution yields a computed
+solution $\hat{x}$ {\em exactly} satisfies
+\begin{equation} \label{gauss-bnd}
+  (A + \delta A) \hat{x} = b,
+\end{equation}
+where $|\delta A| \lesssim 3n\macheps |\hat{L}| |\hat{U}|$, assuming
+$\hat{L}$ and $\hat{U}$ are the computed $L$ and $U$ factors.
+
+I will now briefly sketch a part of the error analysis following
+Demmel's treatment (\S 2.4.2).  Mostly, this is because I find the
+treatment in \S 3.3.1 of Van Loan less clear than I would like -- but
+also, the bound in Demmel's book is marginally tighter.  Here is the
+idea.  Suppose $\hat{L}$ and $\hat{U}$ are the computed $L$ and $U$
+factors.  We obtain $\hat{u}_{jk}$ by repeatedly subtracting $l_{ji}
+u_{ik}$ from the original $a_{jk}$, i.e.
+\[
+  \hat{u}_{jk} =
+    \fl\left( a_{jk} - \sum_{i=1}^{j-1} \hat{l}_{ji} \hat{u}_{ik} \right).
+\]
+Regardless of the order of the sum, we get an error that looks like
+\[
+  \hat{u}_{jk} = a_{jk}(1+\delta_0) -
+                 \sum_{i=1}^{j-1} \hat{l}_{ji} \hat{u}_{ik} (1+\delta_i) +
+                 O(\macheps^2)
+\]
+where $|\delta_i| \leq (j-1) \macheps$.  Turning this around gives
+\begin{align*}
+  a_{jk} & =
+  \frac{1}{1+\delta_0} \left(
+    \hat{l}_{jj} \hat{u}_{jk} +
+    \sum_{i=1}^{j-1} \hat{l}_{ji} \hat{u}_{ik} (1 + \delta_i)
+  \right) + O(\macheps^2) \\
+  & =
+    \hat{l}_{jj} \hat{u}_{jk} (1 - \delta_0) +
+    \sum_{i=1}^{j-1} \hat{l}_{ji} \hat{u}_{ik} (1 + \delta_i - \delta_0) +
+    O(\macheps^2) \\
+  & =
+    \left( \hat{L} \hat{U} \right)_{jk} + e_{jk},
+\end{align*}
+where
+\[
+   e_{jk} =
+    -\hat{l}_{jj} \hat{u}_{jk} \delta_0 +
+    \sum_{i=1}^{j-1} \hat{l}_{ji} \hat{u}_{ik} (\delta_i - \delta_0) +
+    O(\macheps^2)
+\]
+is bounded in magnitude by $(j-1) \macheps (|L||U|)_{jk} + O(\macheps^2)$\footnote{
+  It's obvious that $e_{jk}$ is bounded in magnitude by $2(j-1)
+  \macheps(|L||U|)_{jk} + O(\macheps^2)$.  We cut a factor of two if
+  we go down to the level of looking at the individual rounding errors
+  during the dot product, because some of those errors cancel.
+}.
+A similar argument for the components of $\hat{L}$ yields
+\[
+  A = \hat{L} \hat{U} + E, \mbox{ where }
+  |E| \leq n \macheps |\hat{L}| |\hat{U}| + O(\macheps^2).
+\]
+
+In addition to the backward error due to the computation of the $LU$
+factors, there is also backward error in the forward and backward
+substitution phases, which gives the overall bound (\ref{gauss-bnd}).

@@ -1,0 +1,90 @@
+\section{Blocked Gaussian elimination}
+Just as we could rewrite matrix multiplication in block form, we can also
+rewrite Gaussian elimination in block form.  For example, if we want
+\[
+  \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} =
+  \begin{bmatrix} L_{11} & 0 \\ L_{21} & L_{22} \end{bmatrix}
+  \begin{bmatrix} U_{11} & U_{12} \\ 0 & U_{22} \end{bmatrix}
+\]
+then we can write Gaussian elimination as:
+\begin{enumerate}
+\item
+  Factor $A_{11} = L_{11} U_{11}$.
+\item
+  Compute $L_{21} = A_{21} U_{11}^{-1}$ and $U_{12} = L_{11}^{-1} A_{12}$.
+\item
+  Form the Schur complement $S = A_{22} - L_{21} U_{12}$ and factor
+  $L_{22} U_{22} = S$.
+\end{enumerate}
+
+This same idea works for more than a block 2-by-2 matrix.
+Suppose {\tt idx} is a \matlab\ vector that indicates the first index
+in each block of variables, so that block $A_{IJ}$ is extracted as
+\begin{lstlisting}
+  I = idx(i):idx(i+1)-1;
+  J = idx(j):idx(j+1)-1;
+  A_IJ = A(idx(i):idx(i+1)-1, idx(j):idx(j+1)-1);
+\end{lstlisting}
+Then we can write the following code for block LU factorization:
+\begin{lstlisting}
+  M = length(idx)-1;          % Number of blocks
+  for j = 1:M
+    J    = idx(j):idx(j+1)-1; % Indices for block J
+    rest = idx(j+1):n;        % Indices after block J
+    A(J,J) = lu(A(J,J));      % Factor submatrix A_JJ
+
+    % Extract L and U (this could be implicit)
+    L_JJ   = tril(A(J,J),-1) + eye(length(J));
+    U_JJ   = triu(A(J,J));
+
+    % Compute block column of L and row of U, Schur complement
+    A(rest,J) = A(rest,J)/U_JJ;
+    A(J,rest) = L_JJ\A(J,rest);
+    A(rest,rest) = A(rest,rest)-A(rest,J)*A(J,rest);
+  end
+\end{lstlisting}
+
+As with matrix multiply, thinking about Gaussian elimination in this
+blocky form lets us derive variants that have better cache efficiency.
+Notice that all the operations in this blocked code involve matrix-matrix
+multiplies and multiple back solves with the same matrix.  These routines
+can be written in a cache-efficient way, since they do many floating point
+operations relative to the total amount of data involved.
+
+Though some of you might make use of cache blocking ideas in your own
+work, most of you will never try to write a cache-efficient Gaussian
+elimination routine of your own.  The routines in LAPACK and \matlab\
+(really the same routines) are plenty efficient, so you would most
+likely turn to them.  Still, it is worth knowing how to think about
+block Gaussian elimination, because sometimes the ideas can be specialized
+to build fast solvers for linear systems when there are fast solvers for
+sub-matrices
+
+For example, consider the {\em bordered} matrix
+\[
+  A = \begin{bmatrix} B & W \\ V^T & C \end{bmatrix},
+\]
+where $B$ is an $n$-by-$n$ matrix for which we have a fast
+solver and $C$ is a $p$-by-$p$ matrix, $p \ll n$.
+We can factor $A$ into a product of {\em block} lower and
+upper triangular factors with a simple form:
+\[
+  \begin{bmatrix} B & W \\ V^T & C \end{bmatrix} =
+  \begin{bmatrix} B   & 0 \\ V^T & L_{22} \end{bmatrix}
+  \begin{bmatrix} I & B^{-1} W \\ 0 & U_{22} \end{bmatrix}
+\]
+where $L_{22} U_{22} = C-V^T B^{-1} W$ is an ordinary (small) factorization
+of the trailing Schur complement.  To solve the linear system
+\[
+  \begin{bmatrix} B & W \\ V^T & C \end{bmatrix}
+  \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} =
+  \begin{bmatrix} b_1 \\ b_2 \end{bmatrix},
+\]
+we would then run block forward and backward substitution:
+\begin{align*}
+  y_1 &= B^{-1} b_1 \\
+  y_2 &= L_{22}^{-1} \left( b_2 - V^T y_1 \right) \\
+\\
+  x_2 &= U_{22}^{-1} y_2 \\
+  x_1 &= y_1-B^{-1} (W x_2)
+\end{align*}

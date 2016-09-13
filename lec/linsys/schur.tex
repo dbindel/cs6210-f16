@@ -1,0 +1,56 @@
+\section{Schur complements}
+
+The idea of expressing a step of Gaussian elimination as a low-rank
+submatrix update turns out to be sufficiently useful that we give it
+a name.  At any given step of Gaussian elimination, the trailing
+submatrix is called a {\em Schur complement}.  We investigate the
+structure of the Schur complements by looking at an $LU$
+factorization in block 2-by-2 form:
+\[
+  \begin{bmatrix}
+    A_{11} & A_{12} \\
+    A_{21} & A_{22}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    L_{11} & 0 \\
+    L_{21} & L_{22}
+  \end{bmatrix}
+  \begin{bmatrix}
+    U_{11} & U_{12} \\
+        0 & U_{22}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    L_{11} U_{11} & L_{11} U_{12} \\
+    L_{21} U_{11} & L_{22} U_{22} + L_{21} U_{12}
+  \end{bmatrix}.
+\]
+We can compute $L_{11}$ and $U_{11}$ as $LU$ factors of the leading
+sub-block $A_{11}$, and
+\begin{align*}
+  U_{12} &= L_{11}^{-1} A_{12} \\
+  L_{21} &= A_{21} U_{11}^{-1}.
+\end{align*}
+What about $L_{22}$ and $U_{22}$?  We have
+\begin{align*}
+  L_{22} U_{22}
+  &= A_{22} - L_{21} U_{12} \\
+  &= A_{22} - A_{21} U_{11}^{-1} L_{11}^{-1} A_{12} \\
+  &= A_{22} - A_{21} A_{22}^{-1} A_{12}.
+\end{align*}
+This matrix $S = A_{22} - A_{21} A_{22}^{-1} A_{12}$ is the block analogue
+of the rank-1 update computed in the first step of the standard
+Gaussian elimination algorithm.
+
+For our purposes, the idea of a Schur complement is important because
+it will allow us to write blocked variants of Gaussian elimination ---
+an idea we will take up in more detail shortly.
+But the Schur complement actually has meaning beyond being a matrix that
+mysteriously appears as a by-product of Gaussian elimination.
+In particular, note that if $A$ and $A_{11}$ are both invertible,
+then
+\[
+  \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix}
+  \begin{bmatrix} X \\ S^{-1} \end{bmatrix} =
+  \begin{bmatrix} 0 \\ I \end{bmatrix},
+\]
+i.e. $S^{-1}$ is the $(2,2)$ submatrix of $A^{-1}$.
