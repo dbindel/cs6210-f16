@@ -1,0 +1,62 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\begin{document}
+
+\hdr{HW 2}
+
+You may (and should) talk about problems with each other and with me,
+providing attribution for any good ideas you might get.  Your final
+write-up should be your own.
+
+\paragraph*{1: Entrywise errors}
+Suppose $Ax = b$ and $\hat{x} = x + e$ satisfies
+\[
+  A \hat{x} = b + r.
+\]
+Suppose we are given an elementwise relative residual bound
+$\max_i |r_i|/|b_i| < \gamma$; then show that
+\[
+  \max_i |e_i|/|x_i| \leq
+  \gamma \|\ddiag(b)^{-1} A \ddiag(x)\|_\infty.
+\]
+
+\paragraph*{2: Delicious differentials}
+Suppose $PA = LU$, and assume that there are no ties during partial
+pivoting.  Write a short \matlab\ routine to compute the variations
+$\delta L$ and $\delta U$ for a given change $\delta A$
+\begin{lstlisting}
+  function [dL, dU] = hw2deriv(L, U, P, dA)
+\end{lstlisting}
+
+\paragraph*{3: Complementary conditioning}
+Suppose $A$ is symmetric and positive definite.  Show that if $S$
+is a Schur complement that appears during factorization of $A$,
+then $\kappa_2(S) \leq \kappa_2(A)$.  {\em Hint:} What is the
+relation between $\kappa_2(A)$ and $\kappa_2(L)$ where $A = LL^T$
+is a Cholesky factorization?  What is the relation between the
+Cholesky factorization of $A$ and of $S$?
+
+\paragraph*{4: Run for the border}
+Suppose $A$ satisfies
+\[
+  \sigma_1(A) \leq C \sigma_{n-1}(A)
+\]
+for some modest $C$, but $\sigma_n(A)$ is very close to zero,
+and let {\tt solveA} be a backward stable function for solving
+a linear system involving the matrix $A$.  Assuming the bordered
+system
+\[
+  \begin{bmatrix} A & b \\ c^T & d \end{bmatrix}
+  \begin{bmatrix} x \\ y \end{bmatrix} =
+  \begin{bmatrix} f \\ g \end{bmatrix}
+\]
+is well conditioned.  Write a \matlab\ code that uses
+block Gaussian elimination based with one
+step of iterative refinement to solve the system:
+\begin{lstlisting}
+  function [x, y] = hw2refine(solveA, b, c, d, f, g)
+\end{lstlisting}
+Argue that this computation is backward stable.
+
+\end{document}

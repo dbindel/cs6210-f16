@@ -1,5 +1,6 @@
 HW=\
-	hw1.pdf
+	hw1.pdf \
+	hw2.pdf
 
 .PHONY: all copy
 all: $(HW)
