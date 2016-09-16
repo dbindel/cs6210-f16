@@ -1,0 +1,45 @@
+\section{Iterative refinement}
+
+If we have a solver for $\hat{A} = A + E$ with $E$ small, then we can
+use {\em iterative refinement} to ``clean up'' the solution.  The
+matrix $\hat{A}$ could come from finite precision Gaussian elimination
+of $A$, for example, or from some factorization of a nearby ``easier''
+matrix.  To get the refinement iteration, we take the equation
+\begin{equation} \label{fixedp}
+  Ax = \hat{A}x-Ex = b,
+\end{equation}
+and think of $x$ as the fixed point for an iteration
+\begin{equation} \label{itref-fixedp}
+  \hat{A} x_{k+1} - E x_k = b.
+\end{equation}
+Note that this is the same as
+\[
+  \hat{A} x_{k+1} - (\hat{A} - A) x_k = b,
+\]
+or
+\[
+  x_{k+1} = x_k + \hat{A}^{-1} (b - A x_{k}).
+\]
+If we subtract (\ref{fixedp}) from (\ref{itref-fixedp}), we see
+\[
+  \hat{A}(x_{k+1}-x) - E(x_k-x) = 0,
+\]
+or
+\[
+  x_{k+1}-x = \hat{A}^{-1} E (x_k-x).
+\]
+Taking norms, we have
+\[
+  \|x_{k+1}-x\| \leq \|\hat{A}^{-1} E\| \|x_k-x\|.
+\]
+Thus, if $\|\hat{A}^{-1} E\| < 1$, we are guaranteed that $x_{k} \rightarrow x$
+as $k \rightarrow \infty$.  In fact, this holds even if the backward error
+varies from step to step, as long as it satisfies some uniform bound that is
+less than one.  At least, this is what happens in exact arithmetic.
+
+In practice, the residual is usually computed with only finite precision,
+and so we would stop making progress at some point --- usually at
+the point where we have a truly backward stable solution.  In general,
+iterative refinement is mainly used when either the residual can be
+computed with extra precision or when the original solver suffers from
+relatively large backward error.
