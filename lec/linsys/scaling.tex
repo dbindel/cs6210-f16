@@ -1,0 +1,18 @@
+\section{Scaling}
+
+Suppose we wish to solve $Ax = b$ where $A$ is ill-conditioned.  Sometimes,
+the ill-conditioning is artificial because we made a poor choice of units,
+and it appears to be better conditioned if we write
+\[
+  D_1 A D_2 y = D_1 b,
+\]
+where $D_1$ and $D_2$ are diagonal scaling matrices.  If the original problem
+was poorly scaled, we will likely find $\kappa(D_1 A D_2) \ll \kappa(A)$,
+which may be great for Gaussian elimination.  But by scaling the matrix, we
+are really changing the norms that we use to measure errors --- and that may
+not be the right thing to do.
+
+For physical problems, a good rule of thumb is to non-dimensionalize
+before computing.  The non-dimensionalization will usually reveal a good
+scaling that (one hopes) simultaneously is appropriate for measuring errors
+and does not lead to artificially inflated condition numbers.

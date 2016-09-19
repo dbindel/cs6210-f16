@@ -1,0 +1,37 @@
+\section{The slippery inverse}
+
+The concept of the inverse of a matrix is generally more useful in
+theory than in numerical practice.  We work with the inverse
+{\em implicitly} all the time through solving linear systems via LU; but
+we rarely form it {\em explicitly}, unless the inverse has some
+special structure we want to study or to use.
+
+If we did want to form $A^{-1}$ explicitly, the usual approach is to
+compute $PA = LU$, then use that factorization to solve the systems
+$Ax_k = e_k$, where $e_k$ is the $k$th column of the identity matrix
+and $x_k$ is thus the $k$th column of the identity matrix.  As
+discussed last time, forming the $LU$ factorization takes $n^3/3$
+multiply-adds ($2n^3/3$ flops), and a pair of triangular solves takes
+$n^2$ multiply-add operations.  Therefore, computing the inverse
+explicitly via an LU factorization takes about $n^3$ multiply-add
+operations, or roughly three times as much arithmetic as the original
+LU factorization.  Furthermore, multiplying by an explicit inverse is
+almost exactly the same amount of arithmetic work as a pair of
+triangular solves.  So computing and using an explicit inverse is, on
+balance, more expensive than simply solving linear systems using the
+LU factorization.
+
+To make matters worse, multiplying by the explicit inverse of a matrix
+is {\em not} a backward stable algorithm.  Even if we could compute
+$A^{-1}$ essentially exactly, only committing rounding errors when
+storing the entries and when performing matrix-vector multiplication,
+we would find $\fl(A^{-1} b) = (A^{-1} + F)b$, where $|F| \leq n
+\macheps |A^{-1}|$.  But this corresponds to to a backward error of
+roughly $-AFA$, which is potentially much larger than $\|A\|$.
+
+In summary: you should get used to the idea that any time you see an
+inverse in the description of a numerical method, it is probably
+shorthand for ``solve a linear system here.''  Except in special
+circumstances, forming and multiplying by an explicit inverse is both
+slower and less numerically stable than solving a linear system by
+Gaussian elimination.

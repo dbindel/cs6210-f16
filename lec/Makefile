@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-19.pdf \
 	2016-09-16.pdf \
 	2016-09-14.pdf \
 	2016-09-12.pdf \
@@ -19,6 +20,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC11= \
+	linsys/invbad.tex linsys/itref2.tex linsys/condest.tex \
+	linsys/scaling.tex linsys/symmetric.tex linsys/cholesky.tex
+2016-09-19.pdf: 2016-09-19.tex common.tex commonm.tex \
+	$(LEC11) logistics/2016-09-19.tex
 
 LEC10= \
 	linsys/sensitivity.tex linsys/itref.tex

@@ -1,0 +1,46 @@
+\section{Iterative refinement revisited}
+
+At the end of last lecture, we discussed {\em iterative refinement}:
+\[
+  x_{k+1} = x_k + \hat{A}^{-1} (b - A x_{k}).
+\]
+The fixed point for this iteration is $x = A^{-1} b$, and we can write
+a simple recurrence for the error $e_{k+1} = x_k-x$:
+\[
+  e_{k+1} = \hat{A}^{-1} E e_k
+\]
+where $E = \hat{A}-A$.  Therefore, if $\|\hat{A}^{-1} E\|<1$, then
+iterative refinement converges -- in exact arithmetic.
+
+In floating point arithmetic, we actually compute something like
+\[
+  x_{k+1} = x_k + \hat{A}^{-1} (b - A x_{k} + \delta_k) + \mu_k,
+\]
+where $\delta_k$ is an error associated with computing the residual, and
+$\mu_k$ is an error associated with the update.  This gives us the
+error recurrence
+\[
+  e_{k+1} = \hat{A}^{-1} E e_k + \hat{A}^{-1} \delta_k + \mu_k
+\]
+If $\|\delta_k\| < \alpha$ and $\|\mu_k\| < \beta$ for all $k$, then
+we can show that
+\[
+  \|x_k-x\| \leq
+    \|A^{-1} E\|^k \|x_0-x\| +
+    \frac{ \alpha \|A^{-1}\| + \beta }{1 - \|A^{-1}E\|}.
+\]
+If we evaluate the residual in the obvious way, we typically have
+\begin{align*}
+  \alpha & \leq c_1 \macheps \|A\| \|x\|, \\
+  \beta & \leq c_2 \macheps \|x\|,
+\end{align*}
+for some modest $c_1$ and $c_2$; and for large enough $k$, we end up with
+\[
+  \frac{\|x_k-x\|}{\|x\|} \leq C_1 \macheps \kappa(A) + C_2 \macheps.
+\]
+That is, iterative refinement leads to a relative error not too much
+greater than we would expect due to a small relative perturbation to $A$;
+and we can show that in this case the result is backward stable.
+And if we use {\em mixed} precision to evaluate the residual accurately
+enough relative to $\kappa(A)$ (i.e. $\alpha \kappa(A) \lesssim \beta$)
+we can actually achieve a small {\em forward} error.

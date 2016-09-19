@@ -1,0 +1,84 @@
+\section{Condition estimation}
+
+Suppose now that we want to compute $\kappa_1(A)$
+(or $\kappa_{\infty}(A) = \kappa_1(A^T)$).
+The most obvious approach would be to compute $A^{-1}$, and then
+to evaluate $\|A^{-1}\|_1$ and $\|A\|_1$.  But the computation of
+$A^{-1}$ involves solving $n$ linear systems for a total cost of $O(n^3)$ ---
+the same order of magnitude as the initial factorization.  Error estimates
+that cost too much typically don't get used, so we want a different approach
+to estimating $\kappa_1(A)$, one that does not cost so much.  The only piece
+that is expensive is the evaluation of $\|A^{-1}\|_1$, so we will focus
+on this.
+
+Note that $\|A^{-1} x\|_1$ is a convex function of $x$, and that
+$\|x\|_1 \leq 1$ is a convex set.  So finding
+\[
+  \|A^{-1}\|_1 = \max_{\|x\|_1 \leq 1} \|A^{-1} x\|_1
+\]
+is a convex optimization problem.  Also, note that $\|\cdot\|_1$ is
+differentiable almost everywhere: if all the components of $y$ are
+nonzero, then
+\[
+  \xi^T y = \|y\|_1, \mbox{ for } \xi = \operatorname{sign}(y);
+\]
+and if $\delta y$ is small enough so that all the components of $y + \delta y$
+have the same sign as the corresponding components of $y$, then
+\[
+ \xi^T (y+\delta y) = \|y+\delta y\|_1
+\]
+More generally, we have
+\[
+  \xi^T u \leq \|\xi\|_{\infty} \|u\|_1 = \|u\|_1,
+\]
+i.e. even when $\delta y$ is big enough so that the linear approximation
+to $\|y+\delta y\|_1$ no longer holds, we at least have a lower bound.
+
+Since $y = A^{-1} x$, we actually have that
+\[
+  |\xi^T A^{-1} (x+\delta x)| \leq \|A^{-1} (x+\delta x)\|,
+\]
+with equality when $\delta x$ is sufficiently small (assuming $y$ has
+no zero components).  This suggests that we move from an initial guess $x$
+to a new guess $x_{\mathrm{new}}$ by maximizing
+\[
+  |\xi^T A^{-1} x_{\mathrm{new}}|
+\]
+over $\|x_{\mathrm{new}}\| \leq 1$.  This actually yields $x_{\mathrm{new}} = e_j$,
+where $j$ is chosen so that the $j$th component of
+$z^T = \xi^T A^{-1}$ has the greatest magnitude.
+
+Putting everything together, we have the following algorithm
+\begin{lstlisting}
+% Hager's algorithm to estimate norm(A^{-1},1)
+% We assume solveA and solveAT are O(n^2) solution algorithms
+% for linear systems involving A or A' (e.g. via LU)
+
+x = ones(n,1)/n;    % Initial guess
+while true
+
+  y  = solveA(x);   % Evaluate y = A^{-1} x
+  xi = sign(y);     %  and z = A^{-T} sign(y), the
+  z  = solveAT(xi); %  (sub)gradient of x -> \|A^{-1} x\|_1.
+
+  % Find the largest magnitude component of z
+  [znorm, j] = max(abs(z));
+
+  % znorm = |z_j| is our lower bound on |A^{-1} e_j|.
+  % If this lower bound is no better than where we are now, quit
+  if znorm <= norm(y,1)
+    invA_normest = norm(y,1);
+    break;
+  end
+
+  % Update x to e_j and repeat
+  x = zeros(n,1); x(j) = 1;
+
+end
+\end{lstlisting}
+
+This method is not infallible, but it usually gives estimates that are
+the right order of magnitude.  There are various alternatives,
+refinements, and extensions to Hager's method, but they generally have
+the same flavor of probing $A^{-1}$ through repeated solves with $A$
+and $A^T$.

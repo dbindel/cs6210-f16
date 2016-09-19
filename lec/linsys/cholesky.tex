@@ -1,0 +1,49 @@
+\section{Cholesky}
+
+The algorithm to compute the Cholesky factor of an SPD matrix is
+close to the Gaussian elimination algorithm.  In the first step,
+we would write
+\[
+  \begin{bmatrix}
+    a_{11} & a_{21}^T \\
+    a_{21} & A_{22}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    l_{11} & 0 \\
+    l_{21} & L_{22}
+  \end{bmatrix}
+  \begin{bmatrix}
+    l_{11} & l_{21}^T \\
+        0 & L_{22}^T
+  \end{bmatrix},
+\]
+or
+\begin{align*}
+  a_{11} &= l_{11}^2 \\
+  a_{21} &= l_{21} l_{11} \\
+  A_{22} &= L_{22} L_{22}^T + l_{21} l_{21}^T.
+\end{align*}
+The first two equations allow us to compute the first column of $L$;
+the last equation tells us that the rest of $L$ is the Cholesky factor
+of a Schur complement, $L_{22} L_{22}^T = A_{22} - l_{21} l_{21}^T$.
+Continuing in this fashion, we have the algorithm
+\begin{lstlisting}
+  for j = 1:n
+
+    % Compute the jth column of L
+    A(j,j) = sqrt(A(j,j));
+    A(j+1:end,j) = A(j+1:end,j)/A(j,j);
+
+    % Update trailing submatrix
+    A(j+1:end,j+1:end) = A(j+1:end,j+1:end) - ...
+                         A(j+1:end,j)*A(j+1:end,j)';
+  end
+
+  % Lower triangle was overwritten by L
+  L = tril(A);
+\end{lstlisting}
+Like the nearly-identical Gaussian elimination algorithm, we can
+rewrite the Cholesky algorithm in block form for better cache use.
+Unlike Gaussian elimination, we do just fine using Cholesky {\em without}
+pivoting\footnote{Pivoting can still be useful for near-singular matrices,
+but unpivoted Cholesky is backward stable}.
