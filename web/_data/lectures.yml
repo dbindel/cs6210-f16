@@ -63,7 +63,8 @@
 #
 -
   date: 2016-09-19
-  info: Condition estimation and scaling
+  info: Condition estimation, scaling, symmetric matrices
+  notes: 2016-09-19.pdf
 -
   date: 2016-09-21
   info: Structured linear systems
