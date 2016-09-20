@@ -71,8 +71,7 @@ use from time to time:
   Therefore, $A^{-1}$ is SPD.
 
 \item
-  Any minor of an SPD matrix is SPD, and if $M$ is a minor of $A$,
-  $\kappa_2(M) \leq \kappa_2(A)$.
+  Any minor of an SPD matrix is SPD.
 
   {\bf Proof:}
   Without loss of generality, let $M = A_{11}$.  Then for any appropriately
@@ -80,14 +79,7 @@ use from time to time:
   \[
     x^T M x = \begin{bmatrix} x \\ 0 \end{bmatrix}^T A \begin{bmatrix} x \\ 0 \end{bmatrix} > 0
   \]
-  for $x \neq 0$.  Therefore, $M$ is positive definite.  To establish the
-  condition bound, note that
-  \begin{align*}
-    \|M\|_2^2 &= \max_{\|x\|_2 = 1} x^T M x \\
-              &= \max_{\|x\|_2 = 1} \begin{bmatrix} x \\ 0 \end{bmatrix}^T A \begin{bmatrix} x \\ 0 \end{bmatrix} \\
-              & \leq \max{\|z\|_2 = 1} z^T A z = \|A\|_2^2
-  \end{align*}
-  and similarly with $M^{-1}$
+  for $x \neq 0$.  Therefore, $M$ is positive definite.
 
 \item
   Any Schur complement of an SPD matrix is SPD
@@ -96,6 +88,33 @@ use from time to time:
   A Schur complement in $A$ is the inverse of a minor of an inverse of $A$.
   By the two arguments above, this implies that any Schur complement of
   an SPD matrix is SPD.
+
+\item If $M$ is a minor of $A$, $\kappa_2(M) \leq \kappa_2(A)$.
+
+  {\bf Proof:}
+  The largest and smallest singular values of an SPD matrix are the
+  same as the largest and smallest eigenvalues; they can be written
+  as
+  \[
+    \sigma_1(A) = \max_{\|x\|_2 = 1} x^T A x, \quad
+    \sigma_{\min}(A) = \min_{\|x\|_2 = 1} x^T A x.
+  \]
+  Without loss of generality, let $M = A_{11}$.  Then
+  \[
+    \sigma_1(M)
+    = \max_{\|x\|_2 = 1} x^T M x
+    = \max_{\|x\|_2 = 1}
+      \begin{bmatrix} x \\ 0 \end{bmatrix}^T A
+      \begin{bmatrix} x \\ 0 \end{bmatrix}
+    \leq \max_{\|z\|_2 = 1} z^T A z = \sigma_1(A)
+  \]
+  and similarly $\sigma_{\min}(M) \geq \sigma_{\min}(A)$.
+  The condition numbers are therefore
+  \[
+    \kappa_2(M) =
+    \frac{\sigma_1(M)}{\sigma_{\min}(M)} \leq
+    \frac{\sigma_1(A)}{\sigma_{\min}(A)} = \kappa_2(A).
+  \]
 
 \item If $S$ is a Schur complement in $A$, $\kappa_2(S) \leq \kappa_2(A)$.
 

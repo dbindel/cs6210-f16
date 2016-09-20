@@ -10,24 +10,27 @@ a simple recurrence for the error $e_{k+1} = x_k-x$:
   e_{k+1} = \hat{A}^{-1} E e_k
 \]
 where $E = \hat{A}-A$.  Therefore, if $\|\hat{A}^{-1} E\|<1$, then
-iterative refinement converges -- in exact arithmetic.
+iterative refinement converges --- in exact arithmetic.
 
 In floating point arithmetic, we actually compute something like
 \[
-  x_{k+1} = x_k + \hat{A}^{-1} (b - A x_{k} + \delta_k) + \mu_k,
+  x_{k+1} = x_k + \hat{A}_k^{-1} (b - A x_{k} + \delta_k) + \mu_k,
 \]
-where $\delta_k$ is an error associated with computing the residual, and
+where $\hat{A}_k = A + E_k$ accounts for the backward
+error $E_k$ in the approximate solve,
+$\delta_k$ is an error associated with computing the residual, and
 $\mu_k$ is an error associated with the update.  This gives us the
 error recurrence
 \[
-  e_{k+1} = \hat{A}^{-1} E e_k + \hat{A}^{-1} \delta_k + \mu_k
+  e_{k+1} = \hat{A}_k^{-1} E_k e_k + \hat{A}^{-1} \delta_k + \mu_k
 \]
-If $\|\delta_k\| < \alpha$ and $\|\mu_k\| < \beta$ for all $k$, then
+If $\|\delta_k\| < \alpha$, $\|\mu_k\| < \beta$,
+and $\|A^{-1} E_k\| < \gamma < 1$ for all $k$, then
 we can show that
 \[
   \|x_k-x\| \leq
-    \|A^{-1} E\|^k \|x_0-x\| +
-    \frac{ \alpha \|A^{-1}\| + \beta }{1 - \|A^{-1}E\|}.
+    \gamma^k \|x_0-x\| +
+    \frac{ \alpha \|A^{-1}\| + \beta }{1 - \gamma}.
 \]
 If we evaluate the residual in the obvious way, we typically have
 \begin{align*}
