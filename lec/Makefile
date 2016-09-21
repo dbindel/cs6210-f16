@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-21.pdf \
 	2016-09-19.pdf \
 	2016-09-16.pdf \
 	2016-09-14.pdf \
@@ -20,6 +21,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC12= \
+	linsys/diag_dom.tex linsys/tridiag.tex linsys/bordered.tex \
+	linsys/vandermonde.tex linsys/circulant.tex linsys/otherstruct.tex
+2016-09-21.pdf: 2016-09-21.tex common.tex commonm.tex \
+	$(LEC12) logistics/2016-09-21.tex
 
 LEC11= \
 	linsys/invbad.tex linsys/itref2.tex linsys/condest.tex \

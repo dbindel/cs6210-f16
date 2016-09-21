@@ -1,0 +1,37 @@
+\section{Diagonally dominant matrices}
+
+A matrix $A$ is {\em strictly (column) diagonally dominant} if
+for each column $j$,
+\[
+  |a_{jj}| > \sum_{i \neq j} |a_{ij}|.
+\]
+If we write $A = D + F$ where $D$ is the diagonal and $F$ the
+off-diagonal part, strict column diagonal dominance is equivalent
+to the statement that
+\[
+  \|FD_{-1}\|_1 < 1.
+\]
+Note that we may factor $A$ as
+\[
+  A = (I+FD^{-1}) D
+\]
+with $D$ invertible because the diagonal elements are bounded below
+by zero and $I+FD^{-1}$ invertible by a Neumann series bound.
+Therefore $A$ is invertible if it is strictly column diagonally
+dominant.
+
+Strict diagonal dominance is a useful structural condition for
+several reasons: it ensures nonsingularity, it guarantees convergence
+of certain iterative methods (we will return to this later), and it
+guarantees that $LU$ factorization can be done without pivoting.
+In fact, Gaussian elimination without partial pivoting is guaranteed
+not to even attempt pivoting!  To see this, note that the statement
+is obvious for the first step: column diagonal dominance implies
+that $a_{11}$ is the largest magnitude element in the first column.
+What does the Schur complement look like after one step of Gaussian
+elimination?  By a short computation, it turns out that the Schur
+complement is again diagonally dominant (see GVL section 4.1.1).
+
+Diagonally dominant matrices and symmetric positive definite matrices
+are the two major classes of matrices for which unpivoted Gaussian
+elimination is backward stable.

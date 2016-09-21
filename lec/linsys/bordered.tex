@@ -1,0 +1,47 @@
+\section{Low-rank updates and bordered systems}
+
+We have already discussed block elimination: given a system
+\[
+  \begin{bmatrix} A & B \\ C & D \end{bmatrix}
+  \begin{bmatrix} x \\ y \end{bmatrix} =
+  \begin{bmatrix} f \\ g \end{bmatrix}
+\]
+we can compute
+\begin{align*}
+  S &= D-C A^{-1} B \\
+  S y &= g-C A^{-1} f \\
+  A x &= f-By.
+\end{align*}
+If $A$ has some structure such that solves with $A$ are simple,
+we may want to use this block solve structure rather than
+forming and factoring the bordered system.
+
+Let us now consider a closely-related problem: suppose we want
+to solve
+\[
+  (A+UW^T) x = f.
+\]
+This looks like a problem, but what happens if we define an
+intermediate variable $y = W^T x$?  If we put the original
+equation in terms of $x$ and $y$, and we add the equation
+relating $x$ and $y$, we get a bordered system
+\[
+  \begin{bmatrix} A & U \\ W^T & -I \end{bmatrix}
+  \begin{bmatrix} x \\ y \end{bmatrix} =
+  \begin{bmatrix} f \\ 0 \end{bmatrix}.
+\]
+Solving this bordered system by block elimination and
+collapsing away all the intermediate variables gives us
+\begin{align*}
+  x &= A^{-1} \left( f - U y \right) \\
+    &= A^{-1} \left( f - U S^{-1} (-W^T A^{-1} f) \right) \\
+    &= \left( A^{-1} - A^{-1} U (I+W^T U V)^{-1} W^T A^{-1} \right) f.
+\end{align*}
+We can re-interpret this as the {\em Sherman-Morrison-Woodbury formula}:
+\[
+  (A+UW^T)^{-1} = A^{-1} - A^{-1} U (I+W^T A^{-1} U)^{-1} W^T A^{-1}.
+\]
+The bordered system formulation (together with iterative refinement
+to clean up potential issues with instability) is quite useful as a
+solver.  I prefer it to the presentation of the SMW formula as a
+{\em fait accompli}.

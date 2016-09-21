@@ -1,0 +1,38 @@
+\section{Tridiagonal systems}
+
+Consider a symmetric positive definite tridiagonal system
+\[
+  A = \begin{bmatrix}
+  \alpha_1 & \beta_1 \\
+  \beta_1 & \alpha_2 & \beta_2 \\
+  & \beta_2 & \alpha_3 & \beta_3 \\
+  & & \ddots & \ddots & \ddots \\
+  & & & \beta_{n-2} & \alpha_{n-1} & \beta_{n-1} \\
+  & & & & \beta_{n-1} & \alpha_n
+  \end{bmatrix}
+\]
+If we do one step of Cholesky factorization, the first column of
+multipliers is nonzero only in the first two entries,
+while the Schur complement is
+\[
+  S = \begin{bmatrix}
+  \alpha_2-\beta_1^2/\alpha_1 & \beta_2 \\
+  \beta_2 & \alpha_3 & \beta_3 \\
+  & \ddots & \ddots & \ddots \\
+  & & \beta_{n-2} & \alpha_{n-1} & \beta_{n-1} \\
+  & & & \beta_{n-1} & \alpha_n
+  \end{bmatrix}.
+\]
+That is, at the first step, $L$ and $S$ retain {\em exactly the same
+nonzero structure} as the original tridiagonal $A$.  Cholesky
+factorization on a tridiagonal therefore runs in $O(n)$ time.
+
+More generally, unpivoted {\em band elimination} retains the structure
+of the $A$ matrix in the $LU$ factors: if $A$ has lower and upper
+bandwidths $p$ and $q$, then $L$ and $U$ have lower and upper
+bandwidths $p$ and $q$, respectively.  With pivoting, the upper
+bandwidth of $L$ can go up to $p+q$, and there are at most
+$p+1$ nonzeros per column of $L$.
+
+LAPACK has specialized LU routines for SPD and general nonsymmetric
+tridiagonal and banded matrices.

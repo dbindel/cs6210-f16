@@ -1,0 +1,32 @@
+\section{Vandermonde matrices}
+
+The case of {\em Vandermonde matrices} is interesting for several
+reasons:
+\begin{itemize}
+  \item They are highly structured.
+  \item They are horribly conditioned.
+  \item The ill-conditioned matrix appears as an intermediate
+    in a problem that may be just fine.
+\end{itemize}
+
+A Vandermonde matrix is a matrix $V \in \bbR^{n \times n}$
+whose entries are
+\[
+  v_{ij} = \xi_i^{j-1}.
+\]
+The matrix appears in polynomial interpolation.  The linear
+system $Vc = f$ is equivalent to the conditions
+\[
+  p(\xi_i) = \sum_{j=1}^n c_j \xi_i^{j-1} = f_i.
+\]
+Assuming the $\xi$ are all distinct, this system is nonsingular.
+However, the condition number grows {\em exponentially} as a
+function of $n$.  Does this mean that the problem of polynomial
+interpolation is horribly ill-conditioned?  Of course not!
+The exponential ill-conditioning has to do with the expression
+of the polynomial as a linear combination of monomials (the
+so-called power basis).   But {\em we don't care} what the coefficient
+vector $c$ will be; we just want a representation for the
+interpolating polynomial $p$ that we can evaluate at points
+other than the $\xi_i$.  If we represent $p$ in a different basis,
+we often get a problem that is perfectly well-behaved.

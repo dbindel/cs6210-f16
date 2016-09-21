@@ -1,0 +1,26 @@
+\section{Circulant matrices}
+
+We previously discussed fast {\em multiply} routines for circulant,
+Toeplitz, and Hankel matrices.  The building block
+to compute $y = Cx$ where $C$ is the circulant matrix with leading
+column $c$ is to use the FFT to reduce the problem to diagonal form.
+If $Z$ is the FFT matrix, we have
+\[
+  y = Cx = Z^{-1} \ddiag(\tilde{c}) Z x
+\]
+where $\tilde{c} = Zc$ is the FFT of $c$.  In code, we have
+\begin{lstlisting}
+y = ifft(fft(c) .* fft(x));
+\end{lstlisting}
+To solve a circulant system, we invert each of the linear operations
+involved, i.e.
+\[
+  x = Z^{-1} \ddiag(\tilde{c})^{-1} Zy
+\]
+which we can implement in code as
+\begin{lstlisting}
+x = ifft(fft(y) ./ fft(c));
+\end{lstlisting}
+What if we wanted to solve a Toeplitz or a Hankel matrix?  There are
+indeed fast Toeplitz and Hankel solvers, but they are much more subtle
+than two Fourier transforms and a scaling.

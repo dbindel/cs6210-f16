@@ -1,0 +1,16 @@
+\section{Other structures}
+
+Are these the only structures that we can use for fast linear solves?
+Of course they are not.  For any data sparse matrix, there is at least
+the hope of a fast direct solver, whether it is based on Gaussian
+elimination or some other approach.  But in many cases, it is not
+as straightforward to come up with a fast linear solver as to come
+up with a fast multiplication routine.
+
+If you are faced with an unfamiliar structured matrix and want to
+devise a fast solver, then, what is my best advice?  First, figure
+out the name of the structure!  Then you can start searching to see
+whether someone else has already devised a fast solver.  And if you
+come up with a new idea, knowing the name of the structure you have
+used increases the likelihood that your work may be re-used by
+someone else. 
