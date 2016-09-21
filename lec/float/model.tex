@@ -11,11 +11,11 @@ the MATLAB statement
 We can reason about the error in the computed $\hat{z}$ as follows:
 \begin{align*}
   t_1 &= \fl(x^2) = x^2 (1+\delta_1) \\
-  t_2 &= 1-t_1 = (1-x^2)\left( 1 + \frac{\delta_1 x^2}{1-x^2} \right) \\
+  t_2 &= 1-t_1 = (1-x^2)\left( 1 - \frac{\delta_1 x^2}{1-x^2} \right) \\
   \hat{z}
   &= \fl(1-t_1)
-    = z \left( 1 + \frac{\delta_1 x^2}{1-x^2} \right)(1+\delta_2) \\
-  & \approx z \left( 1 + \frac{\delta_1 x^2}{1-x^2} +\delta_2 \right),
+    = z \left( 1 - \frac{\delta_1 x^2}{1-x^2} \right)(1+\delta_2) \\
+  & \approx z \left( 1 - \frac{\delta_1 x^2}{1-x^2} +\delta_2 \right),
 \end{align*}
 where $|\delta_1|, |\delta_2| \leq \macheps$.  As before, we throw
 away the (tiny) term involving $\delta_1 \delta_2$.
