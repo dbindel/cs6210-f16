@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-23.pdf \
 	2016-09-21.pdf \
 	2016-09-19.pdf \
 	2016-09-16.pdf \
@@ -21,6 +22,11 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC13= \
+		linsys/sparse-direct.tex linsys/sparse-tree.tex linsys/nd.tex
+2016-09-23.pdf: 2016-09-23.tex common.tex commonm.tex \
+	$(LEC13)
 
 LEC12= \
 	linsys/diag_dom.tex linsys/tridiag.tex linsys/bordered.tex \

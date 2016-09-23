@@ -1,0 +1,37 @@
+\section{Sparse direct methods}
+
+Suppose $A$ is a sparse matrix, and $PA = LU$.  Will $L$ and $U$ also
+be sparse?  The answer depends in a somewhat complicated way on the
+structure of the graph associated with the matrix $A$, the pivot
+order, and the order in which variables are eliminated.  Except in
+very special circumstances, there will generally be more nonzeros in
+$L$ and $U$ than there are in $A$; these extra nonzeros are referred
+to as {\em fill}.  There are two standard ideas for minimizing fill:
+\begin{enumerate}
+\item
+  Apply a {\em fill-reducing ordering} to the variables; that is,
+  use a factorization
+  \[
+    PAQ = LU,
+  \]
+  where $Q$ is a column permutation chosen to approximately minimize
+  the fill in $L$ and $U$, and $P$ is the row permutation used for
+  stability.
+
+  The problem of finding an elimination order that minimizes fill is
+  NP-hard, so it is hard to say that any ordering strategy is really
+  optimal.  But there is canned software for some heuristic orderings
+  that tend to work well in practice.  From a practical perspective,
+  then, the important thing is to remember that a fill-reducing
+  elimination order tends to be critical to using sparse Gaussian
+  elimination in practice.
+\item
+  Relax the standard partial pivoting condition, choosing the row
+  permutation $P$ to balance the desire for numerical stability
+  against the desire to minimize fill.
+\end{enumerate}
+
+For the rest of this lecture, we will consider the simplified case of
+{\em structurally} symmetric matrices and factorization without
+pivoting (which you know from last week's guest lectures is stable for
+diagonally dominany systems and positive definite systems).
