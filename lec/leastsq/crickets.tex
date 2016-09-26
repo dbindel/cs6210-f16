@@ -1,0 +1,70 @@
+\section{Cricket chirps: an example}
+
+Did you know that you can estimate the temperature by listening to the
+rate of chirps?  The data set in Table~\ref{table1}%
+\footnote{Data set originally attributed to
+  \url{http://mste.illinois.edu}}.  represents measurements of the
+number of chirps (over 15 seconds) of a striped ground cricket at
+different temperatures measured in degrees Farenheit.  A plot
+(Figure~\ref{fig2}) shows that the two are roughly correlated: the
+higher the temperature, the faster the crickets chirp.  We can
+quantify this by attempting to fit a linear model
+\[
+  \mbox{temperature} = \alpha \cdot \mbox{chirps} + \mbox{beta} + \epsilon
+\]
+where $\epsilon$ is an error term.  To solve this problem by linear
+regression, we minimize the Euclidean norm of the residual
+\[
+  r = b-Ax
+\]
+where
+\begin{align*}
+  b_{i} &= \mbox{temperature in experiment } i \\
+  A_{i1} &= \mbox{chirps in experiment } i \\
+  A_{i2} &= 1 \\
+  x &= \begin{bmatrix} \alpha \\ \beta \end{bmatrix}
+\end{align*}
+MATLAB and Octave are capable of solving least squares problems using
+the backslash operator; that is, if {\tt chirps} and {\tt temp} are
+column vectors in MATLAB, we can solve this regression problem as
+\begin{lstlisting}
+  A = [chirps, ones(ndata,1)];
+  x = A\temp;
+\end{lstlisting}
+The algorithms underlying that backslash operation will make up
+most of the next lecture.
+
+\begin{figure}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[xlabel={Chirps},ylabel={Degrees},grid=major]
+        \addplot[only marks] table {leastsq/cricket.dat};
+        \addplot table[x=chirp,y=fit]{leastsq/cricket.dat};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  \caption{Cricket chirps vs.~temperature and a model fit via
+    linear regression.}
+  \label{fig2}
+\end{figure}
+
+\begin{table}
+  \small
+  \begin{tabular}{l|cccccccccccccccccc}
+    Chirp &
+    20& 16& 20& 18& 17& 16& 15& 17& 15& 16& 15& 17& 16& 17& 14 \\
+    Temp &
+    89& 72& 93& 84& 81& 75& 70& 82& 69& 83& 80& 83& 81& 84& 76
+  \end{tabular}
+  \caption{Cricket data: Chirp count over a 15 second period vs.~temperature
+    in degrees Farenheit.}
+  \label{table1}
+\end{table}
+
+In more complex examples, we want to fit a model involving more than
+two variables.  This still leads to a linear least squares problem,
+but one in which $A$ may have more than one or two columns.  As we
+will see later in the semester, we also use linear least squares
+problems as a building block for more complex fitting procedures,
+including fitting nonlinear models and models with more complicated
+objective functions.

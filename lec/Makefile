@@ -1,4 +1,5 @@
 LEC=\
+	2016-09-26.pdf \
 	2016-09-23.pdf \
 	2016-09-21.pdf \
 	2016-09-19.pdf \
@@ -22,6 +23,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC14= \
+	leastsq/crickets.tex leastsq/basics.tex leastsq/why-ols.tex \
+	leastsq/blue.tex leastsq/factorizations.tex leastsq/troubles.tex
+2016-09-26.pdf: 2016-09-26.tex common.tex commonm.tex \
+	$(LEC14) logistics/2016-09-26.tex
 
 LEC13= \
 		linsys/sparse-direct.tex linsys/sparse-tree.tex linsys/nd.tex

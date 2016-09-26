@@ -1,0 +1,31 @@
+
+\section{Why least squares?}
+
+Why is the ordinary least squares problem interesting?
+There are at least three natural responses.
+
+\begin{enumerate}
+  \item {\bf Simplicity:}
+  The least squares problem is one of the simplest formulations
+  around for fitting linear models.  The quadratic loss model
+  is easy to work with analytically; it is smooth; and it leads
+  to a problem whose solution is linear in the observation data.
+
+  \item {\bf Statistics:}
+  The least squares problem is the optimal approach to parameter
+  estimation among linear unbiased estimators, assuming independent
+  Gaussian noise.  The least squares problem is also the maximum likelihood
+  estimator under these same hypotheses.
+
+  \item {\bf It's a building block:}
+  Linear least squares are not the right formulation for all regression
+  problems --- for example, they tend to lack robustness in the face of
+  heavy-tailed, non-Gaussian random errors.  But even for these cases,
+  ordinary least squares is a useful {\em building block}.
+  Because least squares problems are linear in the observation vector,
+  they are amenable to direct attack by linear algebra methods in a way
+  that other estimation methods are not.  The tools we
+  have available for more complex fitting boil down to linear algebra
+  subproblems at the end of the day, so it is useful to learn how to work
+  effectively with linear least squares.
+\end{enumerate}

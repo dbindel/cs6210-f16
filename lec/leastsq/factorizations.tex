@@ -1,0 +1,86 @@
+\section{A family of factorizations}
+
+\subsection{Cholesky}
+
+If $A$ is full rank, then $A^T A$ is symmetric and positive definite
+matrix, and we can compute a Cholesky factorization of $A^T A$:
+\[
+  A^T A = R^T R.
+\]
+The solution to the least squares problem is then
+\[
+  x = (A^T A)^{-1} A^T b = R^{-1} R^{-T} A^T b,
+\]
+or, in MATLAB world
+\begin{lstlisting}
+  R = chol(A'*A, 'upper');
+  x = R\(R'\(A'*b));
+\end{lstlisting}
+
+\subsection{Economy QR}
+
+The Cholesky factor $R$ appears in a different setting as well.
+Let us write $A = QR$ where $Q = AR^{-1}$; then
+\[
+  Q^T Q = R^{-T} A^T A R^{-1} = R^{-T} R^T R R^{-1} = I.
+\]
+That is, $Q$ is a matrix with orthonormal columns.  This
+``economy QR factorization'' can be computed in several different
+ways, including one that you have seen before in a different guise
+(the Gram-Schmidt process).  MATLAB provides a numerically stable
+method to compute the QR factorization via
+\begin{lstlisting}
+  [Q,R] = qr(A,0);
+\end{lstlisting}
+and we can use the QR factorization directly to solve the least
+squares problem without forming $A^T A$ by
+\begin{lstlisting}
+  [Q,R] = qr(A,0);
+  x = R\(Q'*b);
+\end{lstlisting}
+
+\subsection{Full QR}
+
+There is an alternate ``full'' QR decomposition where we write
+\[
+A = QR, \mbox{ where }
+Q = \begin{bmatrix} Q_1 & Q_2 \end{bmatrix} \in \bbR^{n \times n},
+R = \begin{bmatrix} R_{1} \\ 0 \end{bmatrix} \in \bbR^{m \times n}.
+\]
+To see how this connects to the least squares problem, recall
+that the Euclidean norm is invariant under orthogonal transformations,
+so
+\[
+  \|r\|^2 = \|Q^T r\|^2 = \left\| \begin{bmatrix} Q_1^T b \\ Q_2^T
+    b \end{bmatrix} - \begin{bmatrix} R_1 \\ 0 \end{bmatrix} x
+  \right\|^2 = \|Q_1^T b-R_1x\|^2 + \|Q_2^T b\|^2.
+\]
+We can set $\|Q_1^T v-R_1 x\|^2$ to zero by
+setting $x = R_1^{-1} Q_1^T b$; the result is
+$\|r\|^2 = \|Q_2^T b\|^2$.
+
+\subsection{SVD}
+
+The full QR decomposition is useful because orthogonal transformations
+do not change lengths.  Hence, the QR factorization lets us change
+to a coordinate system where the problem is simple without changing
+the problem in any fundamental way.  The same is true of the SVD,
+which we write as
+\begin{align*}
+A &=
+\begin{bmatrix} U_1 & U_2 \end{bmatrix}
+\begin{bmatrix} \Sigma \\ 0 \end{bmatrix}
+V^T & & \mbox{Full SVD} \\
+&= U_1 \Sigma V^T & & \mbox{Economy SVD}.
+\end{align*}
+As with the QR factorization, we can apply an orthogonal
+transformation involving the factor $U$ that makes the
+least squares residual norm simple:
+\[
+\|U^T r\|^2 =
+\left\| \begin{bmatrix} U_1^T b \\ U_2^T b \end{bmatrix} -
+\begin{bmatrix} \Sigma V^T \\ 0 \end{bmatrix} x
+\right\| =
+\|U_1^T b - \Sigma V^T x\|^2 + \|U_2^T b\|^2,
+\]
+and we can minimize by setting $x = V \Sigma^{-1} U_1^T b$.

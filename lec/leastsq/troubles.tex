@@ -1,0 +1,76 @@
+\section{Trouble points}
+
+At a high level, there are two pieces to solving a least squares
+problem:
+\begin{enumerate}
+\item Project $b$ onto the span of $A$.
+\item Solve a linear system so that $Ax$ equals the projected $b$.
+\end{enumerate}
+Consequently, there are two ways we can get into trouble in solving
+least squares problems: either $b$ may be nearly orthogonal to the
+span of $A$, or the linear system might be ill conditioned.
+
+Let's first consider the issue of $b$ nearly orthogonal to the
+range of $A$ first.  Suppose we have the trivial problem
+\[
+A = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
+b = \begin{bmatrix} \epsilon \\ 1 \end{bmatrix}.
+\]
+The solution to this problem is $x = \epsilon$; but the solution for
+\[
+A = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
+\hat b = \begin{bmatrix} -\epsilon \\ 1 \end{bmatrix}.
+\]
+is $\hat x = -\epsilon$.  Note that $\|\hat b-b\|/\|b\| \approx 2
+\epsilon$ is small, but $|\hat x - x|/|x| = 2$ is huge.  That is
+because the projection of $b$ onto the span of $A$ (i.e.~the first
+component of $b$) is much smaller than $b$ itself; so an error in $b$
+that is small relative to the overall size may not be small relative
+to the size of the projection onto the columns of $A$.
+
+Of course, the case when $b$ is nearly orthogonal to $A$ often
+corresponds to a rather silly regressions, like trying to fit a
+straight line to data distributed uniformly around a circle, or trying
+to find a meaningful signal when the signal to noise ratio is tiny.
+This is something to be aware of and to watch out for, but it isn't
+exactly subtle: if $\|r\|/\|b\|$ is near one, we have a numerical
+problem, but we also probably don't have a very good model.  A more
+subtle problem occurs when some columns of $A$ are nearly linearly
+dependent (i.e.~$A$ is ill-conditioned).
+
+The {\em condition number of $A$ for least squares} is
+\[
+  \kappa(A) = \|A\| \|A^\dagger\| = \sigma_1/\sigma_n.
+\]
+If $\kappa(A)$ is large, that means:
+\begin{enumerate}
+\item Small relative changes to $A$ can cause large changes to the
+  span of $A$ (i.e.~there are some vectors in the span of $\hat A$
+  that form a large angle with all the vectors in the span of $A$).
+\item The linear system to find $x$ in terms of the projection onto
+  $A$ will be ill-conditioned.
+\end{enumerate}
+If $\theta$ is the angle between $b$ and the range of $A$, then the
+sensitivity to perturbations in $b$ is
+\[
+\frac{\|\delta x\|}{\|x\|} \leq
+\frac{\kappa(A)}{\cos(\theta)}{\|\delta b\|}{\|b\|}
+\]
+while the sensitivity to perturbations in $A$ is
+\[
+\frac{\|\delta x\|}{\|x\|} \leq
+\left( \kappa(A)^2 \tan(\theta) + \kappa(A) \right) \frac{\|\delta A\|}{\|A\|}
+\]
+Even if the residual is moderate, the sensitivity of the least squares
+problem to perturbations in $A$ (either due to roundoff or due to
+measurement error) can quickly be dominated by $\kappa(A)^2
+\tan(\theta)$ if $\kappa(A)$ is at all large.
+
+In regression problems, the columns of $A$ correspond to explanatory
+factors.  For example, we might try to use height, weight, and age to
+explain the probability of some disease.  In this setting,
+ill-conditioning happens when the explanatory factors are correlated
+--- for example, perhaps weight might be well predicted by height and
+age in our sample population.  This happens reasonably often.  When
+there is a lot of correlation, we have an {\em ill-posed} problem;
+we will talk about this case in a couple lectures.

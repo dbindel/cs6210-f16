@@ -1,0 +1,61 @@
+\section{Least squares and statistical models}
+
+Consider the model
+\[
+  y_i = \sum_{j=1}^n c_j x_{ij} + \epsilon_i
+\]
+where the {\em factors} $x_{ij}$ for example $j$ are known,
+and the observations $y_i$ are assumed to be an (unknown)
+combination of the factor values plus a small independent
+Gaussian noise term $\epsilon_i \tilde N(0,\sigma^2)$.
+In terms of a linear system, we have
+\[
+  y = X c + \epsilon.
+\]
+A {\em linear unbiased estimator} for $c$ is a linear combination
+of the observations whose expected value is $c$; that is, we
+need a matrix $M \in \bbR^{n \times m}$ such that
+\[
+  E[M^T y] = M^T X c = c.
+\]
+That is, $M$ should be a pseudo-inverse of $X$.
+
+According to the Gauss-Markov theorem, the choice $M = X^\dagger$
+is optimal, and the estimator $\hat{c} = X^\dagger y$
+is the {\em best linear unbiased estimator} (BLUE).  That is,
+it is the linear unbiased estimator of $c$ such that for any
+$u \in \bbR^n$,  $u^T \hat{c}$ has the smallest variance possible.
+Alternately (and equivalently),
+$\operatorname{Var}(\hat{c}) \succeq \operatorname{Var}(\tilde{c})$
+for any linear unbiased estimator $\tilde{c}$.  Here $\succeq$ refers
+to the partial ordering among symmetric matrices: if $A$ and $B$
+are symmetric matrices, then
+\[
+  A \succeq B \quad \equiv \quad (A-B) \mbox{ is positive semidefinite}.
+\]
+
+What if we have more interesting noise?  For example, what if the
+noise variables $\epsilon$ are drawn from a multivariate Gaussian
+distribution with mean zero and positive definite covariance matrix $C$?
+In this case, it turns out that if $C = R^T R$ is the
+Cholesky factorization, then
+\[
+  z = R^{-1} \hat{\epsilon}
+\]
+has independent standard normal entries, and so we can apply
+the Gauss-Markov theorem to the equation
+\[
+  R^{-1} y = R^{-1} X c + R^{-1} \epsilon.
+\]
+The solution $\hat{c} = (R^{-1} X)^{\dagger} R^{-1} y$ can be also
+written as
+\[
+  \hat{c} = \operatorname{argmin}_c \|Xc-y\|^2_{C^{-1}}
+\]
+where
+\[
+  \|u\|_{C^-1}^2 \equiv u^T (C^{-1}) u.
+\]
+This is a generalized least squares problem; the most common version
+is the weighted least squares case where the noise is assumed to
+be independent, but does not have the same variance for every equation.
