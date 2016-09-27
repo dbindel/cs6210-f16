@@ -1,0 +1,101 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\begin{document}
+
+\hdr{HW 3}
+
+You may (and should) talk about problems with each other and with me,
+providing attribution for any good ideas you might get.  Your final
+write-up should be your own.
+
+\paragraph*{1: Funny formulations}
+Suppose that $C$ is symmetric and positive definite.  Show that
+solving the regularized generalized least squares problem
+\[
+  \mbox{minimize } \|Ax-b\|_{C^{-1}}^2 + x^T M x
+\]
+is equivalent to solving the linear system
+\[
+  \begin{bmatrix} C & A \\ A^T & -M \end{bmatrix}
+  \begin{bmatrix} v \\ x \end{bmatrix} =
+  \begin{bmatrix} b \\ 0 \end{bmatrix}.
+\]
+
+\paragraph*{2: Criss-cross}
+Suppose $A \in \bbR^{m \times n}$ is full rank and $A = QR$ is an
+economy QR decomposition.  The {\em leverage score} for
+row $i$ is the squared norm of row $i$,
+i.e.~$\nu_i = \sum_{j=1}^m q_{ij}^2$.  In this exercise, we will show
+that if $r = Ax-b$ is the residual in a least squares problem with
+$x = A^\dagger b$, then the leave-one-out cross-validation (LOOCV) error
+for row $i$ is $r_i/(1-\nu_i)$.
+\begin{enumerate}
+\item Without loss of generality, consider $i = n$, and write
+  $A$, $Q$, $b$, and $r = b-QQ^T b$ as
+  \[
+    A = \begin{bmatrix} A_1 \\ a_2 \end{bmatrix}, \quad
+    Q = \begin{bmatrix} U \\ v^T \end{bmatrix}, \quad
+    b = \begin{bmatrix} c \\ \beta \end{bmatrix}, \quad
+    r = \begin{bmatrix} s \\ \rho \end{bmatrix}.
+  \]
+  Argue that the $\tilde{\beta} = a_2 A_1^\dagger c$
+  (the predicted value of the last row based on a model fit to
+  all the other rows) can also be written as
+  $\tilde{\beta} = v^T U^\dagger c$.
+\item Argue that if $y = Q^T b$ and $\hat{y} = U^\dagger c$, then
+  \[
+    \hat{y} = (I-vv^T)^{-1} (y-v\beta).
+  \]
+\item The LOOCV error for the last row is $\tilde{\beta} - \beta$.
+  Show how to write this as $\tilde{\beta} - \beta = \rho/(1-\nu)$,
+  where $\nu = \|v\|^2$.
+\end{enumerate}
+Usually, the total LOOCV error for a is written as
+the mean squared prediction error over the leave-one-out models, i.e.
+(for a linear model)
+\[
+  \mathrm{LOOCV} =
+  \frac{1}{m} \sum_{i=1}^m \left( \frac{r_i}{1-\nu_i} \right)^2.
+\]
+Computing the LOOCV statistic is more expensive for nonlinear models!
+
+\paragraph*{3: Perturbed projectors}
+Suppose we have two least squares systems
+\begin{align*}
+  A x &= b + r, & A^T r &= 0, \\
+  \hat{A} \hat{x} &= \hat{b} + \hat{r}, & \hat{A}^T \hat{r} &= 0,
+\end{align*}
+and both systems are full rank.
+\begin{enumerate}
+\item
+  Show that
+  \[
+    \frac{\|\hat{r}-r\|}{\|b\|} \leq \frac{\|\hat{b}-b\|}{\|b\|}  + \|\hat{\Pi}-\Pi\|
+  \]
+  where $\Pi = AA^\dagger$ and $\hat{\Pi} = \hat{A} \hat{A}^\dagger$.
+\item
+  Show that if $A = QR$ and $\hat{A} = \hat{Q} \hat{R}$ and
+  $\hat{Q} = QZ + E$ for $Z = Q^T \hat{Q}$, then
+  \[
+    \|\hat{\Pi}-\Pi\| \leq 2 \|E\| + \|E\|^2 \leq 3 \|E\|.
+  \]
+  Hint: Argue that $\|Z\| \leq 1$ and $\|E\| \leq 1$.
+\end{enumerate}
+One can actually refine this bound somewhat, but the algebra gets
+messier.  We can also give a geometric interpretation, as
+the norm $\|E\|$ is the sine of the largest {\em canonical
+angle} between the range spaces of $\hat{Q}$ and $Q$.
+
+\paragraph*{4: Contemplate constraints}
+Consider the constrained problem
+\[
+  \mbox{minimize} \|Ax-b\|^2 \mbox{ s.t. } C^T x = d
+\]
+Show how to write $x$ in terms of the economy QR factorization
+\[
+  \begin{bmatrix} C & A \end{bmatrix} =
+  \begin{bmatrix} Q_1 & Q_2 \end{bmatrix}
+  \begin{bmatrix} R_{11} & R_{12} \\ 0 & R_{22} \end{bmatrix}.
+\]
+\end{document}
