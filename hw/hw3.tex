@@ -11,13 +11,13 @@ write-up should be your own.
 
 \paragraph*{1: Funny formulations}
 Suppose that $C$ is symmetric and positive definite.  Show that
-solving the regularized generalized least squares problem
+solving the generalized least squares problem
 \[
-  \mbox{minimize } \|Ax-b\|_{C^{-1}}^2 + x^T M x
+  \mbox{minimize } \|Ax-b\|_{C^{-1}}^2
 \]
 is equivalent to solving the linear system
 \[
-  \begin{bmatrix} C & A \\ A^T & -M \end{bmatrix}
+  \begin{bmatrix} C & A \\ A^T & 0 \end{bmatrix}
   \begin{bmatrix} v \\ x \end{bmatrix} =
   \begin{bmatrix} b \\ 0 \end{bmatrix}.
 \]
