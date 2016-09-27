@@ -94,10 +94,10 @@
 #
 -
   date: 2016-10-03
-  info: Rank-deficiency and regularization
+  info: Constrained, weighted, and sparse problems
 -
   date: 2016-10-05
-  info: Constrained, weighted, and sparse problems
+  info: Rank-deficiency and regularization
 -
   date: 2016-10-07
   info: Regression beyond least squares
