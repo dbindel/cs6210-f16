@@ -78,9 +78,11 @@ and both systems are full rank.
   Show that if $A = QR$ and $\hat{A} = \hat{Q} \hat{R}$ and
   $\hat{Q} = QZ + E$ for $Z = Q^T \hat{Q}$, then
   \[
-    \|\hat{\Pi}-\Pi\| \leq 2 \|E\| + \|E\|^2 \leq 3 \|E\|.
+    \|\hat{\Pi}-\Pi\| \leq \sqrt{2} \|E\|
   \]
-  Hint: Argue that $\|Z\| \leq 1$ and $\|E\| \leq 1$.
+  {\em Hint}: Write $\hat{\Pi}-\Pi = QZE^T + E \hat{Q}^T$ and exploit
+  the Pythagorean theorem.  You will need to argue that $\|Z\| \leq 1$
+  and that the range spaces of $Q$ and of $E$ are orthogonal.
 \end{enumerate}
 One can actually refine this bound somewhat, but the algebra gets
 messier.  We can also give a geometric interpretation, as
@@ -90,12 +92,15 @@ angle} between the range spaces of $\hat{Q}$ and $Q$.
 \paragraph*{4: Contemplate constraints}
 Consider the constrained problem
 \[
-  \mbox{minimize} \|Ax-b\|^2 \mbox{ s.t. } C^T x = d
+  \mbox{minimize } \|Ax-b\|^2 \mbox{ s.t. } C^T x = 0
 \]
-Show how to write $x$ in terms of the economy QR factorization
+and suppose that we are given an economy factorization $A = QR$.
+Using the Lagrange multiplier constraint formulation from class,
+show that $x$ is the residual in the unconstrained least squares
+problem
 \[
-  \begin{bmatrix} C & A \end{bmatrix} =
-  \begin{bmatrix} Q_1 & Q_2 \end{bmatrix}
-  \begin{bmatrix} R_{11} & R_{12} \\ 0 & R_{22} \end{bmatrix}.
+  \mbox{minimize } \|R^{-T} C \lambda - Q^T b\|^2.
 \]
+{\em Hint:} Look to the formulation from problem 1.
+
 \end{document}
