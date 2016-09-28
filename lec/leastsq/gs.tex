@@ -1,0 +1,69 @@
+\section{QR and Gram-Schmidt}
+
+We now turn to our first numerical method for computing the
+QR decomposition: the Gram-Schmidt algorithm.  This method is
+usually presented in first linear algebra classes, but is
+rarely interpreted as a matrix factorization.  Rather, it is
+presented as a way of converting a basis for a space into an
+orthonormal basis for the same space.  If $a_1, a_2, \ldots, a_n$
+are column vectors, the Gram-Schmidt algorithm is as follows:
+for each $j = 1, \ldots, n$
+\begin{align*}
+  \tilde{a}_j &= a_j - \sum_{i=1}^{j-1} q_i q_i^T a_j \\
+  q_j &= \tilde{a}_j / \|\tilde{a}\|_j.
+\end{align*}
+At the end of the iteration, we have that the $q_j$ vectors are
+all mutually orthonormal and
+\[
+  \operatorname{span}\{ a_1, \ldots, a_j \} =
+  \operatorname{span}\{ q_1, \ldots, q_j \}.
+\]
+To see this as a matrix factorization, we rewrite the iteration as
+\begin{align*}
+  r_{ij} &= q_i^T a_j \\
+  \tilde{a}_j &= a_j - \sum_{i=1}^{j-1} q_i r_{ij} \\
+  r_{jj} &= \|\tilde{a}\|_j \\
+  q_j &= \tilde{a}_j / r_{jj}
+\end{align*}
+Putting these equations together, we have that
+\[
+  a_j = \sum_{i=1}^j q_i r_{ij},
+\]
+or, in matrix form,
+\[
+  A = QR
+\]
+where $A$ and $Q$ are the matrices with column vectors $a_j$ and $q_j$,
+respectively.
+
+Sadly, the Gram-Schmidt algorithm is not backward stable.
+The problem occurs when a vector $a_j$ is nearly in the span of
+previous vectors, so that cancellation rears its ugly head in the
+formation of $\tilde{a}_j$.  The
+classical Gram-Schmidt (CGS) method that we have shown is particularly
+problematic; a somewhat better alternative is the modified Gram-Schmidt
+method (MGS) algorithm:
+\begin{lstlisting}
+  % Overwrite A with Q via MGS, store R separately
+  R = zeros(n);
+  for j = 1:n
+    for i = 1:n-1
+      R(i,j) = Q(:,i)'*A(i,j);
+      A(:,j) = A(:,j) - Q(:,i)*R(i,j);
+    end
+    R(j,j) = norm(A(:,j));
+    A(:,j) = A(:,j) / R(j,j);
+  end
+\end{lstlisting}
+Though equivalent in exact arithmetic, the MGS algorithm has the advantage
+that it computes dot products with the updated $\tilde{a}_j$ as we go
+along, and these intermediate vectors have smaller norm than the original
+vector.  Sadly, this does not completely fix the matter: the computed $q_j$
+vectors can still drift away from being orthogonal to each other.  One can
+explicitly re-orthogonalize vectors that drift away from orthogonality,
+and this helps further.  In practice, though, we usually don't bother: if
+backward stability is required, we turn to other algorithms.
+
+Despite its backward instability, the Gram-Schmidt algorithm forms a very
+useful building block for iterative methods, and we will see it frequently
+in later parts of the course.

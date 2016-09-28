@@ -26,7 +26,7 @@ notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
 LEC15= \
-	leastsq/troubles.tex
+	leastsq/troubles.tex leastsq/sensitivity.tex leastsq/gs.tex
 2016-09-28.pdf: 2016-09-28.tex common.tex commonm.tex \
 	$(LEC15)
 

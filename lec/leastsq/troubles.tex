@@ -10,6 +10,8 @@ Consequently, there are two ways we can get into trouble in solving
 least squares problems: either $b$ may be nearly orthogonal to the
 span of $A$, or the linear system might be ill conditioned.
 
+\subsection{Perpendicular problems}
+
 Let's first consider the issue of $b$ nearly orthogonal to the
 range of $A$ first.  Suppose we have the trivial problem
 \[
@@ -34,10 +36,13 @@ straight line to data distributed uniformly around a circle, or trying
 to find a meaningful signal when the signal to noise ratio is tiny.
 This is something to be aware of and to watch out for, but it isn't
 exactly subtle: if $\|r\|/\|b\|$ is near one, we have a numerical
-problem, but we also probably don't have a very good model.  A more
+problem, but we also probably don't have a very good model.
+
+\subsection{Conditioning of least squares}
+
+A more
 subtle problem occurs when some columns of $A$ are nearly linearly
 dependent (i.e.~$A$ is ill-conditioned).
-
 The {\em condition number of $A$ for least squares} is
 \[
   \kappa(A) = \|A\| \|A^\dagger\| = \sigma_1/\sigma_n.
@@ -54,13 +59,16 @@ If $\theta$ is the angle between $b$ and the range of $A$, then the
 sensitivity to perturbations in $b$ is
 \[
 \frac{\|\delta x\|}{\|x\|} \leq
-\frac{\kappa(A)}{\cos(\theta)}{\|\delta b\|}{\|b\|}
+\frac{\kappa(A)}{\cos(\theta)} \frac{\|\delta b\|}{\|b\|}
 \]
 while the sensitivity to perturbations in $A$ is
 \[
 \frac{\|\delta x\|}{\|x\|} \leq
-\left( \kappa(A)^2 \tan(\theta) + \kappa(A) \right) \frac{\|\delta A\|}{\|A\|}
+\left( \kappa(A)^2 \tan(\theta) + \kappa(A) \right) \frac{\|\delta A\|}{\|A\|}.
 \]
+The first term (involving $\kappa(A)^2$) is associated with the tendency
+of changes in $A$ to change the span of $A$; the second term comes from
+solving the linear system restricted to the span of the original $A$.
 Even if the residual is moderate, the sensitivity of the least squares
 problem to perturbations in $A$ (either due to roundoff or due to
 measurement error) can quickly be dominated by $\kappa(A)^2
@@ -70,7 +78,6 @@ In regression problems, the columns of $A$ correspond to explanatory
 factors.  For example, we might try to use height, weight, and age to
 explain the probability of some disease.  In this setting,
 ill-conditioning happens when the explanatory factors are correlated
---- for example, perhaps weight might be well predicted by height and
+--- for example, weight might be well predicted by height and
 age in our sample population.  This happens reasonably often.  When
-there is a lot of correlation, we have an {\em ill-posed} problem;
-we will talk about this case in a couple lectures.
+there is a lot of correlation, we have an {\em ill-posed} problem.
