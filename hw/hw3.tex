@@ -75,17 +75,22 @@ and both systems are full rank.
   \]
   where $\Pi = AA^\dagger$ and $\hat{\Pi} = \hat{A} \hat{A}^\dagger$.
 \item
+  Show that if $X, Y \in \bbR^{m \times n}$ are any matrices such that
+  $X^T Y = 0$, then $\|X+Y\|^2 \leq \|X\|^2 + \|Y\|^2$.
+\item Also show (using an SVD) that if $Z$ is any square matrix, then
+  $\|ZZ^T-I\| = \|Z^T Z-I\|$.
+\item
   Show that if $A = QR$ and $\hat{A} = \hat{Q} \hat{R}$ and
   $\hat{Q} = QZ + E$ for $Z = Q^T \hat{Q}$, then
   \[
-    \|\hat{\Pi}-\Pi\| \leq \sqrt{2} \|E\|
+    \|\hat{\Pi}-\Pi\| \leq \sqrt{3} \|E\|
   \]
-  {\em Hint}: Write $\hat{\Pi}-\Pi = QZE^T + E \hat{Q}^T$ and exploit
-  the Pythagorean theorem.  You will need to argue that $\|Z\| \leq 1$
-  and that the range spaces of $Q$ and of $E$ are orthogonal.
+  {\em Hint}: Write $\hat{\Pi}-\Pi = Q(ZZ^T-I)Q^T + QZE^T + E \hat{Q}^T$
+  and exploit the previous two points.  You will need to argue
+  that $\|Z\| \leq 1$ and that the range spaces of $Q$ and of $E$
+  are orthogonal.
 \end{enumerate}
-One can actually refine this bound somewhat, but the algebra gets
-messier.  We can also give a geometric interpretation, as
+We can also give a geometric interpretation, as
 the norm $\|E\|$ is the sine of the largest {\em canonical
 angle} between the range spaces of $\hat{Q}$ and $Q$.
 
