@@ -1,4 +1,4 @@
-function QX = lec16applyQ(QR,tau,X)
+function QX = applyQ(QR,tau,X)
 
   [m,n] = size(QR);
   QX = X;

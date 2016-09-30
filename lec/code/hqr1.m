@@ -1,4 +1,4 @@
-function [Q,R] = lec16hqr1(A)
+function [Q,R] = hqr1(A)
   % Compute the QR decomposition of an m-by-n matrix A using
   % Householder transformations.
 

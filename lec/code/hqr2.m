@@ -1,4 +1,4 @@
-function [A,tau] = lec16hqr2(A)
+function [A,tau] = hqr2(A)
   % Compute the QR decomposition of an m-by-n matrix A using
   % Householder transformations, re-using the storage of A
   % for the Q and R factors.
