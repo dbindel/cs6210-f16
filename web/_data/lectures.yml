@@ -89,6 +89,7 @@
 -
   date: 2016-09-30
   info: Householder, Givens, and QR
+  notes: 2016-09-30.pdf
 #
 # ==================
 # Week 7
@@ -116,7 +117,6 @@
 -
   date: 2016-10-14
   info: Perturbation theory
-  hw: Midterm
 #
 # ==================
 # Week 9
@@ -124,6 +124,7 @@
 -
   date: 2016-10-17
   info: Power iterations
+  hw: Midterm
 -
   date: 2016-10-19
   info: Power iterations
@@ -144,7 +145,6 @@
 -
   date: 2016-10-28
   info: Symmetric power iterations and QR
-  hw: HW 4
 #
 # ==================
 # Week 11
@@ -152,6 +152,7 @@
 -
   date: 2016-10-31
   info: Other methods
+  hw: HW 4
 -
   date: 2016-11-02
   info: Computing the SVD
@@ -171,7 +172,6 @@
 -
   date: 2016-11-11
   info: Lanczos and connections
-  hw: HW 5
 #
 # ==================
 # Week 13
@@ -179,6 +179,7 @@
 -
   date: 2016-11-14
   info: Arnoldi and company
+  hw: HW 5
 -
   date: 2016-11-16
   info: Classical iterations
