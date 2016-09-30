@@ -1,0 +1,43 @@
+\section{Givens rotations}
+
+Householder reflections are one of the standard orthogonal
+transformations used in numerical linear algebra.  The other standard
+orthogonal transformation is a {\em Givens rotation}:
+\[
+  G = \begin{bmatrix}
+    c & -s \\
+    s & c
+  \end{bmatrix}.
+\]
+where $c^2 + s^2 = 1$.  Note that
+\[
+  G = \begin{bmatrix}
+    c & -s \\
+    s & c
+  \end{bmatrix}
+  \begin{bmatrix}
+    x \\ y
+  \end{bmatrix} =
+  \begin{bmatrix}
+    cx - sy \\
+    sx + cy
+  \end{bmatrix}
+\]
+so if we choose
+\begin{align*}
+  s &= \frac{-y}{\sqrt{x^2 + y^2}}, &
+  c &= \frac{x}{\sqrt{x^2+y^2}}
+\end{align*}
+then the Givens rotation introduces a zero in the second column.
+More generally, we can transform a vector in $\bbR^m$ into a vector
+parallel to $e_1$ by a sequence of $m-1$ Givens rotations, where
+the first rotation moves the last element to zero, the second rotation
+moves the second-to-last element to zero, and so forth.
+
+For some applications, introducing zeros one by one is very
+attractive.  In some places, you may see this phrased as a contrast
+between algorithms based on Householder reflections and those based on
+Givens rotations, but this is not quite right.  Small Householder
+reflections can be used to introduce one zero at a time, too.
+Still, in the general usage, Givens rotations seem to be the more
+popular choice for this sort of local introduction of zeros.
