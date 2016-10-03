@@ -1,0 +1,40 @@
+\section{Sparse QR}
+
+Just as was the case with LU, the QR decomposition admits a sparse
+variant.  And, as with LU, sparsity of the
+matrix $A \in \bbR^{m \times n}$ alone is not
+enough to guarantee sparsity of the factorization!  Hence, as with
+solving linear systems, our recommendation for solving sparse least
+squares problems varies depending on the actual sparse structure.
+
+Recall that the $R$ matrix in QR factorization is also the Cholesky
+factor of the Gram matrix: $G = A^T A = R^T R$.  Hence, the sparsity of
+the $R$ factor can be inferred from the sparsity of $G$ using the ideas
+we talked about when discussing sparse Cholesky.  If the rows of $A$
+correspond to experiments and columns correspond to factors, the nonzero
+structure of $G$ is determined by which experiments share common
+factors: in general $g_{ij} \neq 0$ if any experiment involves both
+factors $i$ and factor $j$. So a very sparse $A$ matrix may nonetheless
+yield a completely dense $G$ matrix. Of course, if $R$ is dense, that is
+not the end of the world!  Factoring a dense $n \times n$ matrix is
+pretty cheap for $n$ in the hundreds or even up to a couple thousand,
+and solves with the resulting triangular factors are quite inexpensive.
+
+If one forms $Q$ at all, it is often better to work with $Q$ as a
+product of (sparse) Householder reflectors rather than forming the
+elements of $Q$.  One may also choose to use a ``$Q$-less QR decomposition''
+in which the matrix $Q$ is not kept in any explicit form; to form $Q^T b$
+in this case, we would use the formulation $Q^T b = R^{-T} A^T b$.
+
+As with linear solves, least squares solves can be ``cleaned up''
+using iterative refinement.  This is a good idea in particular when
+using $Q$-less QR.  If $\tilde{A}^\dagger$ is an approximate least
+squares solve (e.g.~via the slightly-unstable normal equations approach),
+iterative refinement looks like
+\begin{align*}
+  r^{k} &= b-Ax^{k} \\
+  x^{k+1} &= x^k - \tilde{R}^{-1} (\tilde{R}^{-T} (A^T r_k)).
+\end{align*}
+This approach can be useful even when $A$ is moderately large and dense;
+for example, $\tilde{R}$ might be computed from a (scaled) QR
+decomposition of a carefully selected subset of the rows of $A$.

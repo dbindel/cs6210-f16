@@ -1,4 +1,5 @@
 LEC=\
+	2016-10-03.pdf \
 	2016-09-30.pdf \
 	2016-09-28.pdf \
 	2016-09-26.pdf \
@@ -25,6 +26,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC17= \
+	leastsq/stable.tex leastsq/sparse.tex \
+	leastsq/weighted.tex leastsq/constrained.tex
+2016-10-03.pdf: 2016-10-03.tex common.tex commonm.tex \
+	$(LEC17)
 
 LEC16= \
 	leastsq/gs.tex leastsq/hh.tex leastsq/givens.tex

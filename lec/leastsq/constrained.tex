@@ -1,0 +1,89 @@
+\section{Constrained case}
+
+Consider the weighted least squares problem
+\[
+  \mbox{minimize } \sum_{i=1}^m w_i r_i^2
+\]
+where $w_1$ is much larger than the others.  If we
+let $w_1 \rightarrow \infty$ while the others are fixed, what happens?
+We essentially say that we care about enforcing the first equation
+above all others, and in the limit we are solving the {\em constrained}
+least squares problem
+\[
+  \mbox{minimize } \sum_{i=2}^m w_i r_i^2 \mbox{ s.t. } r_1 = 0.
+\]
+Unfortunately, if we actually try to compute this way, we are dancing on
+dangerous ground; as $w_1$ goes to infinity, so does the condition
+number of the least squares problem.  But this is only an issue with the
+weighted formulation; we can formulate the constrained problem in other
+ways that are perfectly well-behaved.
+
+In the remainder of this section, we address two ways of handling
+the linearly constrained least squares problem
+\[
+  \mbox{minimize } \|Ax-b\|^2 \mbox{ s.t. } C^T x = d,
+\]
+by either eliminating variables (the {\em null-space method}) or adding
+variables (the method of {\em Lagrange multipliers}).
+
+\subsection{Null space method}
+
+In the null space method, we write an explicit expression for the solutions
+to $C^T x = d$ in the form $x^p + W z$ where $x^p$ is a particular solution
+to $C^T x^p = d$ and $W$ is a basis for the null space of $C^T$.  Perhaps the
+simplest particular solution is $x = C^\dagger d$; we can compute both
+this particular solution and an orthogonormal null space basis quickly
+using a full QR decomposition of $C$:
+\[
+  C =
+    \begin{bmatrix} Q_1 & Q_2 \end{bmatrix}
+    \begin{bmatrix} R_1 \\ 0 \end{bmatrix}, \quad
+  x = R_1^{-1} Q_1^T d, \quad W = Q_2.
+\]
+Having written an explicit parameterization for all solutions of the
+constraint equations, we can minimize the least squares objective with
+respect to the reduced set of variables
+\[
+  \mbox{minimize } \|A(x^p + Wz) - b\|^2 = \|(AW)z - (b-Ax^p)\|^2.
+\]
+This new least squares problem involves a smaller set of variables
+(which is good); but in general, even if $A$ is sparse, $AW$ will not be.
+So it is appropriate to have a few more methods in our arsenal.
+
+\subsection{Lagrange multipliers}
+
+An alternate method is the method of {\em Lagrange multipliers}.
+This is an algebraic technique for adding equations to enforce constraints.
+
+One way to approach the Lagrange multiplier method is to look at the
+equations for a constrained minimum.  In order not to have a downhill
+direction, we require that the directional derivatives be zero in any
+direction consistent with the constraint; that is, we require $Cx = d$
+and
+\[
+  \delta x^T A^T r = 0 \mbox{ when } C^T \delta x = 0.
+\]
+The constraint says that admissible $\delta x$ are
+orthogonal to the columns of $C$; the objective tells us the admissible
+$\delta x$ should be orthogonal to the residual.  So we need that $A^T r$
+should lie in the column span of $C$; that is,
+\[
+  A^T r = -C \lambda
+\]
+for some $\lambda$, and $Cx = d$.  Putting this together,
+we have the KKT equations
+\[
+  \begin{bmatrix}
+    A^T A & C \\
+    C^T & 0
+  \end{bmatrix}
+  \begin{bmatrix} x \\ \lambda \end{bmatrix} =
+  \begin{bmatrix} b \\ d \end{bmatrix}.
+\]
+
+These bordered normal equations are not the end point for constrained
+least squares  with Lagrange multipliers, any more than the normal
+equations are the end point for unconstrained least squares.  Rather,
+we can use this as a starting point for clever manipulations involving
+our favorite factorizations (QR and SVD) that reduce the bordered system
+to a more computationally convenient form.

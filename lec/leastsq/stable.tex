@@ -1,0 +1,20 @@
+\section{Stability of QR}
+
+Last time, we discussed QR factorization via Householder reflectors
+or Givens rotations.  It is not too difficult to
+show that applying a Givens rotations or Householder reflector to
+a matrix is backward-stable: if $P$ is the desired transformation,
+the floating point result of $PA$ is
+\[
+  \tilde{P} A = (P+E) A, \quad \|E\| \leq O(\macheps) \|A\|.
+\]
+Moreover, orthogonal matrices are perfectly conditioned!
+Taking a product of $j$ matrices is also fine; the result
+has backward error bounded by $j O(\macheps) \|A\|$.
+As a consequence, QR decomposition by Givens rotations or Householder
+transformations is ultimately backward stable.
+
+The stability of orthogonal matrices in general makes them a
+marvelous building block for numerical linear algebra algorithms,
+and we will take advantage of this again when we discuss
+eigenvalue solvers.

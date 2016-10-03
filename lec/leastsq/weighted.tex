@@ -1,0 +1,74 @@
+\section{Weighted least squares and company}
+
+So far, we have dealt primarily with the least squares problem
+with respect to the Euclidean norm associated with the standard
+inner product on $\bbR^n$.  However, everything
+we have said works for other inner products as well.
+Let $\langle \cdot, \cdot \rangle_M$ be any inner product on
+$\bbR^n$, and let $\|\cdot\|_M^2$ be the associated inner product;
+then the problem
+\[
+  \mbox{minimize } \|Ax-b\|_M^2
+\]
+yields the normal equations
+\[
+  A^T M r = 0.
+\]
+We already saw one version of this when considering the problem of
+regression with normal errors drawn from a joint normal distribution;
+in that case, $M$ was the inverse covariance matrix.  But that is not
+the only place where the more general least squares picture is useful.
+
+\subsection{Least squares in polynomials spaces}
+
+For example, to optimally approximate a function on $[-1,1]$ by a
+polynomial $p$ of degree at most $d$, we would write
+\[
+  \forall q \in \mathcal{P}_{d}, \int_{-1}^1 q(x) (p(x)-f(x)) \, dx = 0.
+\]
+If we were to express this in terms of the ordinary monomial basis,
+we could rewrite $p(x) = \sum_{j=0}^d c_j x^j$, and have
+\[
+  \int_{-1}^1 x^i \left( \sum_j c_j x^j - f(x) \right) \, dx,
+\]
+or, in matrix terms,
+\[
+  Gc = d
+\]
+where $g_{ij} = \int_{-1}^1 x^{i+j} \, dx$ and
+$d_i = \int_{-1}^1 x^i f(x) \, dx$; here we have implicitly
+started indexing at zero.  Another basis would yield a
+different matrix.  In particular, if we take the Cholesky
+factorization $G = R^T R$ and define $U = R^{-1}$, then the
+polynomials
+\[
+  L_j(x) = \sum_{i=0}^j x^i u_{ij}
+\]
+have the property that they form an orthonormal basis for
+the space $\mathcal{P}^d$ --- essentially, this is the
+observation that $Q = A R^{-1}$ has orthonormal columns.
+The polynomials $L_j$ are important enough that they have a name,
+the {\em normalized Legendre polynomials}; these polynomials play
+an important role in approximation theory and the theory of Gaussian
+quadrature.  In fact, there is an explicit three-term recurrence for
+these polynomials which can be derived without resort to the Gram
+matrix; and we shall see this conneciton again when we talk later
+about Krylov subspace methods.
+
+\subsection{Weighting and re-weighting}
+
+What about a more prosaic case of re-weighting?  For example, what if
+for some problem we care not about the residual, but the {\em relative
+residual} with components $r_i/b_i$?  Then we seek to minimize
+\[
+  \sum_i (r_i/b_i)^2 = \|D^{-1} (Ax-b)\|^2
+\]
+where $D = \operatorname{diag}(b)$.  Or, we might decide that
+we want to minimize
+\[
+  \sum_i w_i r_i^2
+\]
+where the weights $w_i$ are chosen to downweight outliers.  How would
+we choose which equations count as outliers?  A natural way to do this
+is to look at the residuals from an earlier fitting; this gives us the
+{\em iteratively reweighted least squares} (IRLS) algorithm.
