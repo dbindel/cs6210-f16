@@ -1,0 +1,17 @@
+\section{$\ell^1$ and the lasso}
+
+An alternative to Tikhonov regularization (based on a Euclidean norm
+of the coefficient vector) is an $\ell^1$ regularized problem
+\[
+  \mbox{minimize } \|Ax-b\|^2 + \lambda \|x\|_1.
+\]
+This is sometimes known as the ``lasso'' approach.  The $\ell^1$
+regularized problem has the property that the solutions tend to
+become sparse as $\lambda$ becomes larger.  That is, the $\ell^1$
+regularization effectively imposes a factor selection process like
+that we saw in the pivoted QR approach.  Unlike the pivoted QR
+approach, however, the $\ell^1$ regularized solution cannot be
+computed by one of the standard factorizations of numerical linear
+algebra.  Instead, one treats it as a more general {\em convex
+  optimization} problem.  We will discuss some approaches to the
+solution of such problems later in the semester.

@@ -1,0 +1,19 @@
+\section{Truncated SVD}
+
+The Tikhonov filter reduces the effect of small singular values on
+the solution, but it does not eliminate that effect.  By contrast,
+the {\em truncated SVD} approach uses the filter
+\[
+f(z) =
+\begin{cases}
+  z, & z > \sigma_{\min} \\
+  \infty, & \mbox{otherwise}.
+\end{cases}
+\]
+In other words, in the truncated SVD approach, we use
+\[
+  x = V_k \Sigma_k^{-1} U_k^T b
+\]
+where $U_k$ and $V_k$ represent the leading $k$ columns of $U$ and
+$V$, respectively, while $\Sigma_k$ is the diagonal matrix consisting
+of the $k$ largest singular values.

@@ -1,0 +1,31 @@
+\section{Factor selection and pivoted QR}
+
+In ill-conditioned problems, the columns of $A$ are nearly linearly
+dependent; we can effectively predict some columns as linear
+combinations of other columns.  The goal of the column pivoted QR
+algorithm is to find a set of columns that are ``as linearly
+independent as possible.''  This is not such a simple task,
+and so we settle for a greedy strategy: at each step, we select the
+column that is least well predicted (in the sense of residual norm)
+by columns already selected.  This leads to the {\em pivoted QR
+  factorization}
+\[
+  A \Pi = Q R
+\]
+where $\Pi$ is a permutation and the diagonal entries of $R$ appear
+in descending order (i.e. $r_{11} \geq r_{22} \geq \ldots$).  To
+decide on how many factors to keep in the factorization, we either
+automatically take the first $k$ or we dynamically choose to take $k$
+factors where $r_{kk}$ is greater than some tolerance and
+$r_{k+1,k+1}$ is not.
+
+The pivoted QR approach has a few advantages.  It yields {\em
+  parsimonious} models that predict from a subset of the columns of
+$A$ -- that is, we need to measure fewer than $n$ factors to produce
+an entry of $b$ in a new column.  It can also be computed relatively
+cheaply, even for large matrices that may be sparse.
+However, pivoted QR is not the only approach!  A related approach
+due to Golub, Klema, and Stewart computes $A = U \Sigma V^T$ and
+chooses a subset of the factors based on pivoted QR of $V^T$.
+More generally, approaches such as the lasso yield an automatic
+factor selection.

@@ -1,0 +1,96 @@
+\section{Bias-variance tradeoffs in the matrix setting}
+
+Least squares is often used to fit a model to be used for prediction
+in the future.  In learning theory, there is a notion of {\em
+  bias-variance} decomposition of the prediction error: the prediction
+error consists of a bias term due to using a space of models that does
+not actually fit the data, and a term that is related to variance in
+the model as a function of measurement noise on the input.  These are
+concepts that we can connect concretely to the type of sensitivity
+analysis we have seen before, a task we turn to now.
+
+Suppose $A \in \bbR^{M \times n}$ is a matrix of factors that we wish
+to use in predicting the entries of $b \in \bbR^M$ via the linear
+model
+\[
+  Ax \approx b.
+\]
+We partition $A$ and $b$ into the first $m$ rows (where we have
+observations) and the remaining $M-m$ rows (where we wish to use
+the model for prediction):
+\[
+  A = \begin{bmatrix} A_1 \\ A_2 \end{bmatrix}, \quad
+  b = \begin{bmatrix} b_1 \\ b_e \end{bmatrix}
+\]
+If we could access all of $b$, we would compute $x$ by the least
+square problem
+\[
+  Ax = b + r, \quad r \perp \mathcal{R}(A).
+\]
+In practice, we are given only $A_1$ and $b_1 + e$ where
+$e$ is a vector of random errors, and we fit the model coefficients
+$\hat{x}$ by solving
+\[
+  \mbox{minimize } \|A_1 \hat{x} - (b_1 + e)\|^2.
+\]
+Our question, then: what is the least squared error in using $\hat{x}$
+for prediction, and how does it compare to the best error possible?
+That is, what is the relation between $\|A \hat{x}-b\|^2$ and
+$\|r\|^2$?
+
+Note that
+\[
+  A\hat{x}-b = A(\hat{x}-x) + r
+\]
+and by the Pythagorean theorem and orthogonality of the residual,
+\[
+  \|A\hat{x}-b\|^2 = \|A(\hat{x}-x)\|^2 + \|r\|^2.
+\]
+The term $\|\hat{r}\|^2$ is the (squared) bias term, the part of the
+error that is due to lack of power in our model.  The term
+$\|A(\hat{x}-x)\|^2$ is the variance term, and is associated with
+sensitivity of the fitting process.  If we dig further into this,
+we can see that
+\begin{align*}
+  x &= A_1^\dagger (b_1 + r_1) &
+  \hat x &= A_1^\dagger (b_1 + e),
+\end{align*}
+and so
+\[
+  \|A(\hat x - x)\|^2 = \|A A_1^\dagger (e-r_1)\|^2
+\]
+Taking norm bounds, we find
+\[
+  \|A(\hat x - x)\| \leq \|A\| \|A_1^\dagger\| (\|e\| + \|r_1)\|),
+\]
+and putting everything together,
+\[
+  \|A\hat{x}-b\| \leq (1+\|A\| \|A_1^\dagger\|) \|r\| + \|A\|
+  \|A_1^\dagger\| \|e\|.
+\]
+If there were no measurement error $e$, we would have a
+{\em quasi-optimality} bound saying that the squared error in prediction
+via $\hat{x}$ is within a factor of $1 + \|A\| \|A_1^\dagger\|$ of the best
+squared error available for any similar model.  If we scale the factor
+matrix $A$ so that $\|A\|$ is moderate in size, everything boils down
+to $\|A_1^\dagger\|$.
+
+When $\|A_1^\dagger\|$ is large, the problem of fitting to training
+data is ill-posed, and the accuracy can be compromised.  What can we
+do?  As we discussed in the last section, the problem with ill-posed
+problems is that they admit many solutions of very similar quality.
+In order to distinguish between these possible solutions to find a
+model with good predictive power, we consider {\em regularization}:
+that is, we assume that the coefficient vector $x$ is not too large
+in norm, or that it is sparse.  Different statistical assumptions give
+rise to different regularization strategies; for the current
+discussion, we shall focus on the computational properties
+of a few of the more common regularization strategies without going
+into the details of the statistical assumptions.  In particular,
+we consider four strategies in turn
+\begin{enumerate}
+\item {\em Factor selection} via {\em pivoted QR}.
+\item {\em Tikhonov regularization} and its solution.
+\item {\em Truncated SVD regularization}.
+\item {\em $\ell^1$ regularization} or the {\em lasso}.
+\end{enumerate}

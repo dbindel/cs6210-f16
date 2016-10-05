@@ -1,0 +1,30 @@
+\section{Tradeoffs and tactics}
+
+All four of the regularization approaches we have described are used
+in practice, and each has something to recommend it.  The pivoted QR
+approach is relatively inexpensive, and it results in a model that
+depends on only a few factors.  If taking the measurements to compute
+a prediction costs money --- or even costs storage or bandwidth for
+the factor data! --- such a model may be to our advantage.  The
+Tikhonov approach is likewise inexpensive, and has a nice Bayesian
+interpretation (though we didn't talk about it).  The truncated SVD
+approach involves the best approximation rank $k$ approximation to the
+original factor matrix, and can be interpreted as finding the $k$ best
+factors that are linear combinations of the original measurements.
+The $\ell_1$ approach again produces models with sparse coefficients;
+but unlike QR with column pivoting, the $\ell_1$ regularized solutions
+incorporate information about the vector $b$ along with the matrix $A$.
+
+So which regularization approach should one use?  In terms of
+prediction quality, all can provide a reasonable deterrent against
+ill-posedness and overfitting due to highly correlated factors.  Also,
+all of the methods described have a parameter (the number of retained
+factors, or a penalty parameter $\lambda$) that governs the tradeoff
+between how well-conditioned the fitting problem will be and the
+increase in bias that naturally comes from looking at a smaller class
+of models.  Choosing this tradeoff intelligently may be rather more
+important than the specific choice of regularization strategy.  A
+detailed discussion of how to make this tradeoff is beyond the scope
+of the class; but we will see some of the computational tricks
+involved in implementing specific strategies for choosing
+regularization parameters before we are done.
