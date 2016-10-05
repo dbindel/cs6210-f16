@@ -40,14 +40,14 @@ distribution with mean zero and positive definite covariance matrix $C$?
 In this case, it turns out that if $C = R^T R$ is the
 Cholesky factorization, then
 \[
-  z = R^{-1} \hat{\epsilon}
+  z = R^{-T} \hat{\epsilon}
 \]
 has independent standard normal entries, and so we can apply
 the Gauss-Markov theorem to the equation
 \[
-  R^{-1} y = R^{-1} X c + R^{-1} \epsilon.
+  R^{-T} y = R^{-T} X c + R^{-T} \epsilon.
 \]
-The solution $\hat{c} = (R^{-1} X)^{\dagger} R^{-1} y$ can be also
+The solution $\hat{c} = (R^{-T} X)^{\dagger} R^{-T} y$ can be also
 written as
 \[
   \hat{c} = \operatorname{argmin}_c \|Xc-y\|^2_{C^{-1}}
