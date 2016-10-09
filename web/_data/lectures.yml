@@ -104,7 +104,8 @@
   notes: 2016-10-05.pdf
 -
   date: 2016-10-07
-  info: Regression beyond least squares
+  info: Regularization choices; matrix nearness problems
+  notes: 2016-10-07.pdf
   hw: HW 3
 #
 # ==================

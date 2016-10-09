@@ -1,0 +1,54 @@
+\section{Choice of regularization}
+
+All of the regularization methods we have discussed share a common
+trait: they define a parametric family of models.  With more
+regularization, we restrict the range of models we can easily generate
+(adding bias), but we also reduce the sensitivity of the fit (reducing
+variance). The choice of the regularization parameter is a key aspect of
+these methods, and we now briefly discuss three different ways of
+systematically making that choice.  In all cases, we
+rely on the assumption that the sample observations we use for the
+fit are representative of the population of observations where we might
+want to predict.
+
+\subsection{Morozov's discrepancy principle}
+
+Suppose that we want to fit $Ax \approx \hat{b}$ by regularized least
+squares, and the (noisy) observation vector $\hat{b}$ is known to be
+within some error bound $\|e\|$ of the true values $b$. The discrepancy
+principle says that we should choose the regularization parameter so the
+residual norm is approximately $\|e\|$. That is, we seek the most stable
+fitting problem we can get subject to the constraint that the residual
+error for the regularized solution (with the noisy vector $\hat{b}$) is
+not much bigger than we would get from unknown true solution.
+
+One of the most obvious drawbacks of the discrepancy principle is that
+it requires that we have an estimate for the norm of the error in the
+data.  Sadly, such estimates are not always available.
+
+\subsection{The L-curve}
+
+A second approach to the regularization parameter is the {\em L-curve}.
+If we draw a parametric curve of the residual error versus solution norm
+on a log-log plot, with $\log \|r_{\lambda}\|$ on the $x$ axis
+and $\log \|x_{\lambda}\|$ on the $y$ axis, we often see an ``L'' shape.
+In the top of the vertical bar (small $\lambda$), we find that increasing
+regularization decreases the solution norm significantly without significantly
+increasing the residual error.  Along the end of the horizontal part,
+increasing regularization increases the residual error, but does not
+significantly help with the solution norm.  We want the corner of the
+curve, where the regularization is chosen to minimize the norm of the
+solution subject to the constraint that the residual is close to the
+smallest possible residual (which we would have without regularization).
+
+Computing the inflection point on the L-curve is a neat calculus
+exercise which we will not attempt here.
+
+\subsection{Generalized cross-validation}
+
+The idea with (generalized) cross-validation is to choose the parameter
+by fitting the model on a subset of the data and testing on the remaining
+data.  We may do this with multiple partitions into data used for fitting
+versus data reserved for checking predictions.
+We often choose regularization parameters to give the smallest error on
+the predictions in a cross-validation study.

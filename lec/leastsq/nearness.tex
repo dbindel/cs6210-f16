@@ -1,0 +1,113 @@
+\section{Nearness problems}
+
+So far, we have considered problems of miminizing a residual error
+where the unknown is a vector.  What if instead the unknown is a
+matrix?  There are a variety of such {\em matrix nearness} problems,
+and this is a good place in the course for them.
+
+\subsection{Nearest symmetric matrix}
+
+As a ``warm-up,'' we consider the problem of finding the
+symmetric matrix $A$ that is nearest to some target (nonsymmetric)
+matrix $B$:
+\[
+  \mbox{minimize}_{A=A^T} \|B-A\|_F^2.
+\]
+There are several ways to tackle this problem, but we want to use
+it as an excuse once again to relate a least squares problem to an
+orthogonal decomposition.  In this case, we note that
+\[
+  B = H + S, \quad
+  H \equiv \frac{1}{2} (B+B^T), \quad
+  S \equiv \frac{1}{2} (B-B^T).
+\]
+The matrices $H$ and $S$ are respectively symmetric $(H=H^T)$
+and skew-symmetric $(S=-S^T)$.  We observe that the
+{\em Frobenius inner product} of any symmetric $H$ and skew $S$
+is
+\[
+  \langle H, S \rangle_F =
+  \sum_{i,j} h_{ij} s_{ij} =
+  \sum_{i > j} h_{ij} (s_{ij} + s_{ji}) = 0,
+\]
+i.e.~the set of all square matrices can be written as the direct
+sum of the set of symmetric matrices and an orthogonal set of
+skew matrices.  In particular, this means that we can invoke the
+Pythagorean theorem:
+\[
+  \|B-A\|_F^2 =
+  \|H-A\|_F^2 + 2 \langle (H-A), S \rangle_F + \|S\|^2 =
+  \|H-A\|_F^2 + \|S\|^2.
+\]
+So we decompose the objective into a piece that we can set exactly
+equal to zero and a piece that is independent of the optimization
+variable.  The solution to the nearest symmetric matrix problem is
+$H = A$, and the distance is $\|S\|_F$.
+
+We can pose the same question in the operator two-norm (rather than
+the Frobenius norm), and we get mostly the same answer.  The main
+difference is that in the case of the two-norm, the minimizing $A$
+is generally not unique.
+
+\subsection{Nearest orthogonal matrix}
+
+Now consider the problem for $B \in \bbR^{m \times n}$ and $m \geq n$
+\[
+  \mbox{minimize}_{Q : Q^T Q = I} \|B-Q\|_F^2.
+\]
+This is sometimes known as the {\em orthogonal Procrustes problem}.
+If $B = U \Sigma V^T$ is a full SVD, then by invariance of the
+Frobenius norm under orthogonal transformations,
+\[
+  \|B-Q\|_F^2 = \|\Sigma-U^T Q V\|_F^2 = \|\Sigma-\tilde{Q}\|_F^2.
+\]
+Therefore, we reduce to the problem of finding a matrix $\tilde{Q}$
+with orthonormal columns that is as close as possible to a
+diagonal matrix with positive diagonal entries.  Considering just
+the first column
+\[
+  \|w-\sigma_1 e_1\|^2 = (x-\sigma_1)^2 + \|y\|^2, \quad
+  w = \begin{bmatrix} x \\ y \end{bmatrix}
+\]
+and expanding, we have
+\[
+  \|w-\sigma_1 e_1^2\| = x^2 - 2 \sigma_1 x + \sigma_1^2 + \|y\|^2
+  = 1 + \sigma_1^2 - 2 \sigma_1 x
+\]
+which is minimal when $x$ is as large as possible ($x = 1$).
+A similar argument shows that the closest unit length vector to
+column $k$ of $\Sigma$ will be $e_k$.  Therefore,
+even if we only insisted that each column was unit length (rather than
+insisting on orthonormality), the closest matrix to $\Sigma$ would be
+the identity matrix.  Hence $\tilde{Q} = I_k$ consists of the leading
+$k$ columns of the identity, and $Q = U I_k V^T$ is the same as
+$Q = U_1 V^T$ where $U_1$ is the $m \times n$ submatrix of $U$ from
+the economy SVD.
+
+Note that if $A = U \Sigma V^T$ is an economy SVD and $Q = UV^T$,
+we have
+\[
+  A = QH, \quad H = V \Sigma V^T.
+\]
+The matrix $H$ is symmetric and positive semi-definite, while $Q$
+has orthonormal columns.  This decomposition is known as the
+{\em polar decomposition} of $A$, and it generalizes
+the polar decomposition of a vector into a (unit length) direction
+times a non-negative length.
+
+\subsection{Other matrix nearness problems}
+
+We have far from exhausted the possible matrix nearness problems
+with these two examples.  Perhaps the obvious next one to cover,
+had we not run out of time, would be the Eckart-Young theorem:
+the nearest rank $k$ matrix to a given matrix $A$ (in either the
+Frobenius or operator 2-norm) is
+\[
+  L = A^k = \sum_{i=1}^k \sigma_i u_i v_i^T.
+\]
+Another entertaining example is the distance to instability ---
+that is, given a matrix $A$ whose eigenvalues all have negative
+real part, what is the nearest matrix with purely imaginary eigenvalues?
+The Eckart-Young theorem is in any of the recommended texts; and
+Nick Higham has a classic paper on matrix nearness problems with these
+and several others.
