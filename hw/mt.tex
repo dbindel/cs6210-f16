@@ -1,0 +1,60 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\newcommand{\tril}{\operatorname{tril}}
+
+\begin{document}
+
+\hdr{Midterm}
+
+Use any reference (books, notes, \matlab\ help, literature),
+but please do not consult with anyone outside the course staff.
+
+\paragraph*{1: QR sensitivity}
+Differentiate the condition $Q^T Q = I$ to show that variations
+of $Q$ satisfy $\delta Q = Q S$ where $S$ is skew (i.e.~$S= -S^T$).
+Using this relation, and assuming $A$ is full rank,
+write a routine to compute the first-order
+sensitivity of the $Q$ and $R$ factors for a perturbation $\delta A$.
+{\em Hint:} This is very similar in flavor to HW 2, problem 2.
+\begin{lstlisting}
+  function [dQ, dR] = mt_qr(Q,R,dA)
+  % Returns the directional derivative of the QR factors
+  % Q*R = A in the dA direction
+\end{lstlisting}
+
+\paragraph*{2: Conditioning}
+For any consistent matrix norm, show if $\|A^{-1} E\| \leq 1$ then
+\[
+  \kappa(A+E) \leq
+  \kappa(A) \left( \frac{1+\|A^{-1}E\|}{1-\|A^{-1}E\|} \right) \leq
+  \kappa(A) \left( 1 + \kappa(A) \frac{\|E\|}{\|A\|} \right) + O(\|E\|^2).
+\]
+where $\kappa$ denotes the condition number with respect to inversion.
+
+\paragraph*{3: Minimum $M$-norm}
+Derive a formula for the solution to an underdetermined system
+$C^T x = d$ where $C \in \bbR^{m \times n}$ is full rank and
+$x$ has minimum $M$-norm
+(recall $\|x\|_M^2 = x^T M x$ with $M \in \bbR^{m \times m}$ spd).
+
+\paragraph*{4: Implicit Cholesky}
+Suppose $D = \ddiag(d)$ where $d \in \bbR^n$
+and $A = D + uu^T$ for $u \in \bbR^n$.  Suppose $A$ is symmetric
+and positive definite and $A = L L^T$ is the Cholesky factorization.
+Show that
+\[
+  A = \ddiag(d_L) + \tril(uv^T,-1)
+\]
+where $\tril(uv^T,-1)$ indicates the strictly lower triangular
+part of $uv^T$; and write a routine to compute $d_L, u, v$ in $O(n)$
+time:
+\begin{lstlisting}
+  function [dL,v] = mt_cholesky(d,u);
+  % For A = diag(d) + u*u' pos def, produce a lower triangular
+  % Cholesky factor L = diag(dL) + tril(u*v',-1);
+\end{lstlisting}
+{\em Hint:} Show that the Schur complements all have the form
+$S = D_{22} + \alpha u_2 u_2^T.$
+
+\end{document}
