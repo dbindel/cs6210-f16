@@ -12,8 +12,8 @@ but please do not consult with anyone outside the course staff.
 
 \paragraph*{1: QR sensitivity}
 Differentiate the condition $Q^T Q = I$ to show that variations
-of $Q$ satisfy $\delta Q = Q S$ where $S$ is skew (i.e.~$S= -S^T$).
-Using this relation, and assuming $A$ is full rank,
+of $Q \in \bbR^{n \times n}$ satisfy $\delta Q = Q S$ where $S$ is skew (i.e.~$S= -S^T$).
+Using this relation, and assuming $A \in \bbR^{n \times n}$ is full rank,
 write a routine to compute the first-order
 sensitivity of the $Q$ and $R$ factors for a perturbation $\delta A$.
 {\em Hint:} This is very similar in flavor to HW 2, problem 2.
@@ -44,7 +44,7 @@ and $A = D + uu^T$ for $u \in \bbR^n$.  Suppose $A$ is symmetric
 and positive definite and $A = L L^T$ is the Cholesky factorization.
 Show that
 \[
-  A = \ddiag(d_L) + \tril(uv^T,-1)
+  L = \ddiag(d_L) + \tril(uv^T,-1)
 \]
 where $\tril(uv^T,-1)$ indicates the strictly lower triangular
 part of $uv^T$; and write a routine to compute $d_L, u, v$ in $O(n)$
@@ -55,6 +55,6 @@ time:
   % Cholesky factor L = diag(dL) + tril(u*v',-1);
 \end{lstlisting}
 {\em Hint:} Show that the Schur complements all have the form
-$S = D_{22} + \alpha u_2 u_2^T.$
+$S = D_{22} + \alpha u_2 u_2^T$.
 
 \end{document}
