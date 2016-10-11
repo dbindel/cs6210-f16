@@ -1,4 +1,5 @@
 LEC=\
+	2016-10-12.pdf \
 	2016-10-07.pdf \
 	2016-10-05.pdf \
 	2016-10-03.pdf \
@@ -28,6 +29,11 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC19= \
+	eigen/intro.tex eigen/applications.tex
+2016-10-12.pdf: 2016-10-12.tex common.tex commonm.tex \
+	$(LEC19) logistics/2016-10-12.tex
 
 LEC19= \
 	leastsq/regchoice.tex leastsq/nearness.tex

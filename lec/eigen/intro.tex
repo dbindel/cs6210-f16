@@ -1,0 +1,198 @@
+\section{Eigenvalue problems}
+
+An eigenvalue $\lambda \in \bbC$ of a matrix $A \in \bbC^{n \times n}$
+is a value for which the equations $A v = v \lambda$ and $w^* A = \lambda w^*$
+have nontrivial
+solutions (the eigenvectors $w^*$ and $v$).  Together, $(\lambda, v)$ forms an
+eigenpair and $(\lambda, v, w^*)$ forms an eigentriple.
+An eigenvector is a basis for a one-dimensional invariant
+subspace: that is, $A$ maps anything multiple of $v$ to some other
+multiple of $v$.  More generally, a matrix $V \in \bbC^{n \times m}$
+spans an invariant subspace if $AV = VL$ for some
+$L \in \bbC^{n \times m}$.
+
+Associated with any square $A$, we can write a matrix $Q$ whose
+columns form an orthonormal basis for nested invariant subspaces of
+$A$; that is, the first $k$ columns of $Q$ form a $k$-dimensional
+invariant subspace of $A$.  This structure of nested invariant
+subspaces gives us that
+\[
+  AQ = QT,
+\]
+where $T$ is an upper triangular matrix.  The factorization
+\[
+  A = QTQ^*
+\]
+is a {\em Schur factorization}.  Most of next week will be devoted to
+methods to compute Schur factorizations (or parts of Schur
+factorizations).  The Schur factorization is nearly as versatile as,
+and is far more numerically stable than, the {\em Jordan canonical form}
+\[
+  A V = V J.
+\]
+where $J$ is a block diagonal matrices with
+{\em Jordan} blocks of the form
+\[
+  J_{\lambda} =
+  \begin{bmatrix}
+    \lambda & 1  \\
+            & \ddots & \ddots \\
+            &        & \lambda & 1 \\
+            &        &         & \lambda
+  \end{bmatrix}.
+\]
+
+The {\em algebraic multiplicity} of an eigenvalue $\lambda$ is the
+number of times it appears on the diagonal of the Jordan form, or the
+number of times the factor $z-\lambda$ divides the characteristic
+polynomial $\det(A-zI)$.  The {\em geometric multiplicity} is given by
+the number of Jordan blocks associated to $\lambda$, or by the
+dimension of the null space of $(A-\lambda I)$.  In general, there is
+exactly one eigenvector of $A$ for each Jordan block, and the
+eigenvectors form a basis iff $A$ is diagonalizable -- that is, if $A$
+has only 1-by-1 Jordan blocks and all geometric and algebraic
+multiplicities match.  The diagonalizable matrices form a dense set in
+$\bbC^{n \times n}$, a fact which is often convenient in proofs (since
+an argument for the diagonalizable case together with a continuity
+argument often yields a general solution).  This fact also explains
+part of why the Jordan canonical form is annoying for numerical work:
+if every matrix is an arbitrarily small perturbation of something
+diagonalizable, then the Jordan form is discontinuous as a function of
+$A$!  Even among the diagonalizable matrices, though, the eigenvector
+decomposition is often overrated for computational purposes.  Poor
+conditioning of the eigenvector basis can make diagonalization a
+numerically unstable business, and most computations that are naively
+formulated in terms of an eigenvector basis can equally well be
+formulated in terms of Schur basis.
+
+In {\em generalized eigenvalue problems}, we ask for nontrivial
+solutions to
+\[
+  (A-\lambda B)v = 0.
+\]
+There are also {\em nonlinear eigenvalue problems}, which show up
+in my research but which we will not talk about in class.  In
+addition to these variants on the eigenvalue problem, there are
+also many different factors that affect the how we choose algorithms.
+Is the problem...
+\begin{enumerate}
+\item
+  nonsymmetric or symmetric?
+\item
+  standard or generalized?
+\item
+  to find all eigenvalues or just a few?
+\item
+  to compute eigenvectors, invariant subspaces, or just eigenvalues?
+\end{enumerate}
+For different answers to these questions, there are different ``best''
+choices of algorithm.  For the next week or two, we will focus
+specifically on the problem of computing eigenpairs, invariant
+subspaces, and Schur forms for nonsymmetric matrices.  We will only
+briefly touch on the special case of the symmetric problem, which has
+so much more mathematical structure that it is treated almost entirely
+differently from the nonsymmetric case.
+
+\subsection{The 2-by-2 case: some illustrative examples}
+
+Many of the salient features that occur in general eigenvalue
+problems can be illustrated with the 2-by-2 matrix
+\[
+  A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}.
+\]
+Finding an eigenvalue is equivalent to finding a root
+of the characteristic polynomial:
+\begin{align*}
+  p(z)
+    &= \det(A-z I) = (a-z)(d-z) - bc \\
+    &= z^2 - (a + d) z + (ad-bc).
+\end{align*}
+If the roots of the characteristic polynomial are $\lambda_1$ and
+$\lambda_2$, then we have
+\begin{align*}
+  p(z) &= (z-\lambda_1)(z-\lambda_2) \\
+       &= z^2 - (\lambda_1 + \lambda_2) z + \lambda_1 \lambda_2.
+\end{align*}
+We recognize the second coefficient in the
+characteristic polynomial as minus the trace $a + d = \lambda_1 +
+\lambda_2$.  The constant coefficient is the determinant
+$ad-bc = \lambda_1 \lambda_2$.  Both these coefficients can be
+seen as functions of the eigenvalues, but both can be computed
+efficiently without referring to the eigenvalues explicitly.
+
+Now suppose we choose some fixed $\lambda \in \bbC$ and look at the
+2-by-2 matrices for which $\lambda$ is an eigenvalue.  If we just want
+$\lambda$ to be {\em an} eigenvalue, we must satisfy one scalar
+equation: $p(\lambda) = 0$.  To find matrices for which $\lambda$ is a
+{\em double} eigenvalue, we must satisfy the additional constraint
+$a+d = 2\lambda$.  And there is only one 2-by-2 matrix for which $\lambda$ is
+a double eigenvalue with {\em geometric} multiplicity 2: $A = \lambda I$.
+Put differently, the set of 2-by-2 matrices for which $\lambda$ is an
+eigenvalue has codimension 1 (i.e. it is described by one scalar
+constraint); the set of 2-by-2 matrices for which $\lambda$ is an eigenvalue
+with algebraic multiplicity 2 has codimension 2; and the set of 2-by-2
+matrices for which $\lambda$ is an eigenvalue with geometric multiplicity
+2 has codimension 4.
+
+More generally, we can say that among general complex $n$-by-$n$ matrices,
+the existence of {\em some} multiple eigenvalue is a
+codimension 1 phenomena (somewhat rare in general); and the existence
+of an eigenvalue with {\em geometric} multiplicity greater than 1 is
+a codimension 3 phenomena (very rare in general).  Of course, things
+change if we consider structured matrices.  For example, in symmetric
+matrices the  algebraic and geometric multiplicities of all eigenvalues
+are the same.
+
+\subsection{The symmetric case}
+
+In general, a real matrix can have complex eigenvalues (though in
+conjugate pairs), and it may or may not have a basis of eigenvectors.
+In the case of real {\em symmetric} matrices ($A = A^T$), we have
+much more structure: namely,
+\begin{itemize}
+\item All the eigenvalues are real.
+\item There is a complete {\em orthonormal} basis of eigenvectors.
+\end{itemize}
+To see the former, observe that if $(v, \lambda)$ is an eigenpair
+and $\|v\| = 1$ then
+\[
+  \lambda = v^* A v = \bar{v^* A v} = \bar{\lambda},
+\]
+which implies that $\lambda$ is real.  To see that eigenvectors
+associated with different eigenvalues must be orthogonal, note
+that if $(v,\lambda)$ and $(u,\mu)$ are eigenpairs with $\lambda \neq
+\mu$, then
+\[
+v^* A u = \begin{cases}
+  (A v)^* u = \lambda v \cdot u \\
+  v^* (Au) = \mu v \cdot u
+\end{cases}
+\]
+and the only way for these to be the same is if $v \cdot u = 0$.
+Combining these two facts about the symmetric eigenvalue problem,
+we usually write the standard decomposition
+\[
+  A = Q \Lambda Q^T
+\]
+where $Q$ is an orthogonal matrix of eigenvalues
+and $\Lambda$ is the corresponding diagonal matrix of eigenvalues.
+
+We often use symmetric matrices to represent quadratic forms,
+and this is one reason why symmetric eigenvalue problems are
+so common.  If $A = Q \Lambda Q^T$, then we can define $w = Q^T v$
+to get the expression
+\[
+  v^* A v = \sum_{i=1}^n w_i^2 \lambda_i.
+\]
+If $\|v\|^2 = 1$ (implying $\|w\|^2 = 1$), then we can see $v^* A v$ is a
+weighted average of the eigenvalues of $A$.  Hence, the minimum or
+maximum of $v^* A v$ over all unit length vectors gives the largest
+and smallest of the eigenvalues of $A$; and, more generally, the
+eigenvalues are stationary points of $v^* A v$ subject to the
+constraint $\|v\|^2 = 1$.  Sometimes we prefer to work with all nonzero
+vectors rather than vectors with unit length, and hence define the
+{\em Rayleigh quotient}
+\[
+  \rho_A(v) = \frac{v^* A v}{v^* v};
+\]
+this ratio plays a central role in the theory of the symmetric eigenproblem.
