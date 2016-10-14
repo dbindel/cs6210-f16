@@ -1,0 +1,29 @@
+\section{Eigenvalue perturbations: a 2-by-2 illustration}
+
+Consider the matrix
+\[
+  A(\epsilon) =
+  \begin{bmatrix}
+     \lambda & 1 \\
+    \epsilon & \lambda
+  \end{bmatrix}.
+\]
+The characteristic polynomial of $A(\epsilon)$ is $p(z) = z^2 -
+2\lambda z + (\lambda^2-\epsilon)$, which has roots $\lambda \pm
+\sqrt{\epsilon}$.  These eigenvalues are {\em continuous} functions of
+$\epsilon$ at $\epsilon = 0$, but they are not differentiable
+functions.  This is a more general phenomenon: an $O(\epsilon)$
+perturbation to a matrix with an eigenvalue with multiplicity $m$
+usually splits the eigenvalue into $m$ distinct eigenvalues, each of
+which is moved from the original position by $O(\epsilon^{1/m})$.  We
+expect, then, that it will be difficult to accurately compute multiple
+eigenvalues of general nonsymmetric matrices in floating point.  If we
+are properly suspicious, we should suspect that {\em nearly} multiple
+eigenvalues are almost as troublesome --- and indeed they are.  On the
+other hand, while we usually lose some accuracy when trying to compute
+nearly multiple eigenvalues, we should not always expect to lose
+{\em all} digits of accuracy.
+
+The next lecture or two will be spent developing the perturbation
+theory we will need in order to figure out what we can and cannot
+expect from our eigenvalue computations.

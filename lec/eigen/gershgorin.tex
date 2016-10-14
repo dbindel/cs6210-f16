@@ -1,0 +1,54 @@
+\section{Gershgorin theory}
+
+The first-order perturbation theory outlined in the previous section
+is very useful, but it is also useful to consider the effects of
+{\em finite} (rather than infinitesimal) perturbations to $A$.  One of
+our main tools in this consideration will be Gershgorin's theorem.
+
+Here is the idea.  We know that diagonally dominant matrices are nonsingular,
+so if $A - \lambda I$ is diagonally dominant, then $\lambda$ cannot be an
+eigenvalue.  Contraposing this statement, $\lambda$ can be an
+eigenvalue only if $A - \lambda I$ is {\em not} diagonally dominant.
+The set of points where $A - \lambda I$ is not diagonally dominant is
+a union of sets $\cup_j G_j$, where each $G_j$ is a {\em Gershgorin disk}:
+\[
+  G_j = B_{\rho_j}(a_{jj}) =
+  \left\{
+    z \in \bbC : |a_{jj}-z| \leq \rho_j \mbox{ where }
+    \rho_j = \sum_{i \neq j} |a_{ij}|
+  \right\}.
+\]
+Our strategy now, which we will pursue in detail next time, is to use
+similarity transforms based on $A$ to make a perturbed matrix $A+E$
+look ``almost'' diagonal, and then use Gershgorin theory to turn that
+``almost'' diagonality into bounds on where the eigenvalues can be.
+
+We now argue that we can extract even more information from the
+Gershgorin disks: we can get {\em counts} of how many eigenvalues
+are in different parts of the union of Gershgorin disks.
+
+Suppose that $\mathcal{G}$ is a connected component of $\cup_j G_j$;
+in other words, suppose that $\mathcal{G} = \cup_{j \in S} G_j$ for
+some set of indices $S$, and that $\mathcal{G} \cap G_k = \emptyset$
+for $k \not \in S$.  Then the number of eigenvalues of $A$ in
+$\mathcal{G}$ (counting eigenvalues according to multiplicity) is the
+same as the side of the index set $S$.
+
+To sketch the proof, we need to know that eigenvalues are continuous
+functions of the matrix entries.  Now, for $s \in [0,1]$, define
+\[
+  H(s) = D + sF
+\]
+where $D$ is the diagonal part of $A$ and $F = A-D$ is the off-diagonal
+part.  The function $H(s)$ is a {\em homotopy} that continuously takes
+us from an easy-to-analyze diagonal matrix at $H(0) = D$ to the matrix
+we care about at $H(1) = A$.  At $s = 0$, we know the eigenvalues of $A$
+are the diagonal elements of $A$; and if we apply the first part of Gershgorin's
+theorem, we see that the eigenvalues of $H(s)$ always must live inside
+the union of Gershgorin disks of $A$ for any $0 \leq s \leq 1$.
+So each of the $|S|$ eigenvalues that start off in the connected component
+$\calG$ at $H(0) = D$ can move around continuously within $\calG$
+as we move the matrix continuously to $H(1) = A$, but they cannot ``jump''
+discontinuously across the gap between $\calG$ and any of the other Gershgorin
+disks.  So at $s = 1$, there will still be $|S|$ eigenvalues of $H(1) = A$
+inside $\calG$.

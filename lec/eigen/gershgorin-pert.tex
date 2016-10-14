@@ -1,0 +1,26 @@
+\section{Perturbing Gershgorin}
+
+Now, let us consider the relation between the Gershgorin disks for
+a matrix $A$ and a matrix $\hat{A} = A+F$.  It is straightforward to write
+down the Gershgorin disks $\hat{G}_j$ for $\hat{A}$:
+\[
+  \hat{G}_j = \calB_{\hat{\rho}_j}(\hat{a}_{jj}) =
+  \left\{
+    z \in \bbC : |a_{jj}+e_{jj}-z| \leq \hat{\rho}_j
+  \right\}
+    \mbox{ where }
+    \hat{\rho}_j = \sum_{i \neq j} |a_{ij}+f_{ij}|.
+\]
+Note that $|a_{jj} + e_{jj} - z| \geq |a_{jj}-z|-|f_{jj}|$
+and $|a_{ij}+f_{ij}| \leq |a_{ij}|+|f_{ij}|$, so
+\begin{equation} \label{disk-bound-1}
+  \hat{G}_j \subseteq \calB_{\rho_j + \sum_j |f_{ij}|}(a_{jj}) =
+  \left\{
+    z \in \bbC : |a_{jj}-z| \leq \rho_j + \sum_i |f_{ij}|
+  \right\}.
+\end{equation}
+We can simplify this expression even further if we are willing
+to expand the regions a bit:
+\begin{equation} \label{disk-bound-2}
+  \hat{G}_j \subseteq \calB_{\rho_j + \|F\|_{1}}(a_{jj}).
+\end{equation}

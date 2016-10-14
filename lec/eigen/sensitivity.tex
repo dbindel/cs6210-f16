@@ -1,0 +1,40 @@
+\section{First-order perturbation theory}
+
+Suppose $A \in \bbC^{n \times n}$ has a simple\footnote{
+  An eigenvalue is simple if it is not multiple.
+} eigenvalue $\lambda$ with corresponding column
+eigenvector $v$ and row eigenvector $w^*$.
+We would like to understand how $\lambda$ changes under
+small perturbations to $A$.  If we formally differentiate
+the eigenvalue equation $A v = v \lambda$, we have
+\[
+  (\delta A) v + A (\delta v) = (\delta v) \lambda + v (\delta \lambda).
+\]
+If we multiply this equation by $w^*$, we have
+\[
+  w^* (\delta A) v + w^* A (\delta v) =
+  \lambda w^* (\delta v) + w^* v (\delta \lambda).
+\]
+Note that $w^* A = \lambda w^*$, so that we have
+\[
+  w^* (\delta A) v = w^* v (\delta \lambda),
+\]
+which we rearrange to get
+\begin{equation} \label{basic-sensitivity}
+  \delta \lambda = \frac{w^* (\delta A) v}{w^* v}.
+\end{equation}
+This formal derivation of the first-order sensitivity of an
+eigenvalue only goes awry if $w^* v = 0$, which we can show is
+not possible if $\lambda$ is simple.
+
+We can use formula (\ref{basic-sensitivity}) to get a condition
+number for the eigenvalue $\lambda$ as follows:
+\[
+  \frac{|\delta \lambda|}{|\lambda|}
+   = \frac{|w^* (\delta A) v|}{|w^* v| |\lambda|}
+    \leq \frac{\|w\|_2 \|v\|_2}{|w^* v|} \frac{\|\delta A\|_2}{|\lambda|}
+    = \sec \theta \frac{\|\delta A\|_2}{|\lambda|}.
+\]
+where $\theta$ is the acute angle between the spaces spanned by $v$ and by $w$.
+When this angle is large, very small perturbations can drastically change the
+eigenvalue.

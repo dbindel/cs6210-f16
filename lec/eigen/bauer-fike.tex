@@ -1,0 +1,63 @@
+\section{The Bauer-Fike theorem}
+
+We now apply Gershgorin theory together with a carefully chosen
+similarity to prove a bound on the eigenvalues of $A+E$ where $E$ is a
+finite perturbation.  This will lead us to the {\em Bauer-Fike} theorem.
+
+The basic idea is as follows.  Suppose that $A$ is a diagonalizable matrix, so
+that there is a complete basis of column eigenvectors $V$ such that
+\[
+  V^{-1} A V = \Lambda.
+\]
+Then we $A+F$ has the same eigenvalues as
+\[
+  V^{-1} (A+F) V = \Lambda + V^{-1} F V = \Lambda + \tilde{F}.
+\]
+Now, consider the Gershgorin disks for $\Lambda + \tilde{F}$.
+The crude bound (\ref{disk-bound-2}) tells us
+that all the eigenvalues live in the regions
+\[
+  \bigcup_j \calB_{\|\tilde{F}\|_1}(\lambda_j) \; \subseteq \;
+  \bigcup_j \calB_{\kappa_1(V) \|F\|_1}(\lambda_j).
+\]
+This bound really is crude, though; it gives us disks of the
+same radius around all the eigenvalues $\lambda_j$ of $A$,
+regardless of the conditioning of those eigenvalues.  Let's
+see if we can do better with the sharper bound (\ref{disk-bound-1}).
+
+To use (\ref{disk-bound-1}), we need to bound
+the absolute column sums of $\tilde{F}$.  Let $e$ represent
+the vector of all ones, and let $e_j$ be the $j$th column of
+the identity matrix; then the $j$th absolute column sums of $\tilde{F}$
+is $\phi_j \equiv e^T |\tilde{F}| e_j$, which we can bound
+as $\phi_j \leq e^T |V^{-1}| |F| |V| e_j$.  Now, note that we
+are free to choose the normalization of the eigenvector $V$;
+let us choose the normalization so that each row of $W^* = V^{-1}$.
+Recall that we defined the angle $\theta_j$ by
+\[
+  \cos(\theta_j) = \frac{|w_j^* v_j|}{\|w_j\|_2 \|v_j\|_2},
+\]
+where $w_j$ and $v_j$ are the $j$th row and column eigenvectors;
+so if we choose $\|w_j\|_2 = 1$ and $w_j^* v_j = 1$ (so $W^* = V^{-1}$),
+we must have $\|v_j\|_2 = \sec(\theta_j)$.  Therefore,
+$\||V| e_j\|_2 = \sec(\theta_j)$.  Now, note that $e^T |V^{-1}|$ is
+a sum of $n$ rows of Euclidean length 1, so $\|e^T |V^{-1}|\|_2 \leq n$.
+Thus, we have
+\[
+  \phi_j \leq n \|F\|_2 \sec(\theta_j).
+\]
+Putting this bound on the columns of $\tilde{F}$ together with
+(\ref{disk-bound-1}), we have the Bauer-Fike theorem.
+
+\begin{theorem}
+  Suppose $A \in \bbC^{n \times n}$ is diagonalizable with
+  eigenvalues $\lambda_1, \ldots, \lambda_n$.
+  Then all the eigenvalues of $A+F$ are in the region
+  \[
+    \bigcup_j \calB_{n \|F\|_2 \sec(\theta_j)}(\lambda_j),
+  \]
+  where $\theta_j$ is the acute angle between the row and column eigenvectors
+  for $\lambda_j$, and any connected component $\calG$ of this region that
+  contains exactly $m$ eigenvalues of $A$ will also contain exactly $m$
+  eigenvalues of $A+F$.
+\end{theorem}

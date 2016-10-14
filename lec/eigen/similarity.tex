@@ -1,0 +1,19 @@
+\section{Similarity transforms}
+
+When we talked about least squares problems, we spent some time
+discussing the transformations that preserve the Euclidean norm:
+orthogonal transformations.  It is worth spending a moment now to give
+a name to the transformations that preserve the eigenvalue structure
+of a matrix.  These are {\em similarity} transformations.
+
+Suppose $A \in \bbC^{n \times n}$ is a square matrix, and $X \in
+\bbC^{n \times n}$ is invertible.  Then the matrix $X A X^{-1}$ is
+said to be {\em similar} to $A$, and the mapping from $A$ to $X A
+X^{-1}$ is a {\em similarity transformation}.  If $A$ is the matrix for
+an operator from $\bbC^n$ onto itself, then $X A X^{-1}$ is the matrix
+for the same operator in a different basis.  The eigenvalues and the
+Jordan block structure of a matrix are preserved under similarity, and
+the matrix $X$ gives a relationship between the eigenvectors of $A$
+and those of $X A X^{-1}$.  Note that this goes both ways: two
+matrices have the same eigenvalues and Jordan block structure iff they
+are similar.
