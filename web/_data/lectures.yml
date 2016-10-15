@@ -130,13 +130,16 @@
   date: 2016-10-17
   info: Power iterations
   hw: Midterm
+  notes: 2016-10-17.pdf
 -
   date: 2016-10-19
-  info: Power iterations
+  info: Subspace iterations and QR
   travel: Bindel at Argonne
+  notes: 2016-10-19.pdf
 -
   date: 2016-10-21
-  info: Hessenberg and real Schur form
+  info: Hessenberg QR
+  notes: 2016-10-21.pdf
 #
 # ==================
 # Week 10
@@ -144,6 +147,7 @@
 -
   date: 2016-10-24
   info: Practical QR
+  notes: 2016-10-24.pdf
 -
   date: 2016-10-26
   info: Intro to symmetric eigenproblems
