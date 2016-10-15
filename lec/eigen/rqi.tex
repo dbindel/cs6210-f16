@@ -1,0 +1,40 @@
+\section{Changing shifts}
+
+If we know a shift $\sigma$ that is close to a desired eigenvalue,
+the shift-invert power method may be a reasonable method.  But even
+with a good choice of shift, this method converges at best linearly
+(i.e. the error goes down by a constant factor at each step).
+We can do better by choosing a shift {\em dynamically}, so that as
+we improve the eigenvector, we also get a more accurate shift.
+
+Suppose $\hat{v}$ is an approximate eigenvector for $A$, i.e.
+we can find some $\hat{\lambda}$ so that
+\begin{equation} \label{rq-deriv-approx}
+  A \hat{v} - \hat{v} \hat{\lambda} \approx 0.
+\end{equation}
+The choice of corresponding approximate eigenvalues is not so clear,
+but a reasonable choice (which is always well-defined when $\hat{v}$
+is nonzero) comes from multiplying (\ref{rq-deriv-approx}) by $\hat{v}^*$
+and changing the $\approx$ to an equal sign:
+\[
+  \hat{v}^* A \hat{v} - \hat{v}^* \hat{v} \hat{\lambda} = 0.
+\]
+The resulting eigenvalue approximation $\hat{\lambda}$ is
+the {\em Rayleigh quotient}:
+\[
+  \hat{\lambda} = \frac{ \hat{v}^* A \hat{v} }{ \hat{v}^* \hat{v} }.
+\]
+
+If we dynamically choose shifts for shift-invert steps using
+Rayleigh quotients, we get the {\em Rayleigh quotient iteration}:
+\begin{align*}
+  \lambda_{k+1} &= \frac{v^{(k)\,*} A v^{(k)}}{v^{(k)\,*} v^{(k)}} \\
+  v^{(k+1)} &=
+    \frac{ (A-\lambda_{k+1})^{-1} v^{(k)} }
+         {\| (A-\lambda_{k+1})^{-1} v^{(k)} \|_2}
+\end{align*}
+Unlike the power method, the Rayleigh quotient iteration has locally
+quadratic convergence --- so once convergence sets in, the number of
+correct digits roughly doubles from step to step.  We will return to
+this method later when we discuss symmetric matrices, for which
+the Rayleigh quotient iteration has locally {\em cubic} convergence.

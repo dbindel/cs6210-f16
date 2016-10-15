@@ -1,0 +1,37 @@
+\section{Inverse iteration and the QR method}
+
+When we discussed the power method, we found that we could improve
+convergence by a spectral transformation that mapped the eigenvalue we
+wanted to something with large magnitude (preferably much larger than
+the other eigenvalues).  This was the {\em shift-invert} strategy.
+We already know there is a connection leading from the power method
+to orthogonal iteration to the QR method, which we can summarize with
+a small number of formulas.  Let us see if we can follow the same
+path to uncover a connection from inverse iteration (the power method
+with $A^{-1}$, a special case of shift-invert in which the shift is zero) to QR.
+If we call the orthogonal factors
+in orthogonal iteration  $\uQ^{(k)}$ ($\uQ^{(0)} = I$) and the iterates
+in QR iteration $A^{(k)}$, we have
+\begin{align}
+  A^{k}   &= \uQ^{(k)} \uR^{(k)} \label{orth-iter-rel} \\
+  A^{(k)} &= (\uQ^{(k)})^* A (\uQ^{(k)}).
+\end{align}
+In particular, note that because $R^{(k)}$ are upper triangular,
+\[
+  A^{k} e_1 = (\uQ^{(k)} e_1) r^{(k)}_{11};
+\]
+that is, the first column of $\uQ^{(k)}$ corresponds to the $k$th
+step of power iteration starting at $e_1$.  What happens when we
+consider negative powers of $A$?  Inverting (\ref{orth-iter-rel}),
+we find
+\[
+  A^{-k} = (\uR^{(k)})^{-1} (\uQ^{(k)})^*
+\]
+The matrix $\tilde{R}^{(k)} = (\uR^{(k)})^{-1}$ is again upper triangular;
+and if we look carefully, we can see in this fact another power iteration:
+\[
+  e_n^* A^{-k} = e_n^* \tilde{R}^{(k)} (\uQ^{(k)})^*
+              = \tilde{r}^{(k)}_{nn} (\uQ^{(k)} e_n)^*.
+\]
+That is, the last column of $\uQ^{(k)}$ corresponds to a power iteration
+converging to a {\em row} eigenvector of $A^{-1}$.

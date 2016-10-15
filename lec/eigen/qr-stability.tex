@@ -1,0 +1,15 @@
+\section{Stability of the method}
+
+Each step of the implicitly double-shifted QR iteration changes the
+matrix only with orthogonal transformations (which are perfectly conditioned)
+or deflations.  Hence, the QR iteration is backward stable.  However,
+this is {\em not} the same as saying that the method is forward stable!
+For forward stability, the conditioning of the eigenvalues is critical,
+and multiple (or nearly multiple) eigenvalues of multiplicity $m$
+usually inherit an $O(\epsilon^{1/m})$ error, as we saw in our earlier
+discussion of sensitivity.
+
+The intermediate computations in the QR code as given above are prone to
+scaling problems, and so the basic QR codes in LAPACK ({\tt dlahqr})
+uses a more careful construction of a scaled copy of the first Householder
+transformation.

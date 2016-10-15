@@ -1,0 +1,22 @@
+\section{The state of the art}
+
+The current state of the art in QR iterations is the LAPACK code {\tt
+  dgehqr} written by Ralph Byers, which is based on an award-winning
+set of papers by Braman, Byers, and Mathias.  This code uses the following
+general strategy:
+\begin{enumerate}
+\item
+  Run the basic QR iteration to find the eigenvalues of a trailing $b \times b$
+  submatrix.  Apply the transformations to the whole matrix, resulting in
+  a ``spike'' to the left of the triangularized portion.
+\item
+  Look for converged eigenvalues in the trailing submatrix by analyzing
+  the ``spike'' to find small elements.  Deflate any eigenvalues found
+  (and there may be several).  This is called {\em aggressive early deflation}.
+\item
+  Use several of the remaining eigenvalues from the Rayleigh quotient block
+  as a sequence of successive shifts.  These can be run simultaneously by
+  chasing a sequence of closely-spaced bulges down the main diagonal.
+  The similarity transformations associated are applied in a blocky way
+  to get good cache performance.
+\end{enumerate}

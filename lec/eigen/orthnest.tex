@@ -1,0 +1,77 @@
+\section{Orthogonal iteration revisited}
+
+Last time, we described a generalization of the power methods to
+compute invariant subspaces.  That is, starting from some initial
+subspace $\calV^{(0)}$, we defined the sequence
+\[
+  \calV^{(k+1)} = A \calV^{(k)} = A^{k+1} \calV^{(0)}.
+\]
+Under some assumptions, the spaces $\calV^{(k)}$ asymptotically converge
+to an invariant subspace of $A$.
+In order to actually implement this iteration, though, we need
+a concrete representation of each of the subspaces in terms of a basis.
+In the case of the power method, we normalized our vector at each step
+to have unit length.  The natural generalization in the case of
+subspace iteration is to normalize our bases to be orthonormal at each
+step.  If the columns of $V^{(k)}$ form an orthonormal basis for
+$\calV^{(k)}$, then the columns of $AV^{(k)}$ form an orthonormal
+basis for $\calV^{(k+1)}$; and we can compute an orthonormal basis
+$V^{(k+1)}$ for $\calV^{(k+1)}$ by an economy QR decomposition:
+\[
+  V^{(k+1)} R^{(k+1)} = A V^{(k)}.
+\]
+This {\em orthogonal iteration} gives us a sequence of orthonormal
+bases $V^{(k+1)}$ for the spaces $\calV^{(k)}$.
+
+We also mentioned in the last lecture that orthogonal iteration has
+the marvelous property that it runs subspace iteration
+{\em for a sequence of nested subspaces}.  Using MATLAB notation,
+we have that for any $l$,
+\[
+  V^{(k+1)}(:,1:l) R^{(k+1)}(1:l,1:l) = A V^{(k)}(:,1:l).
+\]
+So by running orthogonal iteration on an $m$-dimensional subspace,
+we magically {\em also} run orthogonal iteration on an $l$-dimensional
+subspaces for each $l \leq m$.  Recall that the Schur factorization
+\[
+  AU = UT
+\]
+involves an orthonormal basis $U$ such that for any $l$,
+$U(:,1:l)$ spans an $l$-dimensional invariant subspace
+(this is from the triangularity of $T$).  So we might hope that
+if we ran orthogonal iteration on {\em all} of $A$, we would
+eventually converge to the $U$ matrix in the Schur factorization.
+That is, starting from $\uQ^{(0)} = I$, we iterate
+\begin{equation} \label{orth-iter-def}
+  \uQ^{(k+1)} R^{(k+1)} = A \uQ^{(k)}
+\end{equation}
+in the hopes that the columns of $\uQ^{(k)}$, since they span
+nested bases undergoing subspace iteration, will converge
+to the unitary factor $U$.
+
+Now, consider the first two steps of this iteration:
+\begin{align*}
+  \uQ^{(1)} R^{(1)} &= A \\
+  \uQ^{(2)} R^{(2)} &= A \uQ^{(1)}
+\end{align*}
+If we multiply the second equation on the right by $R^{(1)}$,
+we have
+\begin{equation} \label{orth-iter-2}
+  \uQ^{(2)} R^{(2)} R^{(1)} = A \uQ^{(1)} R^{(1)} = A^2.
+\end{equation}
+Similarly, if we multiply $\uQ^{(3)} R^{(3)} = A \uQ^{(3)}$ by $R^{(2)} R^{(1)}$,
+we have
+\[
+  \uQ^{(3)} R^{(3)} R^{(2)} R^{(1)} = A \uQ^{(2)} R^{(2)} R^{(1)} = A^3,
+\]
+where the last equality comes from (\ref{orth-iter-2}).
+We can keep going in this fashion, and if we define the
+upper triangular matrix
+$\uR^{(k)} = R^{(k)} R^{(k-1)} \ldots R^{(1)}$, we have
+\[
+  \uQ^{(k)} \uR^{(k)} = A^k.
+\]
+That is, $\uQ^{(k)}$ is precisely the unitary factor in a QR
+decomposition of $A^k$.  This fact may be unsurprising if
+we consider that we derived this orthogonal iteration from
+the power method.

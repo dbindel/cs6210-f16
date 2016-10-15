@@ -1,0 +1,73 @@
+\section{Power iteration}
+
+In most introductory linear algebra classes, one computes
+eigenvalues as roots of a characteristic polynomial.
+For most problems, this is a {\em bad idea}: the roots of
+the characteristic polynomial are often very sensitive to changes
+in the polynomial coefficients even when they correspond to
+well-conditioned eigenvalues.  Rather than starting from this
+point, we will start with another idea: the {\em power iteration}.
+
+Suppose $A \in \bbC^{n \times n}$ is diagonalizable, with eigenvalues
+$\lambda_1, \ldots, \lambda_n$ ordered so that
+\[
+  |\lambda_1| \geq
+  |\lambda_2| \geq \ldots \geq
+  |\lambda_n|.
+\]
+Then we have $A = V \Lambda V^{-1}$ where
+$\Lambda = \operatorname{diag}(\lambda_1, \ldots, \lambda_n)$.  Now, note that
+\[
+  A^k = (V \Lambda V^{-1})(V \Lambda V^{-1}) \ldots (V\Lambda V^{-1})
+      = V \Lambda^k V^{-1},
+\]
+or, to put it differently,
+\[
+  A^k V = V \Lambda^k.
+\]
+Now, suppose we have a randomly chosen vector $x = V \tilde{x} \in \bbC^{n}$,
+and consider
+\[
+  A^k x = A^k V \tilde{x} = V \Lambda^k \tilde{x}
+        = \sum_{j=1}^n v_j \lambda_j^k \tilde{x}_j.
+\]
+If we pull out a constant factor from this expression, we have
+\[
+  A^k x = \lambda_1^k \left(
+    \sum_{j=1}^n v_j \left( \frac{\lambda_j}{\lambda_1} \right)^k \tilde{x}_j
+  \right).
+\]
+If $|\lambda_1| > |\lambda_2|$, then
+$(\lambda_j/\lambda_1)^k \rightarrow 0$ for each $j > 1$, and for
+large enough $k$, we expect $A^k x$ to be nearly parallel to $v_1$,
+assuming $\tilde{x}_1 \neq 0$.  This is the idea behind the power
+iteration:
+\[
+  x^{(k+1)} = \frac{A x^{(k)}}{\|A x^{(k)}\|}
+           = \frac{A^k x^{(0)}}{\|A^k x^{(0)}\|}.
+\]
+Assuming that the first component of $V^{-1} x^{(0)}$ is nonzero
+and that $|\lambda_1| > |\lambda_2|$, the iterates $x^{(k)}$
+converge linearly to the ``dominant'' eigenvector of $A$, with the
+error asymptotically decreasing by a factor of $|\lambda_1|/|\lambda_2|$
+at each step.
+
+There are three obvious potential problems with the power method:
+\begin{enumerate}
+\item
+  What if the first component of $V^{-1} x^{(0)}$ is zero?
+\item
+  What $\lambda_1/\lambda_2$ is near one?
+\item
+  What if we want the eigenpair $(\lambda_j, v_j)$ for $j \neq 1$?
+\end{enumerate}
+The first point turns out to be a non-issue: if we choose $x^{(0)}$ at
+random, then the first component of $V^{-1} x^{(0)}$ will be nonzero
+with probability 1.  Even if we were so extraordinarily unlucky as to
+choose a starting vector for which $V^{-1} x^{(0)}$ {\em did} have a
+zero leading coefficient, perturbations due to floating point
+arithmetic would generally bump us to the case in which we had a
+nonzero coefficient.
+
+The second and third points turn out to be more interesting,
+and we address them now.

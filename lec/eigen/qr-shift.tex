@@ -1,0 +1,41 @@
+\section{Shifting gears}
+
+The connection from inverse iteration to orthogonal iteration (and
+thus to QR iteration) gives us a way to incorporate the shift-invert
+strategy into QR iteration: simply run QR on the matrix $A-\sigma I$,
+and the $(n,n)$ entry of the iterates (which corresponds to a Rayleigh
+quotient with an increasingly-good approximate row eigenvector) should
+start to converge to $\lambda - \sigma$, where $\lambda$ is the
+eigenvalue nearest $\sigma$.  Put differently, we can run the
+iteration:
+\begin{align*}
+  Q^{(k)} R^{(k)} &= A^{(k-1)} - \sigma I \\
+  A^{(k)} &= R^{(k)} Q^{(k)} + \sigma I.
+\end{align*}
+If we choose a good shift, then the lower right corner entry of
+$A^{(k)}$ should converge to the eigenvalue closest to $\sigma$ in
+fairly short order, and the rest of the elements in the last row
+should converge to zero.
+
+The shift-invert power iteration converges fastest when we choose a
+shift that is close to the eigenvalue that we want.  We can do even
+better if we choose a shift {\em adaptively}, which was the basis for
+running Rayleigh quotient iteration.  The same idea is the basis
+for the {\em shifted QR iteration}:
+\begin{align}
+  Q^{(k)} R^{(k)} &= A^{(k-1)} - \sigma_k I \label{sqr-1} \\
+  A^{(k)} &= R^{(k)} Q^{(k)} + \sigma_k I. \label{sqr-2}
+\end{align}
+This iteration is equivalent to computing
+\begin{align*}
+  \uQ^{(k)} \uR^{(k)} &= \prod_{j=1}^n (A-\sigma_j I) \\
+  A^{(k)} &= (\uQ^{(k)})^* A (\uQ^{(k)}) \\
+  \uQ^{(k)} &= Q^{(k)} Q^{(k-1)} \ldots Q^{(1)}.
+\end{align*}
+
+What should we use for the shift parameters $\sigma_k$?  A natural
+choice is to use $\sigma_k = e_n^* A^{(k-1)} e_n$, which is the same
+as $\sigma_k = (\uQ^{(k)} e_n)^* A (\uQ^{(k)} e_n)$, the Rayleigh quotient
+based on the last column of $\uQ^{(k)}$.  This simple shifted QR iteration
+is equivalent to running Rayleigh iteration starting from an initial vector
+of $e_n$, which we noted before is locally quadratically convergent.

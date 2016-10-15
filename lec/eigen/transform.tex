@@ -1,0 +1,29 @@
+\section{Spectral transformation and shift-invert}
+
+Suppose again that $A$ is diagonalizable with $A = V \Lambda V^{-1}$.
+The power iteration relies on the identity
+\[
+  A^k = V \Lambda^k V^{-1}.
+\]
+Now, suppose that $f(z)$ is any function that is defined locally by a
+convergent power series.  Then as long as the eigenvalues are within
+the radius of convergence, we can define $f(A)$ via the same power series,
+and
+\[
+  f(A) = V f(\Lambda) V^{-1}
+\]
+where $f(\Lambda) = \operatorname{diag}(f(\lambda_1), f(\lambda_2),
+\ldots, f(\lambda_n))$.  So the spectrum of $f(A)$ is the image of
+the spectrum of $A$ under the mapping $f$, a fact known as the
+{\em spectral mapping theorem}.
+
+As a particular instance, consider the function $f(z) = (z-\sigma)^{-1}$.
+This gives us
+\[
+  (A-\sigma I)^{-1} = V (\Lambda - \sigma I)^{-1} V^{-1},
+\]
+and so if we run power iteration on $(A-\sigma I)^{-1}$, we will converge
+to the eigenvector corresponding to the eigenvalue $\lambda_j$ for
+which $(\lambda_j-\sigma)^{-1}$ is maximal --- that is, we find the eigenvalue
+closest to $\sigma$ in the complex plane.  Running the power method on
+$(A-\sigma I)^{-1}$ is sometimes called the shift-invert power method.

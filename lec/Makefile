@@ -1,4 +1,8 @@
 LEC=\
+	2016-10-24.pdf \
+	2016-10-21.pdf \
+	2016-10-19.pdf \
+	2016-10-17.pdf \
 	2016-10-14.pdf \
 	2016-10-12.pdf \
 	2016-10-07.pdf \
@@ -31,10 +35,42 @@ copy:
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
-LEC19= \
+LEC25= \
+	eigen/qr-shift2.tex eigen/qr-deflate.tex \
+	eigen/qr-stability.tex eigen/qr-dgehqr.tex \
+	code/eigen/hessqr.m code/eigen/francis_poly.m \
+	code/eigen/hessqr_francis.m
+2016-10-24.pdf: 2016-10-24.tex common.tex commonm.tex \
+	$(LEC25)
+
+LEC24= \
+	eigen/hessqr.tex eigen/qr-inv-iter.tex eigen/qr-shift.tex \
+	code/eigen/hessred.m code/eigen/hessqr_basic.m
+2016-10-21.pdf: 2016-10-21.tex common.tex commonm.tex \
+	$(LEC24)
+
+LEC23= \
+	eigen/orthnest.tex eigen/orth2qr.tex
+2016-10-19.pdf: 2016-10-19.tex common.tex commonm.tex \
+	$(LEC23)
+
+LEC22= \
+	eigen/power.tex eigen/transform.tex eigen/rqi.tex eigen/subspace.tex \
+	code/eigen/power.m code/eigen/rqi.m code/eigen/subspace.m
+2016-10-17.pdf: 2016-10-17.tex common.tex commonm.tex \
+	$(LEC22)
+
+LEC21= \
+	eigen/similarity.tex eigen/pert2.tex eigen/sensitivity.tex \
+	eigen/gershgorin.tex eigen/gershgorin-pert.tex \
+	eigen/bauer-fike.tex
+2016-10-14.pdf: 2016-10-14.tex common.tex commonm.tex \
+	$(LEC21) logistics/2016-10-14.tex
+
+LEC20= \
 	eigen/intro.tex eigen/applications.tex
 2016-10-12.pdf: 2016-10-12.tex common.tex commonm.tex \
-	$(LEC19) logistics/2016-10-12.tex
+	$(LEC20) logistics/2016-10-12.tex
 
 LEC19= \
 	leastsq/regchoice.tex leastsq/nearness.tex

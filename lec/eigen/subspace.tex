@@ -1,0 +1,53 @@
+\section{Subspaces and orthogonal iteration}
+
+So far, we have still not really addressed the issue of dealing with
+clustered eigenvalues.  For example, in power iteration, what should
+we do if $\lambda_1$ and $\lambda_2$ are very close?  If the ratio
+between the two eigenvalues is nearly one, we don't expect the power
+method to converge quickly; and we are likely to not have at hand a
+shift which is much closer to $\lambda_1$ than to $\lambda_2$, so
+shift-invert power iteration might not help much.  In this case, we
+might want to relax our question, and look for the invariant subspace
+associated with $\lambda_1$ and $\lambda_2$ (and maybe more
+eigenvalues if there are more of them clustered together with
+$\lambda_1$) rather than looking for the eigenvector associated with
+$\lambda_1$.  This is the idea behind {\em subspace iteration}.
+
+In subspace iteration, rather than looking at $A^k x_0$ for some
+initial vector $x_0$, we look at $\mathcal{V}_k = A^k \mathcal{V}_0$,
+where $\mathcal{V}_0$ is some initial subspace.  If $\mathcal{V}_0$ is
+a $p$-dimensional space, then under some mild assumptions the space
+$\mathcal{V}_k$ will asymptotically converge to the $p$-dimensional
+invariant subspace of $A$ associated with the $p$ eigenvalues of $A$
+with largest modulus.  The analysis is basically the same as the
+analysis for the power method.  In order to actually {\em compute},
+though, we need bases for the subspaces $\mathcal{V}_k$.  Let us define
+these bases by the recurrence
+\[
+  Q_{k+1} R_{k+1} = A Q_k
+\]
+where $Q_0$ is a matrix with $p$ orthonormal columns and
+$Q_{k+1} R_{k+1}$ represents an economy QR decomposition.
+This recurrence is called {\em orthogonal iteration}, since
+the columns of $Q_{k+1}$ are an orthonormal basis for
+the range space of $A Q_k$, and the span of $Q_k$ is the span of $A^k Q_0$.
+
+Assuming there is a gap between $|\lambda_{p}|$ and $|\lambda_{p+1}|$,
+orthogonal iteration will usually converge to an orthonormal basis
+for the invariant subspace spanned by the first $p$ eigenvectors of $A$.
+But it is interesting to look not only at the behavior of the subspace,
+but also at the span of the individual eigenvectors.  For example,
+notice that the first column $q_{k,1}$ of $Q_k$ satisfies the recurrence
+\[
+  q_{k+1,1} r_{k+1,11} = A q_{k,1},
+\]
+which means that the vectors $q_{k,1}$ evolve according to the power method!
+So over time, we expect the first columns of the $Q_k$ to converge to the
+dominant eigenvector.  Similarly, we expect the first two columns of $Q_k$
+to converge to a basis for the dominant two-dimensional invariant subspace,
+the first three columns to converge to the dominant three-dimensional
+invariant subspace, and so on.  This observation suggests that we might be
+able to get a complete list of nested invariant subspaces by letting the
+initial $Q_0$ be some square matrix.  This is the basis for the workhorse
+of nonsymmetric eigenvalue algorithms, the {\em QR method}, to which we
+shall turn next time.

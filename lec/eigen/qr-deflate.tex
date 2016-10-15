@@ -1,0 +1,22 @@
+\section*{Deflation}
+
+A sequence of implicit doubly-shifted QR steps with the Francis shift
+will usually give us rapid convergence of a trailing 1-by-1 or 2-by-2
+submatrix to a block of a Schur factorization.  As this happens,
+the trailing row (or two rows) becomes very close to zero.  When the
+values in these rows are close enough to zero, we {\em deflate} by
+setting them equal to zero.  This corresponds to a small perturbation
+to the original problem.
+
+The following code converts a Hessenberg matrix to a block upper triangular
+matrix with 1-by-1 and 2-by-2 blocks.  To reduce this matrix further to
+real Schur form, we would need to make an additional pass to further
+reduce any 2-by-2 block with real eigenvalues into a pair of 1-by-1 blocks.
+
+\lstinputlisting{code/eigen/hessqr.m}
+
+More careful deflation criteria are usually used in practice;
+see the book.  This criterion at least corresponds to small normwise
+perturbations to the original problem, but it may result in less
+accurate estimates of small eigenvalues than we could obtain with
+a more aggressive criterion.
