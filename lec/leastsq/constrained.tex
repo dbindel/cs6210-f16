@@ -31,15 +31,21 @@ variables (the method of {\em Lagrange multipliers}).
 In the null space method, we write an explicit expression for the solutions
 to $C^T x = d$ in the form $x^p + W z$ where $x^p$ is a particular solution
 to $C^T x^p = d$ and $W$ is a basis for the null space of $C^T$.  Perhaps the
-simplest particular solution is $x = C^\dagger d$; we can compute both
+simplest particular solution is $x^p = (C^T)^\dagger d$, the solution with
+minimal norm; we can compute both
 this particular solution and an orthogonormal null space basis quickly
 using a full QR decomposition of $C$:
 \[
   C =
     \begin{bmatrix} Q_1 & Q_2 \end{bmatrix}
     \begin{bmatrix} R_1 \\ 0 \end{bmatrix}, \quad
-  x = R_1^{-1} Q_1^T d, \quad W = Q_2.
+  x^p = Q_1 R_1^{-T} d, \quad W = Q_2.
 \]
+Note that
+\[
+  C^T x^p = (R_1^T Q_1^T) x^p = d,
+\]
+so this is indeed a particular solution.
 Having written an explicit parameterization for all solutions of the
 constraint equations, we can minimize the least squares objective with
 respect to the reduced set of variables
