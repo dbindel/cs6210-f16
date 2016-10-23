@@ -18,8 +18,10 @@ The simple shift strategy we described in the previous section gives
 %
 As a particularly pesky example, consider what happens if we
 want to compute a complex conjugate pair of eigenvalues of a real
-matrix.  With our simple shifting strategy, the iteration
-(\ref{sqr-1})--(\ref{sqr-2}) will never produce a complex iterate, a
+matrix.  With our simple shifting strategy, 
+%the iteration (\ref{sqr-1})--(\ref{sqr-2}) will 
+the QR iteration
+never produce a complex iterate, a
 complex shift, or a complex eigenvalue.  The best we can hope for is
 that our initial shift is closer to both eigenvalues in the conjugate
 pair than it is to anything else in the spectrum; in this case, we

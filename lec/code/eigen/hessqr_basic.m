@@ -3,7 +3,7 @@
 % Compute one basic (unshifted) implicit Hessenberg QR step via
 % Householder transformations.
 %
-function H = lec27hessqr(H)
+function H = hessqr_basic(H)
 
   n = length(H);
   V = zeros(2,n-1);
