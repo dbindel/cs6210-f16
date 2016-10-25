@@ -150,7 +150,7 @@
   notes: 2016-10-24.pdf
 -
   date: 2016-10-26
-  info: Intro to symmetric eigenproblems
+  info: Theory for symmetric eigenproblems and SVD
 -
   date: 2016-10-28
   info: Symmetric power iterations and QR
@@ -160,38 +160,38 @@
 #
 -
   date: 2016-10-31
-  info: Other methods
+  info: Inertia, bisection, DC, and the Grail
   hw: HW 4
 -
   date: 2016-11-02
-  info: Computing the SVD
+  info: Other eigenvalue problems
 -
   date: 2016-11-04
-  info: Symmetric generalized problems
+  info: Model problems for iterative methods
 #
 # ==================
 # Week 12
 #
 -
   date: 2016-11-07
-  info: Lanczos and connections
+  info: Splittings, sweeps, and stationary iterations
 -
   date: 2016-11-09
-  info: Lanczos and connections
+  info: Approximation from subspaces
 -
   date: 2016-11-11
-  info: Lanczos and connections
+  info: Krylov subspaces
 #
 # ==================
 # Week 13
 #
 -
   date: 2016-11-14
-  info: Arnoldi and company
+  info: Lanczos, Arnoldi, and connections
   hw: HW 5
 -
   date: 2016-11-16
-  info: Classical iterations
+  info: Lanczos, Arnoldi, and connections
 -
   date: 2016-11-18
   info: Conjugate gradients
@@ -214,11 +214,12 @@
 #
 -
   date: 2016-11-28
-  info: Preconditioners
+  info: The preconditioning landscape
 -
   date: 2016-11-30
-  info: Multigrid
+  info: Review
 -
   date: 2016-12-02
-  info: Review
+  info: No lecture
+  travel: Bindel at NYU
   hw: HW 6
