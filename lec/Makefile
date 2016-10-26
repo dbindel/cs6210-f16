@@ -1,4 +1,5 @@
 LEC=\
+	2016-10-26.pdf \
 	2016-10-24.pdf \
 	2016-10-21.pdf \
 	2016-10-19.pdf \
@@ -34,6 +35,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC26= \
+	sep/basics.tex sep/variational.tex sep/minimax.tex \
+	sep/subspace.tex sep/inertia.tex
+2016-10-26.pdf: 2016-10-26.tex common.tex commonm.tex \
+	$(LEC26)
 
 LEC25= \
 	eigen/qr-shift2.tex eigen/qr-deflate.tex \

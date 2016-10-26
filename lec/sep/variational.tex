@@ -1,0 +1,83 @@
+\section{Variational approaches}
+
+% The Rayleigh quotient (standard or gen), weighted eigenvalue combo
+% Implications for the SVD (two-sided)
+% Constrained optimization and Lagrange multipliers
+% Residual minimization
+
+The Rayleigh quotient plays a central role in the theory of the
+symmetric eigenvalue problem.  Recall that the Rayleigh quotient is
+\[
+  \rho_A(v) = \frac{v^* A v}{v^* v}.
+\]
+Substituting in $A = U \Lambda U^*$ and (without loss of generality)
+assuming $w = U^* v$ is unit length, we have
+\[
+  \rho_A(v) = \sum_{i=1}^N \lambda_i |w_i|^2, \quad
+  \mbox{ with } \sum_{i=1}^N |w_i|^2 = 1.
+\]
+That is, the Rayleigh quotient is a weighted average of the eigenvalues.
+Maximizing or minimizing the Rayleigh quotient therefore yields the
+largest and the smallest eigenvalues, respectively; more generally,
+for a fixed $A$,
+\[
+  \delta \rho_A(v) = \frac{2}{\|v\|^2} \, \delta_v^* \left( A v - v \rho_A(v) \right),
+\]
+and so at a stationary $v$ (where all derivatives are zero),
+we satisfy the eigenvalue equation
+\[
+  Av = v \rho(A).
+\]
+The eigenvalues are the stationary values of $\rho_A$; the eigenvectors
+are stationary vectors.
+
+The Rayleigh quotient is homogeneous of degree zero; that is, it is
+invariant under scaling of the argument, so $\rho_A(v) = \rho_A(\tau v)$
+for any $\tau \neq 0$.  Hence, rather than consider the problem of
+finding stationary points of $\rho_A$ generally, we might restrict our
+attention to the unit sphere.  That is, consider the Lagrangian function
+\[
+  L(v,\lambda) = v^* A v - \lambda (v^* v - 1);
+\]
+taking variations gives
+\[
+  \delta L = 2 \delta v^* (Av -\lambda v) - \delta \lambda (v^* v - 1)
+\]
+which is zero only if $Av = \lambda v$ and $v$ is normalized to unit
+length.  In this formulation, the eigenvalue is identical to the
+Lagrange multiplier that enforces the constraint.
+
+The notion of a Rayleigh quotient generalizes to pencils.
+If $M$ is Hermitian and positive definite, then
+\[
+  \rho_{A,M}(v) = \frac{v^* A v}{v^* M v}
+\]
+is a weighted average of generalized eigenvalues, and the stationary
+vectors satisfy the generalized eigenvalue problem
+\[
+  Av = Mv \rho_{A,M}(v).
+\]
+We can also restrict to the ellipsoid $\|v\|_M^2 = 1$, i.e. consider
+the stationary points of the Lagrangian
+\[
+  L(v,\lambda) = v^* A v - \lambda (v^* M v - 1),
+\]
+which again yields a generalized eigenvalue problem.
+
+The analogous construction for the SVD is
+\[
+  \phi(u,v) = \frac{u^* A v}{\|u\| \|v\|}
+\]
+or, thinking in terms of a constrained optimization problem, 
+\[
+  L(u,v,\lambda,\mu) = u^* A v - \lambda (u^* u - 1) - \mu (v^* v-1).
+\]
+Taking variations gives
+\[
+  \delta L =
+  \delta u^* (Av - 2\lambda u) + \delta v^* (A^* u-2\mu v) - \delta \lambda (u^*u - 1) - \delta \mu (v^* v - 1),
+\]
+and so $Av \propto u$ and $A^* u \propto v$.  Combining these observations
+gives $A^* A v \propto v$, $A A^* u \propto u$, which we recognize as one
+of the standard eigenvalue problem formulations for the SVD, with the squared
+singular values as the constant of proportionality.

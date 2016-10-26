@@ -1,0 +1,34 @@
+\section{Sylvester's inertia theorem}
+
+The inertia $\nu(A)$ is a triple consisting of the number of positive,
+negative, and zero eigenvalues of $A$.  {\em Sylvester's inertia
+  theorem} says that inertia is preserved under nonsingular {\em
+  congruence} transformations, i.e. transformations of the form
+\[
+  M = V^* A V
+\]
+where $V$ is nonsingular (but not necessarily unitary).
+
+Congruence transformations are significant because they are the natural
+transformations for {\em quadratic forms} defined by symmetric matrices;
+and the invariance of inertia under congruence says something about the
+invariance of the shape of a quadratic form under a change of basis.
+For example, if $A$ is a positive (negative) definite matrix, then the
+quadratic form
+\[
+  \phi(x) = x^* A x
+\]
+defines a concave (convex) bowl; and $\phi(Vx) = x^* (V^* A V) x$ has
+the same shape.
+
+As with almost anything else related to the symmetric eigenvalue
+problem, the minimax characterization is the key to proving
+Sylvester's inertia theorem.  The key observation is that if
+$M = V^* A V$ and $A$ has $k$ positive eigenvalues, then the minimax theorem
+gives us a $k$-dimensional subspace $\calW_+$ on which $A$ is positive
+definite (i.e. if $W$ is a basis, then $z^* (W^* A W) z > 0$ for any
+nonzero $z$).  The matrix $M$ also has a $k$-dimensional space on
+which it is positive definite, namely $V^{-1} \calW$.  Similarly, $M$
+and $A$ both have $(n-k)$-dimensional spaces on which they are
+negative semidefinite.  So the number of positive eigenvalues of $M$
+is $k$, just as the number of positive eigenvalues of $A$ is $k$.

@@ -1,0 +1,131 @@
+\section{Symmetric eigenvalue basics}
+
+% Real semi-simple eigenvalues (no Jordan blocks)
+% Orthogonal eigensystems
+% Spectral projectors
+% Connection to SVD (Gram or block)
+% Generalized eigenvalue problems
+% Avoided crossings
+
+The {\em symmetric (Hermitian) eigenvalue problem} is to find nontrivial
+solutions to
+\[
+  A x = x \lambda
+\]
+where $A = A^*$ is symmetric (Hermitian).  The symmetric eigenvalue
+problem satisfies several properties that we do not have in the general
+case:
+\begin{itemize}
+\item
+  All eigenvalues are real.
+\item
+  There are no non-trivial Jordan blocks.
+\item
+  Eigenvectors associated with distinct eigenvalues are orthogonal.
+\end{itemize}
+It is worthwhile to make some arguments for these facts, drawing
+on ideas we have developed already:
+\begin{itemize}
+\item
+  For any $v$, $v^* A v = v^* A^* v = \bar{v^* A v}$, so $v^* A v$
+  must be real; and we can write any eigenvalue as $v^* A v$ where $v$
+  is the corresponding eigenvector (normalized to unit length).
+\item
+  If $(A-\lambda I)^2 v = 0$ for $\lambda \in \bbR$ and $v \neq 0$, then
+  \[
+    0 = v^* (A-\lambda I)^2 v = \|(A-\lambda I) v\|^2 = 0;
+  \]
+  and so $(A-\lambda I) v = 0$ as well.
+  But if $\lambda$ is associated with a Jordan block, there must
+  be $v \neq 0$ such that $(A-\lambda I)^2 v = 0$ and
+  $(A-\lambda I) v \neq 0$.
+\item
+  If $\lambda \neq \mu$ are eigenvalues associated with eigenvectors
+  $u$ and $v$, then
+  \[
+    \lambda u^* v = u^* A v = \mu u^* v.
+  \]
+  But if $\lambda \neq \mu$, then $(\lambda-\mu) u^* v = 0$ implies
+  that $u^* v = 0$.
+\end{itemize}
+
+We write the complete eigendecomposition of $A$ as
+\[
+  A = U \Lambda U^*
+\]
+where $U$ is orthogonal or unitary and $\Lambda$ is a real diagonal
+matrix.  This is simultaneously a Schur form and a Jordan form.
+
+More generally, if $\langle \cdot, \cdot \rangle$ is an inner product on
+a vector space, the {\em adjoint} of an operator $A$ on that vector
+space is the operator $A^*$ s.t. for any $v, w$
+\[
+  \langle Av, w \rangle = \langle v, A^* w \rangle.
+\]
+If $A = A^*$, then $A$ is said to be {\em self-adjoint}.
+If a matrix $A$ is self-adjoint with respect to the $M$-inner product
+$\langle v, w \rangle_M = w^* M v$ where $M$ is Hermitian positive
+definite, then $H = M A$ is also Hermitian.  In this case, we can rewrite the
+eigenvalue problem
+\[
+  Ax = x \lambda
+\]
+as
+\[
+  Hx = MA x = Mx \lambda.
+\]
+This gives a {\em generalized} symmetric eigenvalue problem\footnote{%
+The case where $M$ is allowed to be indefinite is not much nicer
+than the general nonsymmetric case.}.  A standard example involves
+the analysis of reversible Markov chains, for which the transition
+matrix is self-adjoint with respect to the inner product
+defined by the invariant measure.
+
+For the generalized problem involving the matrix pencil $(H,M)$,
+all eigenvalues are again real and there is a
+complete basis of eigenvectors; but these eigenvectors are now
+$M$-orthogonal.  That is, there exists $U$ such that
+\[
+  U^* H U = \Lambda, \quad U^* M U = I.
+\]
+Generalized eigenvalue problems arise frequently in problems from
+mechanics.  Note that if $M = R^T R$ is a Cholesky factorization,
+then the generalized eigenvalue problem for $(H,M)$ is related to
+a standard symmetric eigenvalue problem
+\[
+  \hat{H} = R^{-T} H R^{-1};
+\]
+if $\hat{H} x = x \lambda$, then $H y = M y \lambda$ where $Ry = x$.
+We may also note that $R^{-1} \hat{H} R = M^{-1} H$; that is
+$\hat{H}$ is related to $A = M^{-1} H$ by a similarity transform.
+Particularly for the case when $M$ is large and sparse, though,
+it may be preferable to work with the generalized problem directly
+rather than converting to a standard eigenvalue problem, whether or
+not the latter is symmetric.
+
+The singular value decomposition may be associated with several
+different symmetric eigenvalue problems.  Suppose $A \in \bbR^{n \times n}$
+has the SVD $A = U \Sigma V^T$; then
+\begin{align*}
+  A^T A &= V \Sigma^2 V^T \\
+  A A^T &= U \Sigma^2 U^T \\
+  \begin{bmatrix}
+    0 & A \\
+    A^T & 0
+  \end{bmatrix} &=
+  \frac{1}{2}
+  \begin{bmatrix}
+    U & U \\
+    V & -V
+  \end{bmatrix}
+  \begin{bmatrix}
+    \Sigma & 0 \\
+    0 & -\Sigma
+  \end{bmatrix}
+  \begin{bmatrix}
+     U &  U \\
+     V & -V
+  \end{bmatrix}^T.
+\end{align*}
+The picture is marginally more complicated when $A$ is rectangular ---
+but only marginally.

@@ -1,0 +1,30 @@
+\section{Sensitivity of invariant subspaces}
+
+The eigenvalues of a symmetric matrix are perfectly conditioned.  What
+of the eigenvectors (or, more generally, the invariant subspaces)?
+Here the picture is more complex, and involves {\em spectral gaps}.
+Suppose $u$ is an eigenvector of $A$ associated with eigenvalue $\mu$,
+and the nearest other eigenvalue is at least $\gamma$ apart.  Then
+there is a perturbation $E$ with $\|E\|_2 = \gamma/2$ for which the
+eigenvalue at $\mu$ and the nearest eigenvalue coalesce.
+
+A more refined picture is given by Davis and Kahan and covered in many
+textbooks since (I recommend those of Parlett and of Stewart).  Let
+$AU = U\Lambda$ and $\hat{A} \hat{U} = \hat{U} \hat{\Lambda}$,
+and define $R = \|\hat{A} U-U \Lambda\|$.  Then
+\[
+  \|\sin \Theta(U,\hat(U))\|_F \leq \frac{\|R\|_F}{\delta}
+\]
+where $\delta$ is the gap between the eigenvalues in $\Lambda$
+and the rest of the spectrum.  If we enforce a gap between an interval
+containing the eigenvalues in $\Lambda$ and the rest of the spectrum,
+we can change all the Frobenius norms into 2-norms (or any other
+unitarily invariant norm).  The matrix $\sin \Theta(U,\hat{U})$ is
+the matrix of sines of the {\em canonical angles} between $U$ and $\hat{U}$;
+if both bases are normalized, the cosines of these canonical angles are
+the singular values of $U^* \hat{U}$.
+
+The punchline for this is that an eigenvector or invariant subspace
+for eigenvalues separated by a large spectral gap from everything
+else in the specturm is nicely stable.  But if the spectral gap is small,
+the vectors may spin like crazy under perturbations.
