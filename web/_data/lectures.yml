@@ -151,6 +151,7 @@
 -
   date: 2016-10-26
   info: Theory for symmetric eigenproblems and SVD
+  notes: 2016-10-26.pdf
 -
   date: 2016-10-28
   info: Symmetric power iterations and QR
