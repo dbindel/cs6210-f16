@@ -154,14 +154,15 @@
   notes: 2016-10-26.pdf
 -
   date: 2016-10-28
-  info: Symmetric power iterations and QR
+  info: Theory for symmetric eigenproblems and SVD
+  notes: 2016-10-28.pdf
 #
 # ==================
 # Week 11
 #
 -
   date: 2016-10-31
-  info: Inertia, bisection, DC, and the Grail
+  info: Solver ideas for SEP and SVD
   hw: HW 4
 -
   date: 2016-11-02

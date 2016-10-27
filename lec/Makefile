@@ -1,4 +1,5 @@
 LEC=\
+	2016-10-28.pdf \
 	2016-10-26.pdf \
 	2016-10-24.pdf \
 	2016-10-21.pdf \
@@ -36,9 +37,13 @@ copy:
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
+LEC27= \
+	sep/minimax.tex sep/subspace.tex sep/inertia.tex
+2016-10-28.pdf: 2016-10-28.tex common.tex commonm.tex \
+	$(LEC27)
+
 LEC26= \
-	sep/basics.tex sep/variational.tex sep/minimax.tex \
-	sep/subspace.tex sep/inertia.tex
+	sep/basics.tex sep/variational.tex
 2016-10-26.pdf: 2016-10-26.tex common.tex commonm.tex \
 	$(LEC26)
 
