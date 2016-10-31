@@ -1,0 +1,84 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\begin{document}
+
+\hdr{HW 5}
+
+You may (and should) talk about problems with each other and with me,
+providing attribution for any good ideas you might get.  Your final
+write-up should be your own.
+
+\paragraph*{1: Minimize this!}
+Consider $A \in \bbR^{n \times n}, b \in \bbR^n$ with $A$ symmetric
+and $b$ not an eigenvector, and define
+\[
+  \phi(x) = \frac{1}{2} x^T A x - x^T b.
+\]
+We wish to minimize $\phi$ subject to the constraint $x^T x = 1$,
+via the Lagrangian
+\[
+  L(x,\mu) = \frac{1}{2} x^T A x - x^T b - \frac{\mu}{2} (x^T x - 1).
+\]
+\begin{enumerate}
+\item Express $x$ at a stationary point in terms
+  of $A$, $b$, and $\mu$.
+\item Argue that the condition $\|x\|^2 = 1$, given the expression
+  from the previous step, is equivalent to
+  singularity of the matrix
+  \[
+    \begin{bmatrix} (A-\mu I)^2 & b \\ b^T & 1 \end{bmatrix}
+  \]
+\item
+  Eliminating the $z$ variable in
+  \[
+    \begin{bmatrix}
+      (A-\mu I)^2 & b \\
+      b^T & 1
+    \end{bmatrix}
+    \begin{bmatrix} y \\ z \end{bmatrix} = 0,
+  \]
+  show that $\mu$ satsifies the quadratic eigenvalue problem
+  \[
+    \left[ (A^2-bb^T) - 2 \mu A + \mu^2 I \right] y = 0.
+  \]
+  Solving via {\tt polyeig} gives
+  us all possible $\mu$ in $O(n^3)$ time.
+\item
+  At the constrained minimizer, we must satisfy that
+  $v^T (A-\mu I) v$ is positive for all $v$ s.t.~$v^T x = 0$.
+  Argue that this implies $\mu < \lambda_2$.
+\item
+  Following the divide-and-conquer idea and the argument
+  from the previous step, argue that $\phi$
+  has no more than three constrained minimizers.
+\end{enumerate}
+
+\paragraph*{2: Catching cosines}
+Suppose $A = H+S \in \bbR^{n \times n}$ where $H$ is symmetric
+and $S$ is skew symmetric.  Let $A = U \Sigma V^T$ be the SVD,
+and let $\theta_k$ be the angle between the $k$th left and right
+singular vectors.  Show that
+\[
+  \frac{\lambda_1(H)}{\sigma_k} \leq \cos(\theta_k) \leq \frac{\lambda_n(H)}{\sigma_k}
+\]
+where $\lambda_1(H)$ and $\lambda_n(H)$ are the smallest and largest
+eigenvalues of $H$.
+
+\paragraph*{3: Think positive}
+Consider the Jacobi iteration for an elementwise non-negative
+matrix $A$ and a non-negative
+right hand side vector $b$.  Show that if the initial guess
+$x^{(0)}$ is elementwise greater than $x$, then $x^{(k)} \geq x$
+elementwise for any even $k$ and $x^{(k)} \leq x$ elementwise for
+any odd $k$.
+
+\paragraph*{4: Smooth operator}
+Write a code to implement the Gauss-Seidel algorithm for the
+one-dimensional model problem (a simple tridiagonal) with a random right
+hand side.  At each step, compute the error and plot the absolute value
+of the FFT of the error.  What do you notice about the behavior with
+increasing numbers of sweeps?  Your submission should include a plot
+that illustrates the point.
+
+\end{document}

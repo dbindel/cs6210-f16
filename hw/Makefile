@@ -4,6 +4,7 @@ HW=\
 	hw2.pdf \
 	hw3.pdf \
 	hw4.pdf \
+	hw5.pdf \
 	mt.pdf
 
 .PHONY: all copy
