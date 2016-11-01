@@ -1,0 +1,89 @@
+\section{Canonical forms}
+
+Abstract linear algebra is about vector spaces and the operations on
+them, independent of any specific choice of basis.  But while the
+abstract view is useful, when we compute, we  are concrete, working with
+the vector spaces $\bbR^n$ and $\bbC^n$ with a standard norm or inner
+product structure.  A choice of basis (or choices of bases) links the
+abstract view to a particular representation.  When working with an
+abstract inner product space, we often would like to choose an
+orthonormal basis, so that the inner product in the abstract space
+corresponds to the standard dot product in $\bbR^n$ or $\bbC^n$.
+Otherwise, the choice of basis may be arbitrary in principle ---
+though, of course, some bases are particularly useful for revealing
+the structure of the operation.
+
+For any given class of linear algebraic operations, we have
+\emph{equivalence classes} of matrices that represent the operation
+under different choices of bases.  It is useful
+to choose a distinguished representative for each of these
+equivalence classes, corresponding to a choice of basis that
+renders the structure of the operation particularly clear.
+These distinguished representatives are known as \emph{canonical forms}.
+Many of these equivalence relations have special names, as do many of
+the canonical forms.
+
+For spaces without and with inner product structure, the equivalence relations
+and canonical forms associated with an operation on $\calV$ of dimension
+$n$ and $\calW$ of dimension $n$ are shown in Figure~\ref{fig-canon}.
+A major theme in the analysis of the Hermitian eigenvalue problem follows
+from a pun: in the Hermitian case in an inner product space,
+the equivalence relation for operators (unitary similarity) and for
+quadratic forms (unitary congruence) are the same thing!.
+
+% Requires pdflscape, afterpage, and capt-of
+\afterpage{
+\clearpage
+\begin{landscape}
+\centering
+\begin{tabular}{l|l|l|l}
+  Abstract & Concrete & Equivalence & Canonical Form \\ \hline \hline
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Linear map &
+  $w = Av$ &
+  $A \sim X^{-1} A Y$ &
+  $\begin{bmatrix} I_k & 0 \\ 0 & 0 \end{bmatrix}$ \\
+  $\mathcal{A} : \calV \rightarrow \calW$ &
+  $A \in \bbC^{m \times n}$ &
+  $X \in \bbC^{m \times m}, Y \in \bbC^{n \times n}$ invertible &
+  $k = \operatorname{rank}(A)$ \\ \hline
+  & &
+  $A \sim U^* A V$ &
+  $\Sigma = \ddiag(\sigma_1, \ldots, \sigma_{\min(m,n)})$ \\
+  & &
+  $U \in \bbC^{m \times m}, V \in \bbC^{n \times n}$ orthogonal &
+  SVD \\ \hline \hline
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Operator &
+  $v' = Av$ &
+  $A \sim X^{-1} A X$ (similarity) &
+  Jordan form \\
+  $\mathcal{A} : \calV \rightarrow \calV$ &
+  $A \in \bbC^{n \times n}$ &
+  $X \in \bbC^{n \times m}$ invertible & \\ \hline
+  & &
+  $A \sim U^* A U$ (unitary similarity) &
+  $T \in \bbC^{n \times n}$ upper triangular \\
+  & &
+  $U \in \bbC^{n \times n}$ unitary & Schur form \\ \hline \hline
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Quadratic form &
+  $\phi = v^* Av$ &
+  $A \sim X^* A X$ (congruence) &
+  $\ddiag(I_{\nu_+}, 0_{\nu_0}, -I_{\nu_-})$ \\
+  $\phi: \calV \times \calV \rightarrow \bbR$ &
+  $A = A^* \in \bbC^{n \times n}$ &
+  $X \in \bbC^{n \times m}$ invertible &
+  $\nu = (\nu_+, \nu_-, \nu_0)$ = {\em inertia} of $A$ \\ \hline
+  & &
+  $A \sim U^* A U$ (unitary congruence) &
+  $\ddiag(\lambda_1, \ldots, \lambda_n)$ \\
+  & &
+  $U \in \bbC^{n \times m}$ unitary & Eigendecomposition \\ \hline \hline
+\end{tabular}
+\captionof{table}{Complex canonical forms (without and with inner product structure)}
+\label{fig-canon}
+\clearpage
+\end{landscape}
+}
+\newpage

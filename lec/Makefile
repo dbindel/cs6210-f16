@@ -38,7 +38,7 @@ notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
 LEC27= \
-	sep/minimax.tex sep/subspace.tex sep/inertia.tex
+	basics/matrix-canonical.tex sep/minimax.tex sep/subspace.tex sep/inertia.tex
 2016-10-28.pdf: 2016-10-28.tex common.tex commonm.tex \
 	$(LEC27)
 
