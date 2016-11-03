@@ -1,4 +1,5 @@
 LEC=\
+	2016-10-31.pdf \
 	2016-10-28.pdf \
 	2016-10-26.pdf \
 	2016-10-24.pdf \
@@ -36,6 +37,11 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC28= \
+	sep/algo.tex sep/qr.tex sep/jacobi.tex sep/dc.tex sep/bisect.tex
+2016-10-31.pdf: 2016-10-31.tex common.tex commonm.tex \
+	$(LEC28)
 
 LEC27= \
 	basics/matrix-canonical.tex sep/minimax.tex sep/subspace.tex sep/inertia.tex

@@ -1,0 +1,68 @@
+\section{Symmetric QR}
+
+\subsection{The eigenvalues of symmetric $A$}
+
+Like the nonsymmetric QR iteration, the symmetric QR iteration involves
+an initial reduction, but to a {\em tridiagonal} form.  This is really
+the same as the Hessenberg reduction step; but a symmetric Hessenberg
+matrix is tridiagonal, and we can use that.  Similarly, when we perform
+bulge-chasing, the intermediate matrices remain symmetric, and so we
+never have a matrix that is more than a few elements away from
+tridiagonal.  For the symmetric case, there is a little difference in
+how we choose shifts: Wilkinson shifts are fine since there are only
+real eigenvalues -- no need for the Francis double-shift strategy. But
+otherwise, the main difference is that each step of the tridiagonal QR
+iteration maps between representations with $O(n)$ parameters in $O(n)$
+time.  Each eigenvalue converges in roughly a constant number of
+iterations, so the cost to compute all eigenvalues of a tridiagonal is
+$O(n^2)$.  Compared to the $O(n^3)$ cost of reducing to tridiagonal form
+in the first place, the cost of solving for the eigenvalues of the
+tridiagonal is thus quit modest.
+
+If we want all the eigenvalues of a sparse matrix, and only want the
+eigenvalues, the algorithm is basically the fastest option. But if we
+want eigenvectors as well, then the QR iteration is more expensive,
+costing an additional $O(n^3)$; other methods run faster.
+
+\subsection{QR iteration for singular values}
+
+Now consider the case of computing the singular values of a matrix $A$.
+We could compute the singular values directly from the eigenvalues of
+the Gram matrix $A^T A$ (or $AA^T$, or the Golub-Kahan matrix).  But
+the backward error associated with tridiagonal reduction is proportional
+to the norm of the matrix $A^T A$ (or the square norm of $A$) and this
+can look quite big compared to the square of the smallest singular values.
+So rather than work with $A^T A$ {\em explicitly}, we prefer to manipulate
+$A$ in order to run the same algorithm {\em implicitly}.
+
+The first step of the QR iteration for the singular value problem is
+thus {\em bidiagonalization}; that is, we compute
+\[
+  A = \hat{U} B \hat{V}^T
+\]
+where $B$ is an upper bidiagonal matrix.  Note that
+\[
+  A^T A = \hat{V} B^T B \hat{V}^T = \hat{V} T \hat{V}^T,
+\]
+i.e.~$B$ is the Cholesky factor of the tridiagonal matrix $A$ that
+we would obtain by tridiagonalization of the Gram matrix $A^T A$.
+But we can compute $B$ directly by alternately applying
+transformations to $A$ from the left and the right.
+
+After the bidiagonal reduction, we want to do implicit QR steps.
+As a shift, we use the square root of the trailing
+corner element of the tridiagonal $B^T B$; in terms of $B$, this is
+just the norm of the last column:
+\[
+  \sigma = \sqrt{b_{n-1,n}^2 + b_{n,n}^2}.
+\]
+With this shift in hand, we could apply the first step of shifted
+QR and complete the process implicitly via bulge chasing in the same
+way we did for the nonsymmetric case.  In practice, there is an alternate
+algorithm (the {\em dqds} method) that enjoys extra stability benefits,
+allowing us to compute the singular values of $B$ to high relative
+accuracy.\footnote{%
+Of course, we usually lose high relative accuracy of the small singular
+values through the initial reduction to
+bidiagonal --- the backward error for that reduction is only small
+relative to the norm of $A$.}

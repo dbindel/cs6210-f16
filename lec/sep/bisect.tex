@@ -1,0 +1,48 @@
+\section{Bisection with inverse iteration}
+
+Our final algorithm for the tridiagonal eigenvalue problem\footnote{%
+As with QR and divide-conquer, the bisection iteration is typically
+preceded by a tridiagonal reduction.
+} is based on {\em Sylvester's inertia theorem},
+which says that congruent matrices have the same inertia.
+In particular, that means that if we perform the symmetric
+factorization
+\[
+  T - \sigma I = L D L^T,
+\]
+the number of positive, negative, and zero diagonal entries of $D$
+is the same as the number of eigenvalues of $A$ that are respectively
+greater than, less than, and equal to $\sigma$.  The {\em bisection
+algorithm} recursively partitions an initial interval containing all
+eigenvalues of $T$ into smaller intervals that either
+\begin{itemize}
+\item Contain no eigenvalues of $A$;
+\item Contain exactly one eigenvalue of $A$; or
+\item Are smaller in length than some tolerance.
+\end{itemize}
+The center point of each interval containing exactly one eigenvalue is
+a reasonable estimate for that eigenvalue, good enough to guarantee
+convergence of a shift-invert iteration.  And this is the bisection
+algorithm in a nutshell.
+
+The main technical difficulty with the bisection algorithm lies not
+in the bisection step (which is remarkably well-behaved even though
+it involves an unpivoted factorization of an indefinite matrix),
+but in the computation of the eigenvectors.  As with the divide-and-conquer
+scheme, bisection with inverse iteration tends to yield eigenvector
+estimates which individually have small residuals, but which may not be
+adequately orthogonal for vectors that correspond to eigenvalues in a
+cluster.  One could use explicit re-orthogonalization, but the modern
+``Grail'' code (the RRR routines in LAPACK nomenclature) manages
+stability in a much more subtle and clever way.
+This was the thesis work of Inderjit Dhillon before he turned his
+energies to machine learning and data mining; more recently, the SVD
+case was the prize-winning thesis work of Paul Willems.  The fact that
+the algorithm merits multiple highly-regarded PhD theses should tell
+you something of the subtleties in getting it right.
+
+The Grail code is so-called because it has optimal complexity for
+computing eigenvectors (given the eigenvalues); to obtain $k$ eigenvectors
+requires only $O(kn)$ time.  This is generally the fastest way to
+compute a specified subset of eigenvectors, and is often the fastest
+way to compute all eigenvectors.
