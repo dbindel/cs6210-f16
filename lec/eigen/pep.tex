@@ -1,0 +1,67 @@
+\section{Polynomial eigenvalue problems}
+
+A {\em nonlinear eigenvalue problem} is an equation of the form
+\[
+  T(\lambda) v = 0
+\]
+where $T : \bbC \rightarrow \bbC^{n \times n}$ is a matrix-valued
+function.  The most common nonlinear eigenvalue problems are
+{\em polynomial eigenvalue problems} in which $T$ is a polynomial;
+and most common among the polynomial eigenvalue problems are the
+{\em quadratic eigenvalue problems}
+\[
+  (\lambda^2 M + \lambda D + K) u = 0.
+\]
+As the notation might suggest, one of the natural sources of
+quadratic eigenvalue problems is in the analysis of damped
+unforced vibrations in mechanical (or other physical) systems.
+In this context, $M$, $D$, and $K$ are the {\em mass},
+{\em damping}, and {\em stiffness} matrices, and the eigenvalue
+problem arises from the search for special solutions to the
+equation
+\[
+  M\ddot{x} + D\dot{x} + Kx = 0
+\]
+where $x(t) = u \exp(\lambda t)$.  We note that the mass matrix
+is often symmetric and positive definite; in this case, we can
+apply a change of variables to convert to a problem in which the
+leading term involves an identity matrix.  We will assume this case
+for the remainder of our discussion.
+
+When studying the solution of higher-order differential equations,
+a standard trick is to put the system into first-order form by
+introducing auxiliary variables for derivatives.  For example,
+we would put our model second-order unforced vibration equation
+into first-order form by introducing the variable $v = \dot{x}$;
+then (assuming $M = I$), we have
+\[
+  \begin{bmatrix} \dot{v} \\ \dot{x} \end{bmatrix} =
+  \begin{bmatrix} -D & -K \\ I & 0 \end{bmatrix}
+  \begin{bmatrix} v \\ x \end{bmatrix}.
+\]
+Similarly, we can convert the quadratic eigenvalue problem into
+a standard linear eigenvalue problem by introducing $w = \lambda u$;
+then
+\[
+  \lambda \begin{bmatrix} w \\ u \end{bmatrix} =
+  \begin{bmatrix} -D & -K \\ I & 0 \end{bmatrix}
+  \begin{bmatrix} w \\ u \end{bmatrix}.
+\]
+This process of converting a quadratic (or higher-order polynomial)
+eigenvalue problem into a linear eigenvalue problem in a higher-dimensional
+space is called {\em linearization} (a somewhat unfortunate term, but the
+standard choice).  There are many ways to define the auxiliary variables,
+and hence many ways to linearize a polynomial eigenvalue problem; the version
+we have described is the {\em companion} linearization.  Different
+linearizations are appropriate to polynomial eigenvalue problems with
+different structure.
+
+More generally, a ``genuinely'' nonlinear eigenvalue involves
+a matrix $T(\lambda)$ that depends on the spectral parameter $\lambda$
+as a more general non-rational function.  Typically, we restrict our
+attention to functions that are complex-analytic in some domain of
+interest; these arise naturally in many applications, particularly
+in problems involving delay, radiation, and similar effects.  One
+thread in my own research has been to extend some of the theory we
+have for the standard eigenvalue problem --- results like Gershgorin
+and Bauer-Fike --- to this more general nonlinear case.

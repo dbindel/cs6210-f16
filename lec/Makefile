@@ -1,4 +1,5 @@
 LEC=\
+	2016-11-02.pdf \
 	2016-10-31.pdf \
 	2016-10-28.pdf \
 	2016-10-26.pdf \
@@ -37,6 +38,12 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC29= \
+	eigen/sylvester.tex eigen/riccati.tex \
+	eigen/pep.tex eigen/pseudospectra.tex
+2016-11-02.pdf: 2016-11-02.tex common.tex commonm.tex \
+	$(LEC29)
 
 LEC28= \
 	sep/algo.tex sep/qr.tex sep/jacobi.tex sep/dc.tex sep/bisect.tex

@@ -1,0 +1,31 @@
+\section{Pseudospectra}
+
+We conclude our discussion of eigenvalue-related ideas by revisiting the
+perturbation theory for the nonsymmetric eigenvalue problem from a
+somewhat different perspective.  In the symmetric case, if $A-\hat{\lambda} I$
+is nearly singular (i.e. $(A-\hat{\lambda} I) \hat{x} = r$ where
+$\|r\| \ll \|A\|\|\hat{x}\|$), then $\hat{\lambda}$ is close to one of the
+eigenvalues of $A$.  But in the nonsymmetric case, $A-\hat{\lambda I}$ may
+become quite close to singular even though $\hat{\lambda}$ is quite far
+from any eigenvalues of $A$.  The approximate null vector of $A-\hat{\lambda} I$
+is sometimes called a {\em quasi-mode}, and dynamical systems defined via
+such a matrix $A$ are often characterized by long-lived transient dynamics
+that are well-described in terms of such quasi-modes.
+
+In order to describe quasi-modes and long-lived transients, we need a
+systematic way of thinking about ``almost eigenvalues.''  This leads
+us to the idea of the $\epsilon$-{\em pseudospectrum}:
+\[
+  \Lambda_{\epsilon}(A) = \{z \in \bbC : \|(A-zI)^{-1}\| \geq \epsilon^{-1}\}.
+\]
+This is equivalent to
+\[
+  \Lambda_{\epsilon}(A) = \{ z \in \bbC : \exists E \mbox{ s.t. } \|E\| < \epsilon \mbox{ and }(A+E-zI) \mbox{ singular} \},
+\]
+or, when the norm involved is the operator $2$-norm,
+\[
+  \Lambda_{\epsilon}(A) = \{ x \in \bbC : \sigma_{\min}(A-zI) < \epsilon \}.
+\]
+There is a great deal of beautiful theory involving pseudospectra; as a
+guide to the area, I highly recommend {\em Spectra and Pseudospectra}
+by Mark Embree and Nick Trefethen.

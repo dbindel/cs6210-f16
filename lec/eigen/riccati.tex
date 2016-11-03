@@ -1,0 +1,50 @@
+\subsection{Riccati equations}
+
+The Sylvester equation is a {\em linear} matrix equation whose solution
+is accelerated via an intermediate eigendecomposition.  The
+{\em algebraic Riccati equation} is a {\em quadratic} matrix equation
+that also can be expressed via an eigenvalue problem.  The Riccati
+equation occurs in optimal control problems, as well as some other places;
+for the continuous-time optimal control problem, we would usually write
+\[
+  A^T X + XA - XBR^{-1} B^T X + Q = 0
+\]
+where $R$ and $Q$ are spd matrices representing cost functions,
+$A$ and $B$ are general square matrices, and we seek a symmetric solution
+matrix $X$.
+
+The key to thinking of the Riccati equation via eigenvalues is to write
+the left hand side of the equation as a pure quadratic:
+\[
+  \begin{bmatrix} I \\ X \end{bmatrix}
+  \begin{bmatrix} Q & A \\ A^T & -BR^{-1}B^T \end{bmatrix}
+  \begin{bmatrix} I \\ X \end{bmatrix} = 0.
+\]
+We can also characterize this by the relation
+\[
+  \begin{bmatrix} Q & A \\ A^T & -BR^{-1} B^T \end{bmatrix}
+  \begin{bmatrix} I \\ X \end{bmatrix} =
+  \begin{bmatrix} 0 & I \\ -I & 0 \end{bmatrix}
+  \begin{bmatrix} I \\ X \end{bmatrix},
+\]
+or, equivalently
+\[
+  Z = \begin{bmatrix}
+    A & -BR^{-1} B^T \\
+    -Q & -A^T
+  \end{bmatrix}
+  \begin{bmatrix} I \\ X \end{bmatrix} = 0.
+\]
+That is, we want a specific basis of the null space of
+a {\em Hamiltonian matrix}, i.e. a matrix $Z$ such that
+\[
+  JZ \mbox{ symmetric}, J \equiv \begin{bmatrix} 0 & I \\ -I & 0 \end{bmatrix}.
+\]
+
+Hamiltonian eigenvalue problems show up in a surprising variety of
+places in addition to optimal control. The theory of eigenvalue problems
+for Hamiltonian and skew-Hamiltonian matrices is reasonably well
+developed, and the eigenvalues have a special symmetry to them.  There
+is now good software for these classes of problems that exploits the
+structure --- though not in LAPACK.  The right place to look for these
+solvers is in the SLICOT package.

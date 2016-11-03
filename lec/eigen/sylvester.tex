@@ -1,0 +1,61 @@
+\section{Sylvester equations}
+
+The {\em Sylvester equation} (or the special case of
+the {\em Lyapunov equation}) is a matrix equation of the form
+\[
+  AX + XB = C
+\]
+where $A \in \bbR^{m \times m}, B \in \bbR^{n \times n}, B \in \bbR^{m \times n}$, are known,
+and $X \in \bbR^{m \times n}$ is to be determined.  The Sylvester
+equation has important applications in control theory, and also plays
+a prominent role in the theory of several classes of structured matrices.
+
+On the surface of it,
+this is a simple system: the expressions $AX$ and $XB$ are just linear
+in the elements of $X$, after all.  Indeed, we can rewrite the system
+as
+\[
+  (I \otimes A + B^T \otimes I)
+  \operatorname{vec}(X) =
+  \operatorname{vec}(C),
+\]
+where
+\[
+  \operatorname{\vec}(\begin{bmatrix} x_1 & \ldots & x_n \end{bmatrix}) =
+  \begin{bmatrix} x_1 \\ \vdots \\ x_n \end{bmatrix}
+\]
+is a vector of length $mn$ composed by listing the elements of $X$ in
+column-major order, and the {\em Kronecker product} is defined by
+\[
+  F \otimes G =
+  \begin{bmatrix}
+    f_{11} G & f_{12} G & \ldots \\
+    f_{21} G & f_{22} G & \ldots \\
+    \vdots & \vdots & \ddots
+  \end{bmatrix}.
+\]
+Alas, solving this matrix equation by Gaussian elimination would cost
+$O((mn)^3)$.  Can we do better?
+
+The {\em Bartels-Stewart} algorithm is a clever approach to the problem
+that takes only $O(\max(m,n)^3)$ time.  The key is to compute the
+Schur factorizations
+\begin{align*}
+  A &= U_A T_A U_A^* &
+  B &= U_B T_B U_B^*
+\end{align*}
+from which we obtain
+\[
+  T_A \tilde{X} + \tilde{X} T_B = \tilde{C}
+\]
+where $\tilde{X} = U_A^* X U_B$ and $\tilde{C} = U_A^* C U_B$.
+Column $j$ of this system of equations can be written as
+\[
+  (T_A + t_{B,kk} I) \tilde{x}_k =
+  \tilde{c}_k - \sum_{j=1}^{k-1} \tilde{x}_j t_{B,jk};
+\]
+therefore, we can solve each column of $\tilde{x}$ in turn by
+a back-substitution procedure that involves a triangular
+linear solve.  We only run into trouble if one of these systems
+is singular (or nearly so), corresponding to the case where $A$
+and $-B$ (nearly) have an eigenvalue in common.
