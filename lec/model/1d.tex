@@ -1,0 +1,96 @@
+\section{The 1D model problem}
+
+It is difficult to say many useful
+things about the convergence of iterative methods without looking at a
+concrete problem.  Therefore, we will set the stage with a very
+specific model problem: a discretization of the Poisson equation.
+We start with the one-dimensional case.
+
+The continuous version of our model problem is a one-dimensional
+Poisson equation with homogeneous Dirichlet boundary conditions:
+\begin{align*}
+  -\frac{d^2 u}{dx^2} &= f \mbox{ for } x \in (0,1) \\
+  u(0) & = 0 \\
+  u(1) & = 0
+\end{align*}
+Let $x_j = j/(n+1)$ for $j = 0, 1, \ldots, n+1$ be a set of mesh points.
+We can approximate the second derivative of $u$ at a point by
+a finite difference method:
+\[
+  -\frac{d^2 u}{dx^2}(x_j) \approx
+    \frac{-u(x_{j-1})+2u(x_j)-u(x_{j+1})}{h^2}
+\]
+where $h = 1/(n+1)$ is the mesh spacing.  If we replace the second
+derivative in the Poisson equation with this finite-difference approximation,
+we have a scheme for computing $u_j \approx u(x_j)$:
+\begin{align*}
+  -u_{j-1} + 2u_j - u_{j-1} &= h^2 f_j \mbox{ for } 1 \leq j \leq n \\
+  u_0 & = 0 \\
+  u_{n+1} & = 0
+\end{align*}
+We can write this approximation as a matrix equation $Tu = h^2 f$, where
+\[
+  T = \begin{bmatrix}
+      2 & -1 \\
+      -1 & 2 & -1 \\
+         & -1 & 2 & -1 \\
+         &    & \ddots & \ddots & \ddots \\
+         &    &        & -1 & 2      & -1 \\
+         &    &        &    & -1      & 2
+      \end{bmatrix}
+\]
+
+Part of what makes this simple Poisson discretization so appealing as
+a model problem is that we can compute the eigenvalues and eigenvectors
+directly.  This is because solving the $(T-\lambda) \psi = 0$ is
+equivalent to considering the constant coefficient difference equation
+\[
+  \psi_{k+1} - (2-\lambda) \psi_k + \psi_{k-1} = 0
+\]
+subject to the boundary conditions $\psi_0 = \psi_{n+1} = 0$.  Solutions to
+this difference equation must have the form
+\[
+  \psi_{k} = \alpha \xi^k + \beta \bar{\xi}^k,
+\]
+where $\xi$ and $\bar{\xi}$ are the roots of the characteristic
+polynomial $p(z) = z^2 - (2-\lambda) z + 1$.  For $0 \leq \lambda \leq 4$,
+these roots form a complex conjugate pair, each with unit magnitude;
+that is, we can write $\xi = \exp(i\theta)$ for some $\theta$, and so
+\[
+  \xi^k = \exp(ik\theta) = \cos(k\theta) + i \sin(k\theta).
+\]
+Thus, any solution to the difference equation must have the form
+\[
+  \psi_{k} = \gamma \cos(k\theta) + \mu \sin(k\theta).
+\]
+Plugging in the boundary conditions, we find that $\gamma = 0$,
+and $\theta = l\pi/(n+1)$ for some $l$.  Thus, the normalized eigenvectors
+of $T$ are $z_j$ with entries
+\[
+  z_j(k) = \sqrt{\frac{2}{n+1}} \sin\left( \frac{jk\pi}{n+1} \right),
+         = \sqrt{\frac{2}{n+1}} \sin( (j\pi) x_k )
+\]
+and the corresponding eigenvalues are
+\[
+  \lambda_j = 2 \left( 1 - \cos \frac{\pi j}{n+1} \right).
+\]
+For $j \ll n$, Taylor expansion gives that
+\[
+  \lambda_j = h^2 (\pi j)^2 + O\left( h^4 (\pi j)^4 \right).
+\]
+
+By way of comparison, the continuous Dirichlet eigenvalue
+problem
+\[
+  -\frac{d^2 w}{dx^2} = \mu w, \quad w(0) = w(1) = 0
+\]
+has eigenfunctions of the form
+\[
+  w_j = \sin(j\pi x), \quad \mu_j = (j \pi)^2.
+\]
+Thus, the eigenvectors of $h^{-2} T$ are {\em exactly} the sampled
+eigenfunctions of $-d^2/dx^2$ on $[0,1]$ with Dirichlet boundary
+conditions, while the extremal eigenvalues of $h^{-2} T$ satisfy
+\[
+  h^{-2} \lambda_j = \mu_j + O(\mu_j^2 h^2).
+\]

@@ -1,4 +1,5 @@
 LEC=\
+	2016-11-04.pdf \
 	2016-11-02.pdf \
 	2016-10-31.pdf \
 	2016-10-28.pdf \
@@ -38,6 +39,11 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC30= \
+	model/overview.tex model/1d.tex model/2d.tex model/methods.tex
+2016-11-04.pdf: 2016-11-04.tex common.tex commonm.tex \
+	$(LEC30)
 
 LEC29= \
 	eigen/sylvester.tex eigen/riccati.tex \

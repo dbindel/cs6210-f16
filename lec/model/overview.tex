@@ -1,0 +1,28 @@
+\section{The need for model problems}
+
+Direct methods for solving linear systems and eigenvalue problems are
+(mostly) ``black box.''  We design algorithms that work well for a
+broad category of problems with given structural properties; once we
+understand the structure, there is often a reasonably routine choice
+of solvers.  Of course, even for direct methods, it is not entirely
+true that we get ``black box'' performance --- for example, the fill
+in sparse direct factorization methods is highly dependent on the
+sparsity structure of the matrix at hand.  Nonetheless, users of
+sparse solvers can largely leave the details to specialists once they
+understand the basic lay of the land.
+
+For the remainder of the semester, we will focus on iterative solvers,
+which are a different beast altogether.  Iterative solvers produce a
+sequence of approximate solutions that (ideally) converge to the true
+solution to a linear system or eigenvalue problem.  However, the rate
+of convergence is highly dependent on both the iterative method and
+the details of the problem.  Even when we are able to take advantage
+of a good library of iterative solvers, there are often a wide variety
+of methods to choose from and a large number of parameters that we need
+to understand and tune to get good performance.
+
+Because iterative methods are more problem-dependent than direct methods,
+we will focus our presentation on a set of model problems that exhibit
+characteristics common in many problems drawn from physical models.
+We will also comment on other types of problem structures as we go along,
+but will mostly leave the details to select homework problems.

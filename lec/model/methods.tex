@@ -1,0 +1,47 @@
+\section{Methods for solving the 2D model problem}
+
+Suppose we wanted to solve the 2D model problem in practice.  What
+methods do we have at our disposal so far?  Of course, we have several
+direct methods
+\begin{enumerate}
+\item
+  We could run Gaussian elimination on $T_{n \times n}$.  This takes
+  time $O(N^3)$, where $N = n^2$.
+\item
+  The matrix $T_{n \times n}$ is also a banded matrix with bandwidth
+  $n$ so we could do band Gaussian elimination at a cost of
+  $O(N^2 n) = O(N^{2.5})$.
+\item
+  A sparse direct solve using nested dissection ordering runs in
+  $O(N^{1.5})$.
+\item
+  Treating the problem as a Sylvester equation and running
+  Bartels-Stewart requires $O(n^3)$ time to find the eigensystem of
+  $T$ and to transform $U$ and $F$ using the eigenvector matrix;
+  and $O(n^2)$ time for the subsequent (diagonal) linear solve.
+\item
+  The eigenvector matrix for $T$ corresponds to a {\em discrete sine
+    transform}, which is closely related to the FFT; and we know the
+  eigenvalues in closed form.  This allows us to reduce the time for
+  Bartels-Stewart to $O(n^2 \log n) = O(N \log N)$.
+\end{enumerate}
+
+In the coming lectures, we turn to a variety of {\em iterative methods}.
+These methods do not produce an exact answer, but rather produce a
+sequence of ever-better approximations to the truth.
+With appropriate parameter choices,
+the time to reduce the error by a constant factor scales
+like\footnote{%
+See Table 6.1 of {\em Applied Numerical Linear Algebra} by J.~Demmel.}
+\begin{center}
+\begin{tabular}{ll}
+  Jacobi & $N^2$ \\
+  Gauss-Seidel & $N^2$ \\
+  CG & $N^{3/2}$ \\
+  SOR & $N^{3/2}$ \\
+  SSOR with Chebyshev acceleration & $N^{5/4}$ \\
+  Multigrid & $N$
+\end{tabular}
+\end{center}
+For both the direct and iterative methods, the more structure we use,
+the faster we can go.
