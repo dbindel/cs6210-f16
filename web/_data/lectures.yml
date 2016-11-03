@@ -164,9 +164,11 @@
   date: 2016-10-31
   info: Solver ideas for SEP and SVD
   hw: HW 4
+  notes: 2016-10-31.pdf
 -
   date: 2016-11-02
   info: Other eigenvalue problems
+  notes: 2016-11-02.pdf
 -
   date: 2016-11-04
   info: Model problems for iterative methods
