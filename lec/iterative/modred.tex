@@ -1,0 +1,31 @@
+\section{Model reduction}
+
+Our focus in this section is methods for solving a single linear
+system at a time.  Often, we want to solve many closely-related
+linear systems with different matrices.  As a simple example,
+we might want to evaluate
+\[
+  (A-\sigma I) x(\sigma) = b
+\]
+for several different values of $\sigma$ within some range; more
+generally, we might want to solve linear systems $A(s) x(s) = b(s)$
+where $A$ and $b$ depend smoothly on some low-dimensional parameter
+vector $s$ that varies over a bounded set.  In such settings, one often
+finds (and can sometimes prove via interpolation theory) that $x(s)$
+lies close to a space $\calV$ that can be computed. For example, we
+might find that an adequate space $\calV$ spanned by sample solutions
+$x(s_1), x(s_2), \ldots$; we could then choose a corresponding trial
+space $\calW$ as the basis for a Galerkin scheme.  Hence, we may
+estimate $x(\sigma)$ very quickly (online) after a more expensive
+computation to construct a basis for an appropriate approximation space
+(offline).
+
+There are a wide-variety of techniques that employ this general idea.
+These include model reduction methods from control theory
+(moment-matching methods that use Krylov subspaces, truncated balanced
+realization methods that involve solving Sylvester equations, etc);
+global-basis methods for the solution of PDEs (e.g.~the so-called {\em
+empirical interpolation method}); and many other methods for both
+linear and nonlinear problems.  While it is not a focus for this course,
+the approach is so simple and broadly applicable that I would feel bad
+if you left not knowing about it.

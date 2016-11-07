@@ -1,4 +1,5 @@
 LEC=\
+	2016-11-09.pdf \
 	2016-11-07.pdf \
 	2016-11-04.pdf \
 	2016-11-02.pdf \
@@ -40,6 +41,11 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC32=\
+	iterative/subspace.tex iterative/quasiopt.tex iterative/modred.tex
+2016-11-09.pdf: 2016-11-07.tex common.tex commonm.tex \
+	$(LEC32)
 
 LEC31=\
 	iterative/overview.tex \
