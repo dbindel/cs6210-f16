@@ -1,0 +1,23 @@
+\section{General relaxations}
+
+So far, we have mostly discussed stationary methods in we think of
+sweeping through all the variables in some fixed order and
+updating a variable or block of variables at a time.  There is nothing
+that say that the order must be {\em fixed}, though, if we are willing
+to forgo the analytical framework of splittings.  There are essentially
+two reasons that we might think to do this:
+\begin{enumerate}
+\item
+  We decide which variable(s) to update next based on some adaptive
+  policy, such as which equations have the largest residual.  This
+  leads to the {\em Gauss-Southwell} method.  Various methods for fast
+  (sublinear time) personalized PageRank use this strategy.
+\item
+  We update variable(s) on multiple processors, communicating the
+  changes opportunistically.  In this case, there may be no real rhyme
+  or reason to the order in which we see updates.  These methods are
+  called {\em chaotic relaxation} or {\em asynchronous relaxation}
+  approaches, and they have seen a great deal of renewed interest over
+  the past several years for both classical scientific computing problems
+  (e.g.~PDE solvers) and for machine learning applications.
+\end{enumerate}

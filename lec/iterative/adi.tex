@@ -1,0 +1,33 @@
+\section{Alternating Direction Implicit}
+
+The {\em alternating direction implicit} approach to the model problem
+began life as an operator-splitting approach to solving a time-domain
+diffusion problem.  At each step of an ordinary implicit time stepper
+for the heat equation, one would solve a system of the form
+\[
+  (I+\Delta t T) x = b,
+\]
+where $\Delta t$ is small and $T$ is the 2D Laplacian operator.  But
+note that if $T = T_x + T_y$, then
+\[
+  (I+\Delta t/2 T_x)(I+ \Delta t/2 T_y) = (I+\Delta t T + O(\Delta t)^2);
+\]
+hence, we commit only a small amount of error if instead of solving one
+system with $T$ we solve two half-step systems involving $T_x$ and $T_y$,
+respectively, where $T_x$ and $T_y$ are the discretizations of the
+derivative operator in the $x$ and $y$ directions.  This is known as the
+{\em alternating direction} method.  The implementation is relatively
+straightforward:
+\lstinputlisting{code/iter/sweep_adi.m}
+
+In practice, cycling between several different versions of the shift parameter
+(interpreted above as a time-step) can lead to very rapid convergence of
+the ADI iteration.  This beautiful classical result, which has deep
+connections to the Zolotarev problem from approximation theory, has taken
+on renewed usefulness in modern control theory and model reduction,
+where recent work has connected ADI-type methods for Sylvester equations
+to various rational Krylov methods.
+
+The ADI method and its relations have also garnered many citations over
+the past 5--10 years because of their role as prior art for various
+optimization methods, such as the ADMM method.

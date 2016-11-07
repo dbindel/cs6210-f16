@@ -1,0 +1,85 @@
+\section{Stationary iterations}
+
+Stationary iterations are so named because the solution to a linear
+system is expressed as a stationary point (fixed point) of
+\[
+  x^{(k+1)} = F(x^{(k)}).
+\]
+A sufficient (though not necessary) condition for convergence is that
+the mapping is a contraction, i.e.~there is an $\alpha < 1$ such that
+for all $x, y$ in the vector space,
+\[
+  \|F(x)-F(y)\| \leq \alpha \|x-y\|.
+\]
+The constant $\alpha$ is the rate of convergence.
+
+If we are solving a linear equation $Ax = b$, it generally makes sense
+to write a fixed point iteration where the mapping $F$ is affine.  We
+can write any such iteration via a {\em splitting} of the matrix $A$,
+i.e.~by writing $A=M-N$ with $M$ nonsingular.  Then we rewrite $Ax = b$
+as
+\[
+  Mx = Nx + b,
+\]
+and the fixed point iteration is
+\[
+  Mx^{(k+1)} = Nx^{(k)} + b,
+\]
+which we may rewrite as
+\[
+  x^{(k+1)} = x^{(k)} + M^{-1} (b-Ax^{(k)}).
+\]
+
+\subsection{Error iteration and convergence}
+
+We derive an error iteration by subtracting the fixed point equation
+from the iteration equation
+\begin{align*}
+  M x^{(k+1)} &= Nx^{(k)} + b \\
+  -[M x &= Nx + b] \\ \hline
+  Me^{(k+1)} &= N e^{(k)}
+\end{align*}
+or $e^{(k+1)} = R e^{(k)}$ where $R \equiv M^{-1} N$ is
+the {\em iteration matrix}.  A sufficient condition for convergence
+is that $\|R\| < 1$ in some operator norm.  The necessary and sufficient
+condition is that $\rho(R) < 1$, where the spectral radius $\rho(R)$
+is defined as $\max |\lambda|$ over all eigenvalues $\lambda$ of $R$.
+
+The choice of $M$ is key to the success of an iterative method.
+Ideally, we want it to be easy to solve linear systems with $M$
+(low set-up time for any initial factorizations, and a low cost
+per iteration to solve), but we also want $R$ to have a small
+norm or spectral radius.  Often, there is a direct tension between
+these two.  For example, the ``best'' choice of $M$ from the perspective
+of iteration count is $M = A$.  But this is a silly thing to do:
+the iteration converges after one step, but that step is to solve
+$Ax = b$!
+
+\subsection{Complexity of stationary iterations}
+
+What is the cost to ``solve'' a system of linear equations using a
+stationary iteration?  We never exactly solve the system, so we need
+a convergence criterion to address this problem.  Let us instead ask
+the time to satisfy $\|e^{(k)}\| \leq \epsilon \|e^{(0)}\|$, where
+$\|e^{(0)}\|$ is the initial error.  Supposing $\|R\| < 1$, we know
+\[
+  \|e^{(k)}\| \leq \|R\|^k \|e^{(0)}\|,
+\]
+so the criterion should be met
+after $\lceil \log(\epsilon)/\log(\|R\|) \rceil$
+steps.
+While norms on a finite-dimensional space are all equivalent,
+the constants involved may depend on the dimension of the space.
+Therefore, when we analyze the complexity of a stationary iteration,
+we must specify the family of norms (of either the error or the residual)
+that we are using to judge convergence.
+
+The cost per step depends on the time to solve a linear
+system with $M$ and the time to form a residual.
+For many of the basic stationary iterations, the time per step is
+$O(\nnz(A))$, where $\nnz(A)$ is the number of nonzero elements in
+the matrix $A$.  The number of steps, though, depends very strongly
+on not just the number of nonzeros, but more detailed properties of
+$A$.  Therefore, we generally cannot describe the asymptotic complexity
+of an iterative method except in the context of a very specific family
+of matrices (such as the 2D Poisson model problem).

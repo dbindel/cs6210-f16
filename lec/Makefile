@@ -1,4 +1,5 @@
 LEC=\
+	2016-11-07.pdf \
 	2016-11-04.pdf \
 	2016-11-02.pdf \
 	2016-10-31.pdf \
@@ -39,6 +40,16 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC31=\
+	iterative/overview.tex \
+	iterative/stationary-overview.tex \
+	iterative/stationary-classical.tex \
+	iterative/stationary-converge.tex \
+	iterative/relaxation.tex \
+	iterative/adi.tex
+2016-11-07.pdf: 2016-11-07.tex common.tex commonm.tex \
+	$(LEC31)
 
 LEC30= \
 	model/overview.tex model/1d.tex model/2d.tex model/methods.tex

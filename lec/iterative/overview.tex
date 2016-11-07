@@ -1,0 +1,28 @@
+\section{Iteration basics}
+
+An iterative solver for $Ax = b$ is produces a sequence of
+approximations $x^{(k)} \rightarrow x$.  We always stop after
+finitely many steps, based on some convergence criterion, e.g.
+\begin{itemize}
+\item A residual estimate reached some threshold tolerance
+  (relative to $b$ or to the initial residual).
+\item An error estimate reached some threshold tolerance
+  (usually relative to the initial error estimate).
+\item We reach a maximum iteration count.
+\end{itemize}
+We say we have solved the problem when some error-related tolerance
+is satisfied.  We can often reason about the cost per step in a
+simple way, but estimating the steps to a solution can be
+quite complicated.  It depends on the nature of the iteration, the
+structure of the problem, the norms used to judge convergence, and
+the problem tolerances.
+
+The oldest and simplest iterations for solving linear systems are
+{\em stationary iterations} (a.k.a.~{\em fixed point iterations})
+and more generally {\em relaxation iterations}.
+In many cases, these iterations have been supplanted by more
+sophisticated methods (such as Krylov subspace methods), but they
+remain a useful building block.  Moreover, what is old has a way of
+becoming new again; many of the classic iterations from the 1950s
+and 1960s are seeing new life in applications to machine learning
+and large scale optimization problems.

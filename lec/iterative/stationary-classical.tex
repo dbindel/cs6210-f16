@@ -1,0 +1,92 @@
+\section{The classical iterations}
+
+One of the simplest stationary iterations is {\em Richardson iteration},
+in which $M$ is chosen to be proportional to the identity:
+\begin{align*}
+  x^{(k+1)} &= x^{(k)} + \omega (b-Ax^{(k)}) \\
+            &= (I-\omega A) x^{(k)} + \omega b.
+\end{align*}
+The iteration matrix in this case is simply $R = I - \omega A$.  If $A$
+is symmetric and positive definite, we can always make Richardson
+iteration converge with an appropriate $\omega$, though the convergence
+may be heart-breakingly slow.
+
+Let $A = D - L - U$, where $D$ is diagonal, $L$ is strictly lower
+triangular, and $U$ is strictly upper triangular.  Jacobi iteration
+takes $M = D$.  When we discuss multigrid, we will also see  {\em damped
+Jacobi}, for which $M = \omega^{-1} D$ with $\omega < 1$.  Damped Jacobi
+is equivalent to moving in the Jacobi direction by a fraction $\omega$
+of the usual step length.  Like Richardson, we can always make (damped)
+Jacobi converge for SPD matrices; the method also converges for $A$
+strictly diagonally dominant.
+
+The {\em Gauss-Seidel} iteration incorporates a little more of $A$ into
+$M$, taking $M = D-L$.  For $A$ symmetric and positive definite, this
+generally yields about twice the rate of convergence of Jacobi; and it
+is not necessary to damp the method to obtain convergence.  However,
+Gauss-Seidel is less friendly to parallel computing because the
+triangular solve involves computing in a strict order.
+
+\subsection{Splitting and sweeping}
+
+While we typically analyze stationary methods in terms of a splitting,
+that is not always how we implement them.  We can think of either Jacobi
+or Gauss-Seidel as a {\em sweep} over the variables, in which we update
+the value of variable $i$ using the $i$th equation and using a guess for
+all the other variables.  In the Jacobi iteration, the guess for the
+other variables comes from the previous step; in Gauss-Seidel, the guess
+for the other variables involves whatever our most up-to-date information
+might be.  We illustrate this style of programming with two codes, each
+of which compute a single sweep:
+
+\lstinputlisting{code/iter/sweep_jacobi.m}
+\lstinputlisting{code/iter/sweep_gs.m}
+
+\subsection{Over-relaxation}
+
+In the Jacobi iteration, we take $M = D$; in Gauss-Seidel, we take $M = D-L$.
+In general, Gauss-Seidel works better than Jacobi.  So if we go even further
+in the ``Gauss-Seidel'' direction, perhaps we will do better still?  This is
+the idea behind {\em successive over-relaxation}, which uses the splitting
+$M = D-\omega L$ for $\omega > 1$.  The case $\omega < 1$ is called
+{\em under-relaxation}.
+
+The iteration converges for positive definite $A$ for any $\omega \in (0,2)$.
+The optimal choice is problem-dependent; but it is rarely of interest any
+more, since SOR is mostly used to accelerate more sophisticated iterative
+methods.  Indeed, the most widely-used variant of SOR involves a
+forward sweep and a backward sweep; this SSOR iteration applied to an SPD $A$
+matrix yields an SPD splitting matrix $M$, and can therefore be used to
+accelerate the conjugate gradient method (which depends on this structure).
+
+\subsection{Red-black ordering}
+
+In Jacobi iteration, we can compute the updates for each equation
+independently of all other updates --- order does not matter, and so the
+method is ripe for parallelism within one sweep\footnote{%
+  There is actually not enough work per sweep to make this worthwhile
+  with ordinary Jacobi, usually, but it is worthwhile if we deal
+  with the block variants.
+}
+In general, though, Gauss-Seidel and over-relaxation methods depend
+on the order in which we update variables.  The {\em red-black} ordering
+(or more general {\em multi-color ordering}) trick involves re-ordering
+the unknowns in our matrix by ``color,'' where each unknown is assigned
+a color such that no neighbor in the graph of the matrix has the same
+color.  In the 2D Poisson case, this can be achieved with two colors,
+usually dubbed ``red'' and ``black,'' applied in a checkerboard pattern.
+
+\subsection{Block iterations}
+
+So far, we have restricted our attention to {\em point relaxation} methods
+that update a single variable at a time.  {\em Block} versions of Jacobi and
+Gauss-Seidel have exactly the same flavor as the regular versions, but they
+update a subset of variables simultaneously.  These methods correspond to a
+splitting with $M$ equal to the block diagonal or block lower triangular part
+of $A$.
+
+The block Jacobi and Gauss-Seidel methods update disjoint subsets of
+variables.  The {\em Schwarz} methods act on {\em overlapping} subsets
+It turns out that a little overlap can have a surprisingly large benefit.
+The book {\em Domain Decomposition} by Smith, Gropp, and Keyes provides a
+nice overview.
