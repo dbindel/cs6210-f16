@@ -188,6 +188,7 @@
 -
   date: 2016-11-11
   info: Krylov subspaces
+  notes: 2016-11-11.pdf
 #
 # ==================
 # Week 13
@@ -195,10 +196,12 @@
 -
   date: 2016-11-14
   info: Lanczos, Arnoldi, and connections
+  notes: 2016-11-14.pdf
   hw: HW 5
 -
   date: 2016-11-16
   info: Lanczos, Arnoldi, and connections
+  notes: 2016-11-16.pdf
 -
   date: 2016-11-18
   info: Conjugate gradients

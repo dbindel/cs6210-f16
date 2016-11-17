@@ -1,0 +1,69 @@
+\section{Arnoldi}
+
+Krylov subspaces are good spaces for approximation schemes.  But the
+power basis (i.e.~the basis $A^j b$ for $j = 0, \ldots, k-1$) is not
+good for numerical work.  The vectors in the power basis tend to
+converge toward the dominant eigenvector, and so the power basis quickly
+becomes ill-conditioned.  We would much rather have orthonormal bases
+for the same spaces.  This is where the Arnoldi iteration and its kin
+come in.
+
+Each step of the Arnoldi iteration consists of two pieces:
+\begin{itemize}
+\item
+  Compute $Aq_k$ to get a vector in the space of dimension $k+1$
+\item
+  Orthogonalize $Aq_k$ against $q_1, \ldots, q_k$ using Gram-Schmidt.
+  Scale the remainder to unit length.
+\end{itemize}
+If we keep track of the coefficients in the Gram-Schmidt process
+in a matrix $H$, we have
+\[
+  h_{k+1,k} q_{k+1} = Aq_k - \sum_{j=1}^{k} q_j h_{jk}
+\]
+where $h_{jk} = q_j^T A q_k$ and $h_{k+1,k}$ is the normalization
+constant.  Rearranging slightly, we have
+\[
+  Aq_k = \sum_{j=1}^{k+1} q_j h_{jk}.
+\]
+Defining $Q_k = \begin{bmatrix} q_1 & q_2 & \ldots & q_k \end{bmatrix}$,
+we have the {\em Arnoldi decomposition}
+\[
+  AQ_k = Q_{k+1} \bar{H}_k, \quad
+  \bar{H}_k =
+  \begin{bmatrix}
+    h_{11} & h_{12} & \ldots & h_{1k} \\
+    h_{21} & h_{22} & \ldots & h_{2k} \\
+           & h_{32} & \ldots & h_{3k} \\
+           &        & \ddots & \vdots \\
+           &        &        & h_{k+1,k}
+  \end{bmatrix} \in \bbR^{(k+1) \times k}.
+\]
+\begin{figure}
+\lstinputlisting{code/iter/arnoldi.m}
+\caption{The standard Arnoldi algorithm.}
+\label{arnoldi-1}
+\end{figure}
+
+\begin{figure}
+\lstinputlisting{code/iter/arnoldi2.m}
+\caption{The Arnoldi algorithm with re-orthogonalization.}
+\label{arnoldi-2}
+\end{figure}
+
+The Arnoldi {\em decomposition} is simply the leading $k$ columns of an
+upper Hessenberg reduction of the original matrix $A$.  The Arnoldi
+{\em algorithm} is the interlaced multiply-and-orthogonalize process
+used to obtain the decomposition (Figure~\ref{arnoldi-1}).
+Unfortunately, the modified Gram-Schmidt algorithm --- though more
+stable than classical Gram-Schmidt! --- is nonetheless unstable in
+general.  The sore point occurs when we start with a matrix that lies
+too near the span of the vectors we orthogonalize against; in this case,
+by the time we finish orthogonalizing against previous vectors, we have
+cancelled away so much of the original vector that what is left may be
+substantially contaminated by roundoff.  For this reason, the
+``twice is enough'' reorthogonalization process of Kahan and Parlett
+is useful: this says that if the remainder after orthogonalization is
+too small compared to what we started with, then we should perhaps
+refine our computation by orthogonalizing the remainder again.
+We show this process in Figure~\ref{arnoldi-2}.

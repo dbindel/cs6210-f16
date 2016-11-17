@@ -1,0 +1,43 @@
+\section{Lanczos}
+
+Now suppose that $A$ is a symmetric matrix.  In this case, the Arnoldi
+decomposition takes a special form: the upper Hessenberg matrix is now
+a symmetric upper Hessenber matrix (aka a tridiagonal), and we dub
+the resulting decomposition the {\em Lanczos} decomposition:
+\[
+  AQ_k = Q_{k+1} \bar{T}_k, \quad
+  T_k =
+  \begin{bmatrix}
+    \alpha_1 & \beta_1 \\
+    \beta_1 & \alpha_2 & \beta_2 \\
+            & \beta_2 & \alpha_3 & \beta_3 \\
+            & & \ddots & \ddots & \ddots \\
+            & & & \beta_{k-2} & \alpha_{k-1} & \beta_{k-1} \\
+            & & & & \beta_{k-1} & \alpha_k \\
+            & & & & & \beta_k
+  \end{bmatrix}
+\]
+The Lanczos algorithm is the specialization of the Arnoldi algorithm
+to the symmetric case.  In exact arithmetic, the tridiagonal form of
+the coefficient matrix allows us to do only a constant amount of
+orthogonalization work at each step (Figure~\ref{lanczos}).
+
+\begin{figure}
+\lstinputlisting{code/iter/lanczos.m}
+\caption{Lanczos iteration.  Note that in floating point, the columns
+  of $Q$ will lose orthogonality.}
+\label{lanczos}
+\end{figure}
+
+Sadly, the Lanczos algorithm in floating point behaves rather differently
+from the algorithm in exact arithmetic.  In particular, the iteration
+tends to ``restart'' periodically as the space starts to get very good
+approximations of eigenvectors.  One can deal with this via full
+reorthogonalization, as with the Arnoldi iteration; but then the method
+loses the luster of low cost, as we have to orthogonalize against several
+vetors periodically.  An alternate {\em selective orthogonalization}
+strategy proposed by Parlett and Scott lets us orthogonalize only against
+a few previous vectors, which are associated with converged eigenvector
+approximations (Ritz vectors).  But, as we shall see, such orthogonalization
+is mostly useful when we want to solve eigenvalue problems.  For linear
+systems, it tends not to be necessary.

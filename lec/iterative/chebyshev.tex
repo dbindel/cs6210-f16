@@ -1,0 +1,51 @@
+\section{Chebyshev polynomials}
+
+Suppose now that $A$ is symmetric positive definite, and we seek to
+minimize $\|q(A) b\| \leq \|q(\Lambda)\| \|b\|$.  Controlling $q(z)$
+on all the eigenvalues is a pain, but it turns out to be simple to
+instead bound $q(z)$ over some interval $[\alpha_1, \alpha_n]$
+The polynomial we want is the {\em scaled and shifted Chebyshev polynomial}
+\[
+  q_m(z) =
+  \frac{T_m\left( (z-\bar{\alpha})/\rho \right)}
+       {T_m\left( -\bar{\alpha}/\rho \right)}
+\]
+where $\bar{\alpha} = (\alpha_n + \alpha_1)/2$ and
+$\rho = (\alpha_n-\alpha_1)/2$.
+
+The Chebyshev polynomials $T_m$ are defined by the recurrence
+\begin{align*}
+  T_0(x) &= 1 \\
+  T_1(x) &= x \\
+  T_{m+1}(x) &= 2x T_m(x) - T_{m-1}(x), \quad m \geq 1.
+\end{align*}
+The Chebyshev polynomials have a number of remarkable properties, but
+perhaps the most relevant in this setting is that
+\[
+  T_m(x) =
+  \begin{cases}
+    \cos(m \cos^{-1}(x)), & |x| \leq 1, \\
+    \cosh(m \cosh^{-1}(x)), &|x| \geq 1
+  \end{cases}.
+\]
+Thus, $T_m(x)$ oscillates between $\pm 1$ on the interval $[-1,1]$,
+and then grows very quickly outside that interval.  In particular,
+\[
+  T_{m}(1 + \epsilon) \geq \frac{1}{2} (1+m\sqrt{2\epsilon}).
+\]
+Thus, we have that on $[\alpha_, \alpha_n]$,
+$|q_m| \leq \frac{2}{1+m\sqrt{2\epsilon}}$
+where
+\[
+  \epsilon = \bar{\alpha}/\rho-1
+  = \frac{2\alpha_1}{\alpha_n-\alpha_1}
+  = 2 \left( \kappa(A)-1 \right)^{-1},
+\]
+and hence
+\begin{align*}
+  |q_m(z)|
+  &\leq \frac{2}{1+2m/\sqrt{\kappa(A)-1}} \\
+  &= 2\left( 1- \frac{2m}{\sqrt{\kappa(A)-1}}\right) + O\left(\frac{m^2}{\kappa(A-1)}\right).
+\end{align*}
+Hence, we expect to reduce the optimal residual in this case
+by at least about $2/\sqrt{\kappa(A)-1}$ at each step.

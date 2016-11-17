@@ -1,4 +1,7 @@
 LEC=\
+	2016-11-16.pdf \
+	2016-11-14.pdf \
+	2016-11-11.pdf \
 	2016-11-09.pdf \
 	2016-11-07.pdf \
 	2016-11-04.pdf \
@@ -42,9 +45,25 @@ copy:
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
 
+LEC35=\
+	iterative/chebyshev.tex	iterative/cheblim.tex iterative/arnoldi.tex \
+	iterative/lanczos.tex
+2016-11-16.pdf: 2016-11-16.tex common.tex commonm.tex \
+	$(LEC35)
+
+LEC34=\
+	iterative/chebyshev.tex	iterative/cheblim.tex iterative/arnoldi.tex
+2016-11-14.pdf: 2016-11-14.tex common.tex commonm.tex \
+	$(LEC34)
+
+LEC33=\
+	iterative/quasiopt.tex iterative/modred.tex iterative/krylov.tex
+2016-11-11.pdf: 2016-11-11.tex common.tex commonm.tex \
+	$(LEC33)
+
 LEC32=\
-	iterative/subspace.tex iterative/quasiopt.tex iterative/modred.tex
-2016-11-09.pdf: 2016-11-07.tex common.tex commonm.tex \
+	iterative/relaxation.tex iterative/adi.tex iterative/subspace.tex
+2016-11-09.pdf: 2016-11-09.tex common.tex commonm.tex \
 	$(LEC32)
 
 LEC31=\
@@ -52,8 +71,7 @@ LEC31=\
 	iterative/stationary-overview.tex \
 	iterative/stationary-classical.tex \
 	iterative/stationary-converge.tex \
-	iterative/relaxation.tex \
-	iterative/adi.tex
+
 2016-11-07.pdf: 2016-11-07.tex common.tex commonm.tex \
 	$(LEC31)
 

@@ -1,0 +1,45 @@
+\section{Chebyshev: Uses and Limitations}
+
+We previously sketched out an approach for analyzing the convergence of
+methods based on Krylov subspaces:
+\begin{enumerate}
+\item
+  Characterize the Krylov subspace of interest in terms of polynomials,
+  i.e. $\mathcal{K}_k(A,b) = \{ p(A)b : p \in \mathcal{P}_{k-1} \}$.
+\item
+  For $\hat{x} = p(A) b$, write an associated error (or residual)
+  in terms of a related polynomial in $A$.
+\item
+  Phrase the problem of minimizing the error, residual, etc.~in terms
+  of minimizing a polynomial $q(z)$ on the spectrum of $A$
+  (call this $\Lambda(A)$).  The polynomial $q$ must generally satisfy
+  some side constraints that prevent the zero polynomial from being
+  a valid solution.
+\item
+  Let $\Lambda(A) \subset \Omega$, and write
+  \[
+    \max_{\lambda \in \Lambda(A)} |q(\lambda)| \leq
+    \max_{z \in Omega} |q(z)|.
+  \]
+  The set $\Omega$ should be simpler to work with than the set of
+  eigenvalues.  The simplest case is when $A$ is symmetric positive
+  definite and $\Omega = [\lambda_1, \lambda_n]$.
+\item
+  The optimization problem can usually be phrased in terms of special
+  polynomial families.  The simplest case, when $\Omega$ is just an
+  interval, usually leads to an analysis via Chebyshev polynomials.
+\end{enumerate}
+The analysis sketched above is the basis for the convergence analysis
+of the Chebyshev semi-iteration, the conjugate gradient method, and
+(with various twists) several other Krylov subspace methods.
+
+The advantage of this type of analysis is that it leads to convergence
+bounds in terms of some relatively simple property of the matrix, such
+as the condition number.  The disadvantage is that the approximation of
+the spectral set $\Lambda(A)$ by a bounding region $\Omega$ can lead to
+rather pessimistic bounds.  In practice, the extent to which we are able
+to find good solutions in a Krylov subspace often depends on the
+``clumpiness'' of the eigenvalues.  Unfortunately, this ``clumpiness''
+is rather difficult to reason about a priori!  Thus, the right way to evaluate
+the convergence of Krylov methods in practice is usually to try them out,
+plot the convergence curves, and see what happens.
