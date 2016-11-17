@@ -1,0 +1,39 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\begin{document}
+
+\hdr{HW 6}
+
+You may (and should) talk about problems with each other and with me,
+providing attribution for any good ideas you might get.  Your final
+write-up should be your own.
+
+\paragraph*{1: Residual projector}
+Show that if $\hat{x} = Vy$ satisfies $r = A\hat{x}-b \perp W$, then
+\[
+  r = \Pi b = \left[I-AV(W^TAV)^{-1} W^T\right] b
+\]
+and $\Pi$ is a projector.
+
+\paragraph*{2: PCG}
+In this problem, we explore some iterations to solve the 2D model
+problem on a $100 \times 100$ mesh with a constant right hand side.
+\begin{enumerate}
+\item Use the MATLAB (or Octave) function {\tt pcg} to solve the
+  problem with no preconditioner.  Show the residual versus iteration
+  count on a semi-logarithmic plot.
+\item Augment the {\tt sweep\_adi} routine in the class code so that
+  it is symmetric (i.e.~after doing an $x$ sweep and a $y$ sweep,
+  do a $y$ sweep and then an $x$ sweep).  Use this as a preconditioner
+  for the PCG iteration and again plot convergence on a semi-log plot.
+\end{enumerate}
+
+\paragraph*{3: Course evaluations}
+Course evaluations will open at 8 am on Monday, November 28 (a little
+more than one week in advance of the due date).  Your evaluations are
+confidential, but we can check whether or not you completed them.
+Please do complete the evaluation!  This will be worth a significant
+chunk of this problem set.
+
+\end{document}
