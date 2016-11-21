@@ -1,0 +1,30 @@
+\subsection{Communication-Avoiding (CA) Krylov}
+
+In highly parallel computing systems, the cost of computing with Krylov
+subspaces may be dominated not by the matrix-vector products, but by the
+cost of computing dot products for the purpose of orthogonalization.
+Repeatedly applying matrix-vector products may involves rather local
+communication patterns, but dot products involve a global communication.
+Of course, we could (in principle) form a power basis for the Krylov
+subspace; but this basis is typically too ill-conditioned for serious
+work.  So what is one to do?
+
+The {\em communication-avoiding} Krylov methods use the power of
+polynomials to thread between the Scylla of synchronization costs and
+the Charybdis of catastrophic ill-conditioning.  In general, we write
+Krylov subspace bases as
+\[
+  \mathcal{K}_k(A,b) = \operatorname{span}\{ p_j(A) b \}_{j=0}^{(k-1)}.
+\]
+where $p_j(z)$ is a degree $j$ polynomial.  In the case of the
+power basis, $p_j(z) = z^j$; and in the case of the Lanczos or
+Arnoldi bases, $p_j(z)$ is chosen fully adaptively.  The communication
+avoiding approach is to choose $p_j(z)$ in advance, but using information
+about the spectra to ensure that the vectors $p_j(A) b$ are not too
+nearly co-linear.
+
+As with some of the other topics in this section, the big idea behind
+communication-avoiding Krylov methods is simple, but there are too many
+details to give a full treatment in the time we have allocated.  For
+those interested in such details, I recommend the 2010 \href{https://www2.eecs.berkeley.edu/Pubs/TechRpts/2010/EECS-2010-37.pdf}{Ph.D.~thesis of
+Mark Hoemmen}.

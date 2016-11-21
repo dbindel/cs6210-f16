@@ -1,0 +1,47 @@
+\section{Extrapolation and mixing}
+
+When we discussed CG, we also briefly discussed {\em nonlinear} CG
+methods (e.g.~Fletcher-Reeves).  One can similarly extend Krylov
+subspace ideas to accelerate nonlinear equation solving methods;
+that is, given a fixed point iteration
+\[
+  x^{(k+1)} = G(x^{(k)}),
+\]
+we can accelerate the computation of the fixed point by taking an
+appropriate linear combination of the iterates $x^{(k)}$.  This is
+a powerful idea; indeed, it is so powerful that it can be used to
+compute repulsive fixed points where the usual iteration would
+diverge!  The techniques usually go under the heading of
+{\em extrapolation methods} (including Reduced Rank Extrapolation or RRE,
+Minimal Polynomial Extrapolation or MPE, and Vector Pad\'e Extrapolation);
+and {\em acceleration} or {\em mixing} techniques, the most popular of
+which is the {\em Anderson acceleration} method.  Applied to the iterates
+of a stationary linear system solver, these techniques are all formally
+equivalent to Krylov subspace solvers.  In particular, RRE is equivalent
+to GMRES (in exact arithmetic).
+
+The idea behind extrapolation methods is to exploit systematic patterns
+in the convergence of fixed point iteration.  For example, suppose the
+error iteration gave us (approximately)
+\[
+  e^{(k)} = \sum_{j=1}^m v^{(j)} \alpha_j^k
+\]
+where the vectors $v^{(j)}$ and the exponents $\alpha_j$ were unknown.
+The hope is that we can learn the parameters of the error iteration
+by fitting a model to the update sequence:
+\[
+  u^{(k)} = x^{(k+1)}-x^{(k)} = e^{(k+1)}-e^{(k)} =
+  \sum_{j=1}^m (\alpha_j-1) v^{(j)} \alpha_j^k.
+\]
+If $p(z) = c_0 + c_1 z + \ldots + c_m z^m$ is a polynomial such
+that $p(\alpha_j) = 0$ for each $\alpha_j$, then we should satisfy
+\[
+  \sum_{j=1}^m c_j u^{(k+j)} = 0.
+\]
+If we look at enough update steps, we can determine both the
+coefficient vectors and the exponents.
+
+With an appropriate model, extrapolation methods can produce rather
+astonishing results.  Of course, extrapolation methods are subject
+to issues of overfitting, and (particularly when the convergence is
+irregular) may produce results that are wildly incorrect.

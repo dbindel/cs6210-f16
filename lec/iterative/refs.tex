@@ -1,0 +1,26 @@
+\section{References}
+
+There is a lot of ground to cover when it comes to Krylov subspace
+methods, and we scarcely have time to do justice to the two most popular
+Krylov subspace methods (CG for the SPD case and GMRES elsewhere).
+Apart from the material in Golub and Van Loan and other standard texts,
+I highly recommend two books for a survey of other methods and some
+practical details:
+\begin{enumerate}
+\item \href{http://www.netlib.org/templates/templates.pdf}{\em Templates for the Solution of Linear Systems:
+Building Blocks for Iterative Methods}
+  by Barrett {\em et al}.  This is freely available, and includes
+  what you need to know to get started with various methods.
+\item {\em Iterative methods for sparse linear systems} by Y.~Saad.
+  This is now in a second edition (available from SIAM), but you
+  can also get the first edition at \href{http://www-users.cs.umn.edu/~saad/books.html}{Saad's web page}.
+\item {\em Iterative methods for solving linear systems} by Anne Greenbaum
+  (published by SIAM) is a fairly up-to-date treatment of the major iterative
+  solvers for linear systems, including the whole family of Krylov subspace
+  solvers as well as classical stationary iterations and multigrid methods.
+\item {\em Iterative methods for linear and nonlinear equations} by C.~T.~Kelley
+  is another SIAM book --- are you seeing a theme?
+  It covers CG and GMRES, though not the other
+  Krylov iterations; however, it also covers nonlinear iterations.  It is
+  short and tutorial in nature.
+\end{enumerate}
