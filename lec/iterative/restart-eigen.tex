@@ -1,0 +1,46 @@
+\section{Restarting}
+
+When discussing GMRES, we said that to keep storage under control,
+we typically {\em restart} after a few steps.  The same technique
+works for solving eigenvalue problems, but requires more care.
+In particular, when solving a linear system, it made sense to restart
+with a whole new Krylov subspace.  For eigenvalue problems,
+{\em implicit} restarting is the norm.
+
+The earliest versions of implicit restarting followed the strategy:
+\begin{enumerate}
+\item
+  Build an initial Arnoldi decomposition
+  \[
+    A Q_m = Q_m H_m + \beta_m q_{m+1} e_m^T.
+  \]
+\item
+  Do several steps of shifted QR iteration on the projected matrix
+  $H_m$ to get a new decomposition
+  \[
+    A \tilde{Q}_m =
+    \tilde{Q}_m \tilde{H}_m + \tilde{\beta_m} \tilde{q}_{m+1} e_m^T.
+  \]
+\item
+  ``Cut back'' to a basis consisting of the first $p$ vectors
+  of $\tilde{Q}_m$.
+\end{enumerate}
+The ``filter and cut back'' approach of the implicitly restarted
+Arnoldi method involves some technical difficulties, but there is
+good software available (the ARPACK code of Lehoucq and Sorensen).
+This is the basis for the {\tt eigs} code in MATLAB.
+
+A simpler method was introduced in 2002 by Pete Stewart,
+the {\em Krylov-Schur} method.  The Krylov-Schur approach rests on
+a more general decomposition than Arnoldi, a so-called {\em Krylov
+decomposition}
+\[
+  A U_k = U_k B_k + u_{k+1} b_{k+1}^*;
+\]
+if the columns of $U_k$ are orthonormal, we call this an orthonormal
+decomposition.  The idea of the Krylov-Schur method is to compute a
+Schur decomposition of $B_k$, then sort the Schur decomposition to move
+the unwanted Ritz values to the ``end,'' where they can be purged
+by truncating the decomposition.  This approach avoids some of the
+technical issues in previous implicit restarting methods that maintained
+an Arnoldi decomposition throughout.

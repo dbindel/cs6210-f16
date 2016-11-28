@@ -1,0 +1,41 @@
+\subsection{Jacobi-Davidson}
+
+The {\em Jacobi-Davidson} iteration is an alternative subspace-based
+large-scale eigenvalue solver that does not use Krylov subspaces.
+Instead, one builds a subspace via steps of an inexact Newton iteration
+on the eigenvalue equation.  Given an approximate eigenpair $(\theta,u)$
+where $\theta$ is the Rayleigh quotient, we seek a correction $s \perp u$
+so that
+\[
+  A(u+s) = \lambda (u+s).
+\]
+Rewriting this in terms of $r = (A-\theta I) u$, we have for any
+approximate $\tilde{\lambda}$ to the desired eigenvalue
+\[
+  (A-\tilde{\lambda} I) s = -r + (\lambda-\theta) u + (\lambda-\tilde{\lambda}) s.
+\]
+Using the desiderata that $u^* s = 0$ and the fact that $(I-uu^*) u = 0$,
+we obtain the correction equation
+\[
+  (I-uu^*) (A-\tilde{\lambda} I)(I-uu^*) s = -r, \quad \mbox{where } s \perp u.
+\]
+The method proceeds by at each step solving the correction equation
+approximately and extending the subspace by a new direction $s$.
+One then seeks an approximate eigenpair from within the subspace.
+
+In addition to a proper choice of subspaces, one needs a method to
+extract approximate eigenvectors and eigenvalues.  This is particularly
+important for approximating interior eigenvalues, as the standard
+Rayleigh-Ritz approach may give poor results there.  One possible
+method is to use the {\em refined Ritz} vector, which is obtained by
+minimizing the residual over all candidate eigenvectors associated
+with an approximate eigenvalue $\tilde{\lambda}$.  The refined Ritz
+vector may then be plugged into the Rayleigh quotient to obtain a
+new eigenvector.  Another method is the {\em harmonic Rayleigh-Ritz}
+approach, which for eigenvalues near a target $\tau$ employs the
+condition
+\[
+  (A-\tau I)^{-1} \tilde{u} - (\tilde{\theta}-\tau)^{-1} \tilde{u} \perp \mathcal{V}.
+\]
+We again usually use the Rayleigh quotient from the harmonic Ritz vector
+rather than the harmonic Ritz value $\tilde{\theta}$.

@@ -1,0 +1,23 @@
+\section{Spectral transformation}
+
+We have dealt with the notion of spectral transformation before,
+when we discussed the power iteration.  The idea of spectral
+transformation is to work not with $A$, but with some rational
+$f(A)$ where $f$ maps the eigenvalues of interest to the outside
+of the spectrum.  Usually $f$ is a rational function; common
+examples include
+\begin{itemize}
+\item {\em Shift-invert}: $f(z) = (z-\sigma)^{-1}$.  Favors
+  eigenvalues close to the shift $\sigma$.
+\item {\em Cayley}: $f(z) = (\sigma-z) (\sigma +z)^{-1}$.  This maps
+  the left half plane to the interior of the unit circle and the
+  right half plane to the exterior; it is commonly used in stability
+  analysis.
+\item {\em Polynomial}: Just what it sounds like.
+\end{itemize}
+In general, the shifted linear solves needed to carry out rational spectral
+transformations (e.g. shift-invert and Cayley) must be computed to
+rather high accuracy.  Hence, we favor sparse direct methods.  An alternate
+approach, similar to what we say when we briefly considered flexible GMRES,
+is to break out of the confines of using a Krylov subspace; the most
+popular variant here is the {\em Jacobi-Davidson} method.

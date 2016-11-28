@@ -226,7 +226,8 @@
 #
 -
   date: 2016-11-28
-  info: The preconditioning landscape
+  info: Krylov subspace methods for eigenproblems
+  notes: 2016-11-28.pdf
 -
   date: 2016-11-30
   info: Review

@@ -1,4 +1,5 @@
 LEC=\
+	2016-11-28.pdf \
 	2016-11-21.pdf \
 	2016-11-18.pdf \
 	2016-11-16.pdf \
@@ -46,6 +47,13 @@ copy:
 
 notes.pdf: notes.tex commonm.tex refs.bib \
 	$(LEC1) $(LEC2)
+
+LEC39=\
+	logistics/2016-11-28.tex iterative/krylov-eigen.tex \
+	iterative/transform-eigen.tex iterative/restart-eigen.tex \
+	iterative/jd-eigen.tex
+2016-11-28.pdf: 2016-11-28.tex common.tex commonm.tex \
+	$(LEC39)
 
 LEC37=\
   iterative/refs.tex iterative/gmres.tex iterative/biorth.tex \
