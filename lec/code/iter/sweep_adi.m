@@ -8,7 +8,6 @@ function [U] = sweep_adi(U, F);
   h2 = 1/(n+1)^2;
   dt = 1/(n+1);
   Ts = spdiags(ones(n,1)*[-1, 2+dt, -1], [-1, 0, 1], n, n);
-  II = speye(n);
 
   % Iterate on Ts*U + U*Ts = h^2*F + 2*dt*U where Ts = T+dt*I:
   %   Ts*U = h^2*F + 2*dt*U - U*Ts
