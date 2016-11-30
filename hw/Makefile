@@ -6,7 +6,8 @@ HW=\
 	hw4.pdf \
 	hw5.pdf \
 	hw6.pdf \
-	mt.pdf
+	mt.pdf \
+	final.pdf
 
 .PHONY: all copy
 all: $(HW)

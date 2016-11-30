@@ -24,5 +24,9 @@
   file: hw5
 -
   desc: HW 6
-  due: 2016-12-02
+  due: 2016-12-05
   file: hw6
+-
+  desc: Final
+  due: 2016-12-14
+  file: final

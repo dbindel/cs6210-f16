@@ -1,0 +1,86 @@
+\documentclass[12pt, leqno]{article} %% use to set typesize
+\include{common}
+
+\newcommand{\tril}{\operatorname{tril}}
+\newcommand{\triu}{\operatorname{triu}}
+
+\begin{document}
+
+\hdr{Final}
+
+Use any reference (books, notes, \matlab\ help, literature),
+but please do not consult with anyone outside the course staff.
+
+\paragraph*{1: A matrix iteration}
+Argue that the iteration
+\[
+  M_{k+1} = A^T M_k A + I
+\]
+converges to the unique solution to $M - A^T M A = I$ when $\|A\|_2 < 1$.
+Also argue that if $M_0$ is symmetric and positive definite,
+then each successive iterate $M_k$ is symmetric and positive definite.
+
+\paragraph*{2: Simple solver}
+Write an $O(n \log n)$ iterative solver for $Ax = b$
+for any shifted Hankel matrix $A \in \bbR^{n \times n}$ of the form
+\[
+  a_{ij} = \delta_{ij} + u_{i+j-1}
+\]
+where $\|u\|_1 < 1/2$.  Your method should converge in the
+$\infty$ norm at a rate independent of $n$.  Your code should
+take the form
+\begin{lstlisting}
+function [x] = final_p2solve(u, b, tol)
+% Solve Ax = b to a relative residual of at most tol
+\end{lstlisting}
+
+\paragraph*{3: Minimize this!}
+Write a routine to solve
+\[
+  \mbox{minimize}_{x \neq 0} \frac{x^T A x}{x^T M x}
+  \mbox{ s.t. } \sum_j x_j = 0.
+\]
+where $A, M \in \bbR^{n \times n}$ are symmetric and
+$M$ is positive definite.
+\begin{lstlisting}
+function [x, fmin] = final_p3solve(A, M)
+% Return the minimizing vector x and the minimum value fmin
+\end{lstlisting}
+
+\paragraph*{4: Interesting involutions}
+Let the matrix $A \in \bbR^{n \times n}$ be an {\em involution},
+i.e.~$A = A^{-1}$.  Let $U \in \bbR^{n \times k}$ and
+$V \in \bbR^{n \times (n-k)}$ be orthonormal bases for the
+invariant subspaces of $A$ associated with the eigenvalues $1$ and $-1$,
+respectively.  Given these bases, write a routine to compute a
+Schur decomposition of the form
+\[
+  A \begin{bmatrix} U & W \end{bmatrix} =
+  \begin{bmatrix} U & W \end{bmatrix}
+  \begin{bmatrix} I & X \\ 0 & -I \end{bmatrix}.
+\]
+Your routine should {\em not} call {\tt schur}, {\tt eigs}, or similar
+routines, nor should you do your own QR iteration --- this problem can
+be solved purely in terms of operations like matrix multiply, solve, and
+QR factorizations.
+\begin{lstlisting}
+function [Q,T] = final_p4solve(U,V)
+% Compute the Schur factorization of an involution with orthonormal
+% subspace bases U (for eigenvalue 1) and V (for eigenvalue -1)
+\end{lstlisting}
+
+\paragraph*{5: Constrained Krylov}
+Suppose $Ax = b$ and $x$ is known to satisfy the
+constraint $\sum_j x_j = 1$.  Write a GMRES-like code to minimize
+the residual norm over a $k$-dimensional subspace subject to
+the constraint.  You may call the {\tt arnoldi}
+routine from the class repository as a building block.  Do not
+worry too much about numerical stability of any projected solves
+(e.g.~something like normal equations is fine).
+\begin{lstlisting}
+function [x] = final_p5solve(A, b, k)
+% Minimize the residual subject to the constraint sum(x) = 1
+% over the Krylov space K_k(A, b).
+\end{lstlisting}
+
+\end{document}
